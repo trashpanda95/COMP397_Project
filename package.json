@@ -8,9 +8,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/gomesjohns/TheInvasion.git"
+    "url": "https://github.com/trashpanda95/The_Invasion__COMP397_FALL17"
   },
-  "author": "John Gomes",
+  "author": "Navsas",
   "license": "MIT",
   "devDependencies": {
     "@types/easeljs": "^0.8.36",
