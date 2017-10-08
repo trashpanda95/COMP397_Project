@@ -30,4 +30,4 @@ var scenes;
     }(objects.Scene));
     scenes.Start = Start;
 })(scenes || (scenes = {}));
-//# sourceMappingURL=startScreen.js.map
+//# sourceMappingURL=start.js.map
