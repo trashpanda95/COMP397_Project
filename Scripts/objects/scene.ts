@@ -24,8 +24,8 @@ module objects {
     /**
      * Update elements in the scene
      */
-    public Update():number {
-      return 0;
+    public Update():void {
+      
     }
 
     /**
