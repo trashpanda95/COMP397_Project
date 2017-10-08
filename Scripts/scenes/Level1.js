@@ -23,6 +23,7 @@ var scenes;
         //PRIVATE METHOS
         //PUBLIC METHODS
         Level1.prototype.Start = function () {
+            Cons;
         };
         Level1.prototype.Update = function () {
         };

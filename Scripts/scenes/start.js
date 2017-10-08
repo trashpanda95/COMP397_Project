@@ -12,19 +12,27 @@ var scenes;
 (function (scenes) {
     var Start = /** @class */ (function (_super) {
         __extends(Start, _super);
-        //PRIVATE INSTANCE VARIABLES
         //PUBLIC PROPETIES
         //CONSTRUCTORS
-        function Start() {
-            return _super.call(this) || this;
+        function Start(assetManager) {
+            var _this = _super.call(this) || this;
+            _this._assetManager = assetManager;
+            //this._currentScene - currentScene;
+            _this.Start();
+            return _this;
         }
         //PRIVATE METHOS
         //PUBLIC METHODS
         Start.prototype.Start = function () {
+            this._player = new objects.Player(this._assetManager);
+            this.Main();
         };
         Start.prototype.Update = function () {
+            this._player.Update();
+            //return this._currentScene;
         };
         Start.prototype.Main = function () {
+            this.addChild(this._player);
         };
         return Start;
     }(objects.Scene));

@@ -19,7 +19,7 @@ module scenes {
         //PUBLIC METHODS
         public Start():void
         {
-
+            Cons
         }
 
         public Update():void

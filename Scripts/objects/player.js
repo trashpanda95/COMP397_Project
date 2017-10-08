@@ -12,16 +12,37 @@ var objects;
 (function (objects) {
     var Player = /** @class */ (function (_super) {
         __extends(Player, _super);
-        //PRIVATE INSTANCE VARIBALES
         //PUBLIC PROPERTIES
         //CONSTRUCTORS
         function Player(assetManager) {
-            return _super.call(this, assetManager.getResult("player")) || this;
+            var _this = _super.call(this, assetManager.getResult("player")) || this;
+            _this.Start();
+            return _this;
         }
         //PRIVATE METHODS
+        Player.prototype._checkBounds = function () {
+            if (this.x >= 640 - this.halfWidth) {
+                this.x = 640 - this.halfWidth;
+            }
+            if (this.x <= this.halfWidth) {
+                this.x = this.halfWidth;
+            }
+        };
         //PUBLIC METHODS
-        Player.prototype.Start = function () { };
-        Player.prototype.Update = function () { };
+        Player.prototype.Start = function () {
+            this.width = this.getBounds().width;
+            this.height = this.getBounds().height;
+            this.halfWidth = this.width * 0.5;
+            this.halfHeight = this.height * 0.5;
+            this.regX = this.halfWidth;
+            this.regY = this.halfHeight;
+            this.x = 320;
+            this.y = 430;
+        };
+        Player.prototype.Update = function () {
+            this.x = this.stage.mouseX;
+            this._checkBounds();
+        };
         return Player;
     }(createjs.Bitmap));
     objects.Player = Player;
