@@ -6,8 +6,8 @@
     var assetManager;
     var assetManifest = [
         { id: "player", src: "../../Assets/images/player_test.png" },
-        { id: "player", src: "../../Assets/images/zombie_test.png" },
-        { id: "player", src: "../../Assets/images/background_test.png" }
+        { id: "enemy", src: "../../Assets/images/zombie_test.png" },
+        { id: "bg", src: "../../Assets/images/background_test.png" }
     ];
     function Init() {
         assetManager = new createjs.LoadQueue();

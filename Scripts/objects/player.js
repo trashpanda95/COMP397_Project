@@ -12,9 +12,16 @@ var objects;
 (function (objects) {
     var Player = /** @class */ (function (_super) {
         __extends(Player, _super);
-        function Player() {
-            return _super !== null && _super.apply(this, arguments) || this;
+        //PRIVATE INSTANCE VARIBALES
+        //PUBLIC PROPERTIES
+        //CONSTRUCTORS
+        function Player(assetManager) {
+            return _super.call(this, assetManager.getResult("player")) || this;
         }
+        //PRIVATE METHODS
+        //PUBLIC METHODS
+        Player.prototype.Start = function () { };
+        Player.prototype.Update = function () { };
         return Player;
     }(createjs.Bitmap));
     objects.Player = Player;
