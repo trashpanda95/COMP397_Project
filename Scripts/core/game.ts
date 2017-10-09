@@ -5,14 +5,15 @@
     let canvas:any;
     let gameName:objects.Label;
     let assetManager:createjs.LoadQueue;
-    let currentScene: objects.Scene;
-    let currentState:number;
+    
 
     let assetManifest =[
         {id: "player", src:"../../Assets/images/player_test.png"},
         {id: "enemy", src:"../../Assets/images/zombie_test.png"},
         {id: "bg", src:"../../Assets/images/background_test.png"}
     ];  
+    let currentScene: objects.Scene;
+    let currentState:number;
 
     function Init()
     {
@@ -29,7 +30,7 @@
         createjs.Ticker.framerate = 60;
         createjs.Ticker.on("tick", Update);
 
-        //currentState = config.START;
+        currentState = config.START;
         Main();
     }
 
@@ -44,7 +45,7 @@
         console.log("Game Started...");
         gameName = new objects.Label("The Invasion", "50px", "Consolas", "#000000", 425, 300, true);
         stage.addChild(gameName);
-        currentScene = new scenes.Start(assetManager);
+        currentScene = new scenes.Start(assetManager, currentState);
         stage.addChild(currentScene);
     }
     window.onload = Init;
