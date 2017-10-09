@@ -20,14 +20,6 @@ var objects;
             return _this;
         }
         //PRIVATE METHODS
-        Player.prototype._checkBounds = function () {
-            if (this.x >= 640 - this.halfWidth) {
-                this.x = 640 - this.halfWidth;
-            }
-            if (this.x <= this.halfWidth) {
-                this.x = this.halfWidth;
-            }
-        };
         //PUBLIC METHODS
         Player.prototype.Start = function () {
             this.width = this.getBounds().width;
@@ -36,12 +28,13 @@ var objects;
             this.halfHeight = this.height * 0.5;
             this.regX = this.halfWidth;
             this.regY = this.halfHeight;
-            this.x = 320;
-            this.y = 430;
+            this.x = 420;
+            this.y = 300;
+            this.scaleX = 0.3;
+            this.scaleY = 0.3;
         };
         Player.prototype.Update = function () {
             this.x = this.stage.mouseX;
-            this._checkBounds();
         };
         return Player;
     }(createjs.Bitmap));

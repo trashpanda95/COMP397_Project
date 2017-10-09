@@ -15,19 +15,9 @@ module objects {
             super(assetManager.getResult("player"));
             this.Start();
         }
-
         //PRIVATE METHODS
-        private _checkBounds() {
-            if(this.x >= 640 - this.halfWidth) {
-              this.x = 640 - this.halfWidth;
-            }
-            if(this.x <= this.halfWidth) {
-              this.x = this.halfWidth;
-            }
-          }
-
+        
         //PUBLIC METHODS
-
         public Start()
         {
             this.width = this.getBounds().width;
@@ -36,13 +26,14 @@ module objects {
             this.halfHeight = this.height * 0.5;
             this.regX = this.halfWidth;
             this.regY = this.halfHeight;
-            this.x = 320;
-            this.y = 430;
+            this.x = 420;
+            this.y = 300;
+            this.scaleX= 0.3;
+            this.scaleY= 0.3;
         }
         public Update()
         {
             this.x = this.stage.mouseX;
-            this._checkBounds();
         }
     }
 }

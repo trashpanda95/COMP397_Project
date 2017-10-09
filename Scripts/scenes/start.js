@@ -14,10 +14,10 @@ var scenes;
         __extends(Start, _super);
         //PUBLIC PROPETIES
         //CONSTRUCTORS
-        function Start(assetManager, currentScene) {
+        function Start(assetManager) {
             var _this = _super.call(this) || this;
             _this._assetManager = assetManager;
-            _this._currentScene = currentScene;
+            //this._currentScene = currentScene;
             _this.Start();
             return _this;
         }
