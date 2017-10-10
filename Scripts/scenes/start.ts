@@ -28,6 +28,7 @@ module scenes {
         public Update():void
         {
             this._player.Update();
+
             //return this._currentScene;
         }
 

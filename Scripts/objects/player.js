@@ -12,6 +12,7 @@ var objects;
 (function (objects) {
     var Player = /** @class */ (function (_super) {
         __extends(Player, _super);
+        //stage:createjs.Stage;
         //PUBLIC PROPERTIES
         //CONSTRUCTORS
         function Player(assetManager) {
@@ -20,20 +21,32 @@ var objects;
             return _this;
         }
         //PRIVATE METHODS
-        //PUBLIC METHODS
-        Player.prototype.Start = function () {
+        Player.prototype.regXY = function () {
             this.width = this.getBounds().width;
             this.height = this.getBounds().height;
             this.halfWidth = this.width * 0.5;
             this.halfHeight = this.height * 0.5;
             this.regX = this.halfWidth;
             this.regY = this.halfHeight;
-            this.x = 420;
+        };
+        Player.prototype._checkBounds = function () {
+            if (this.x >= 640 - this.halfWidth) {
+                this.x = 640 - this.halfWidth;
+            }
+            if (this.x <= this.halfWidth) {
+                this.x = this.halfWidth;
+            }
+        };
+        //PUBLIC METHODS
+        Player.prototype.Start = function () {
+            this.regXY();
+            this.x = 400;
             this.y = 300;
             this.scaleX = 0.3;
             this.scaleY = 0.3;
         };
         Player.prototype.Update = function () {
+            //console.log("Mouse X = "+ this.stage);   
             this.x = this.stage.mouseX;
         };
         return Player;
