@@ -12,7 +12,6 @@ var objects;
 (function (objects) {
     var Player = /** @class */ (function (_super) {
         __extends(Player, _super);
-        //stage:createjs.Stage;
         //PUBLIC PROPERTIES
         //CONSTRUCTORS
         function Player(assetManager) {
@@ -46,7 +45,7 @@ var objects;
             this.scaleY = 0.3;
         };
         Player.prototype.Update = function () {
-            //console.log("Mouse X = "+ this.stage);   
+            console.log("player.ts Update");
             this.x = this.stage.mouseX;
         };
         return Player;

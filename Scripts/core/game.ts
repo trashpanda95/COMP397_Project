@@ -3,9 +3,8 @@
 {
     let stage:createjs.Stage;
     let canvas:any;
-    let gameName:objects.Label;
-    let assetManager:createjs.LoadQueue;
-    
+    let assetManager:createjs.LoadQueue;  
+   
     //Load Assets
     let assetManifest =[
         {id: "player", src:"../../Assets/images/player_test.png"},
@@ -13,7 +12,7 @@
         {id: "bg", src:"../../Assets/images/background_test.png"}
     ];  
     let currentScene: objects.Scene;
-    //let currentState:number;
+    let currentState = 0;
 
     function Init()
     {
@@ -25,32 +24,41 @@
 
     function Start()
     {
-        //Get canvas from inde.html
+        //Get canvas from index.html
         canvas = document.getElementById("canvas");
-        //New instance of stage
+        //Placing canvas into stage
         stage = new createjs.Stage(canvas);
         //Enable mouse movement within stage
         stage.enableMouseOver(20);
         //Update function
         createjs.Ticker.framerate = 60;
         createjs.Ticker.on("tick", Update);
-
         Main();
         
     }
-
+     
     function Update()
-    {
-        let testScene = new scenes.Start(assetManager)
-        testScene.Update();
-        stage.update();
+    {   
+        let newState = currentScene.Update();
+        if(newState != currentState)
+        {
+            currentState = newState;
+            Main();
+        }
+        stage.update(); 
     }
 
     function Main()
-    {
-        console.log("Game Started");
-        //Add start scene to the stage
-        currentScene = new scenes.Start(assetManager);
+    {    
+        stage.removeAllChildren();
+
+        switch (currentState)
+        {
+            //Add start scene to the stage
+            case config.START:
+            currentScene = new scenes.Start(assetManager, currentState);
+            break;     
+        }   
         stage.addChild(currentScene);
     }
     window.onload = Init;

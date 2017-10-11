@@ -6,8 +6,9 @@ module objects {
         height:number;
         halfWidth:number;
         halfHeight:number;
-        //stage:createjs.Stage;
-
+        stage:createjs.Stage;
+        canvas: any;
+        
         //PUBLIC PROPERTIES
 
         //CONSTRUCTORS
@@ -36,7 +37,7 @@ module objects {
           }
         //PUBLIC METHODS
         public Start()
-        {
+        {   
             this.regXY();
             this.x = 400;
             this.y = 300;
@@ -45,8 +46,8 @@ module objects {
         }
         public Update()
         {
-            //console.log("Mouse X = "+ this.stage);   
-            this.x= this.stage.mouseX;  
+            console.log("player.ts Update");
+            this.x= this.stage.mouseX;    
         }
     }
 }

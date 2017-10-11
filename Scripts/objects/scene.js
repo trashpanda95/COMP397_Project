@@ -28,6 +28,7 @@ var objects;
          * Update elements in the scene
          */
         Scene.prototype.Update = function () {
+            return this.currentScene;
         };
         /**
          *  Add elements in the Main Method

@@ -14,10 +14,10 @@ var scenes;
         __extends(Start, _super);
         //PUBLIC PROPETIES
         //CONSTRUCTORS
-        function Start(assetManager) {
+        function Start(assetManager, currentScene) {
             var _this = _super.call(this) || this;
             _this._assetManager = assetManager;
-            //this._currentScene = currentScene;
+            _this.currentScene = currentScene;
             _this.Start();
             return _this;
         }
@@ -29,7 +29,7 @@ var scenes;
         };
         Start.prototype.Update = function () {
             this._player.Update();
-            //return this._currentScene;
+            return this.currentScene;
         };
         Start.prototype.Main = function () {
             this.addChild(this._player);

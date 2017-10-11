@@ -8,11 +8,11 @@ module scenes {
         //PUBLIC PROPETIES
 
         //CONSTRUCTORS
-        constructor(assetManager:createjs.LoadQueue)
+        constructor(assetManager:createjs.LoadQueue, currentScene: number)
         {
             super();
             this._assetManager = assetManager;
-            //this._currentScene = currentScene;
+            this.currentScene = currentScene;
             this.Start(); 
         }
 
@@ -25,11 +25,10 @@ module scenes {
             this.Main();
         }
 
-        public Update():void
+        public Update():number
         {
             this._player.Update();
-
-            //return this._currentScene;
+            return this.currentScene;
         }
 
         public Main():void

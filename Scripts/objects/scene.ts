@@ -1,14 +1,14 @@
 module objects {
   export class Scene extends createjs.Container {
     // PRIVATE INSTANCE VARIABLES
-    protected _currentScene: number;
+    protected currentScene: number;
 
     // PUBLIC PROPERTIES
 
     // CONSTRUCTORS
-    constructor() {
+    constructor() 
+    {
       super();
-
     }
     // PRIVATE METHODS
 
@@ -24,8 +24,8 @@ module objects {
     /**
      * Update elements in the scene
      */
-    public Update():void {
-      
+    public Update():number {
+      return this.currentScene;
     }
 
     /**

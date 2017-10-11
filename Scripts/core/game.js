@@ -2,7 +2,6 @@
 (function () {
     var stage;
     var canvas;
-    var gameName;
     var assetManager;
     //Load Assets
     var assetManifest = [
@@ -11,7 +10,7 @@
         { id: "bg", src: "../../Assets/images/background_test.png" }
     ];
     var currentScene;
-    //let currentState:number;
+    var currentState = 0;
     function Init() {
         assetManager = new createjs.LoadQueue();
         assetManager.installPlugin(createjs.Sound);
@@ -19,9 +18,9 @@
         assetManager.loadManifest(assetManifest);
     }
     function Start() {
-        //Get canvas from inde.html
+        //Get canvas from index.html
         canvas = document.getElementById("canvas");
-        //New instance of stage
+        //Placing canvas into stage
         stage = new createjs.Stage(canvas);
         //Enable mouse movement within stage
         stage.enableMouseOver(20);
@@ -31,14 +30,21 @@
         Main();
     }
     function Update() {
-        var testScene = new scenes.Start(assetManager);
-        testScene.Update();
+        var newState = currentScene.Update();
+        if (newState != currentState) {
+            currentState = newState;
+            Main();
+        }
         stage.update();
     }
     function Main() {
-        console.log("Game Started");
-        //Add start scene to the stage
-        currentScene = new scenes.Start(assetManager);
+        stage.removeAllChildren();
+        switch (currentState) {
+            //Add start scene to the stage
+            case config.START:
+                currentScene = new scenes.Start(assetManager, currentState);
+                break;
+        }
         stage.addChild(currentScene);
     }
     window.onload = Init;
