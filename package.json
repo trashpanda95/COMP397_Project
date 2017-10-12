@@ -1,0 +1,21 @@
+{
+  "name": "createjs-the_invasion",
+  "version": "1.0.0",
+  "description": "CreateJS The Invasion",
+  "main": "",
+  "scripts": {
+    "test": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/trashpanda95/The_Invasion__COMP397_FALL17"
+  },
+  "author": "Navsas",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/easeljs": "^0.8.36",
+    "@types/preloadjs": "^0.6.32",
+    "@types/soundjs": "^0.6.27",
+    "@types/tweenjs": "^0.6.27"
+  }
+}

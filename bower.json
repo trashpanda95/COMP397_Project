@@ -1,0 +1,27 @@
+{
+  "name": "createjs_the_invasion",
+  "authors": [
+    "gomesjohns <gomes.john103@gmail.com>"
+  ],
+  "description": "Createjs The Invasion",
+  "main": "",
+  "keywords": [
+    "CreateJS"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "EaselJS": "^1.0.2",
+    "TweenJS": "^1.0.2",
+    "SoundJS": "^1.0.1",
+    "PreloadJS": "^1.0.1"
+  }
+}
