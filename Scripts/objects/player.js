@@ -28,7 +28,7 @@ var objects;
             this.regX = this.halfWidth;
             this.regY = this.halfHeight;
         };
-        Player.prototype._checkBounds = function () {
+        Player.prototype.checkBounds = function () {
             if (this.x >= 640 - this.halfWidth) {
                 this.x = 640 - this.halfWidth;
             }
@@ -36,17 +36,66 @@ var objects;
                 this.x = this.halfWidth;
             }
         };
-        //PUBLIC METHODS
+        //--------------Player Keyboard Movement----------------
+        Player.prototype.keyboardInputListener = function () {
+            window.onkeydown = this.onControlDown;
+        };
+        Player.prototype.onControlDown = function (e) {
+            //LEFT ARROW
+            if (e.keyCode == 37) {
+                console.log("Left Arrow");
+                Player.moveLeft = true;
+                Player.moveRight = false;
+                Player.moveUp = false;
+                Player.moveDown = false;
+            }
+            else if (e.keyCode == 38) {
+                console.log("Up Arrow");
+                Player.moveLeft = false;
+                Player.moveRight = false;
+                Player.moveUp = true;
+                Player.moveDown = false;
+            }
+            else if (e.keyCode == 39) {
+                console.log("Right Arrow");
+                Player.moveLeft = false;
+                Player.moveRight = true;
+                Player.moveUp = false;
+                Player.moveDown = false;
+            }
+            else if (e.keyCode == 40) {
+                console.log("Down Arrow");
+                Player.moveLeft = false;
+                Player.moveRight = false;
+                Player.moveUp = false;
+                Player.moveDown = true;
+            }
+        };
+        Player.prototype.playerMovement = function () {
+            if (Player.moveLeft) {
+                this.x -= 1;
+            }
+            else if (Player.moveRight) {
+                this.x += 1;
+            }
+            else if (Player.moveUp) {
+                this.y -= 1;
+            }
+            else if (Player.moveDown) {
+                this.y += 1;
+            }
+        };
+        //PUBLIC METHODS             
         Player.prototype.Start = function () {
             this.regXY();
             this.x = 400;
             this.y = 300;
             this.scaleX = 0.3;
             this.scaleY = 0.3;
+            this.keyboardInputListener();
         };
         Player.prototype.Update = function () {
-            console.log("player.ts Update");
-            this.x = this.stage.mouseX;
+            this.playerMovement();
         };
         return Player;
     }(createjs.Bitmap));

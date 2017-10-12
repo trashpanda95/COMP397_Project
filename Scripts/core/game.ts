@@ -16,6 +16,7 @@
 
     function Init()
     {
+        //Load Assets
         assetManager = new createjs.LoadQueue();
         assetManager.installPlugin(createjs.Sound);
         assetManager.on("complete", Start);
@@ -23,18 +24,17 @@
     }
 
     function Start()
-    {
-        //Get canvas from index.html
-        canvas = document.getElementById("canvas");
-        //Placing canvas into stage
-        stage = new createjs.Stage(canvas);
+    {      
+        //Setup createjs
+        canvas = document.getElementById("canvas"); //reference to canvas element
+        stage = new createjs.Stage(canvas); //passing canvas to stage
+        createjs.Ticker.framerate = 60; //set frame rate to 60 fps
+        createjs.Ticker.on("tick", Update); //update game every frame
+
         //Enable mouse movement within stage
-        stage.enableMouseOver(20);
-        //Update function
-        createjs.Ticker.framerate = 60;
-        createjs.Ticker.on("tick", Update);
-        Main();
-        
+        stage.enableMouseOver(20);  
+
+        Main();  
     }
      
     function Update()
@@ -54,7 +54,7 @@
 
         switch (currentState)
         {
-            //Add start scene to the stage
+            //Add start scene to the stage, later add more scenes
             case config.START:
             currentScene = new scenes.Start(assetManager, currentState);
             break;     
