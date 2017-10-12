@@ -1,14 +1,21 @@
 module objects {
     export class Player extends createjs.Bitmap {
-        //PRIVATE INSTANCE VARIBALES   
+        //PRIVATE INSTANCE VARIBALES 
+        //Bitmap  
         width: number;
         height: number;
         halfWidth: number;
         halfHeight: number;
+        //Controls
         static moveLeft: boolean;
         static moveUp: any;
         static moveRight: any;
         static moveDown: any;
+        //Player
+        playerSpeed: number = 2;
+        playerRoataion: number = 0;
+        //Game
+        delta: any;
 
         //PUBLIC PROPERTIES
 
@@ -58,6 +65,7 @@ module objects {
         private keyboardInputListener() //Call onControlDown method on key down
         {
             window.onkeydown = this.onControlDown;
+            window.onkeyup = this.onControlUp;
         }
         private onControlDown(e: KeyboardEvent) //Get value of key and set global variable
         {
@@ -94,21 +102,63 @@ module objects {
                 Player.moveRight = false;
                 Player.moveUp = false;
                 Player.moveDown = true;
-            }
+            }            
         }
+        private onControlUp(e: KeyboardEvent) //Get value of key and set global variable
+        {
+            //LEFT ARROW
+            if (e.keyCode == 37) {
+                console.log("Left Arrow");
+                Player.moveLeft = false;
+                Player.moveRight = false;
+                Player.moveUp = false;
+                Player.moveDown = false;
+            }
+            //UP ARROW
+            else if (e.keyCode == 38) {
+                console.log("Up Arrow");
+                Player.moveLeft = false;
+                Player.moveRight = false;
+                Player.moveUp = false;
+                Player.moveDown = false;
+
+            }
+            //RIGHT ARROW
+            else if (e.keyCode == 39) {
+                console.log("Right Arrow");
+                Player.moveLeft = false;
+                Player.moveRight = false;
+                Player.moveUp = false;
+                Player.moveDown = false;
+
+            }
+            //DOWN ARROW
+            else if (e.keyCode == 40) {
+                console.log("Down Arrow");
+                Player.moveLeft = false;
+                Player.moveRight = false;
+                Player.moveUp = false;
+                Player.moveDown = false;
+            }            
+        }
+        
         private playerMovement() //Move player object
         {
             if (Player.moveLeft) {
-                this.x -= 1;
+                this.rotation = this.playerRoataion - 180 ;
+                this.x -= this.playerSpeed ;
             }
             else if (Player.moveRight) {
-                this.x += 1;
+                this.rotation = this.playerRoataion ;
+                this.x += this.playerSpeed;
             }
             else if (Player.moveUp) {
-                this.y -= 1;
+                this.rotation = this.playerRoataion -90 ;
+                this.y -= this.playerSpeed;
             }
             else if (Player.moveDown) {
-                this.y += 1;
+                this.rotation = this.playerRoataion + 90 ;
+                this.y += this.playerSpeed;
             }
         }
     }

@@ -16,6 +16,9 @@ var objects;
         //CONSTRUCTORS
         function Player(assetManager) {
             var _this = _super.call(this, assetManager.getResult("player")) || this;
+            //Player
+            _this.playerSpeed = 2;
+            _this.playerRoataion = 0;
             _this.Start();
             return _this;
         }
@@ -51,6 +54,7 @@ var objects;
         //-----------------------Player Keyboard Movement---------------------------
         Player.prototype.keyboardInputListener = function () {
             window.onkeydown = this.onControlDown;
+            window.onkeyup = this.onControlUp;
         };
         Player.prototype.onControlDown = function (e) {
             //LEFT ARROW
@@ -83,18 +87,53 @@ var objects;
                 Player.moveDown = true;
             }
         };
+        Player.prototype.onControlUp = function (e) {
+            //LEFT ARROW
+            if (e.keyCode == 37) {
+                console.log("Left Arrow");
+                Player.moveLeft = false;
+                Player.moveRight = false;
+                Player.moveUp = false;
+                Player.moveDown = false;
+            }
+            else if (e.keyCode == 38) {
+                console.log("Up Arrow");
+                Player.moveLeft = false;
+                Player.moveRight = false;
+                Player.moveUp = false;
+                Player.moveDown = false;
+            }
+            else if (e.keyCode == 39) {
+                console.log("Right Arrow");
+                Player.moveLeft = false;
+                Player.moveRight = false;
+                Player.moveUp = false;
+                Player.moveDown = false;
+            }
+            else if (e.keyCode == 40) {
+                console.log("Down Arrow");
+                Player.moveLeft = false;
+                Player.moveRight = false;
+                Player.moveUp = false;
+                Player.moveDown = false;
+            }
+        };
         Player.prototype.playerMovement = function () {
             if (Player.moveLeft) {
-                this.x -= 1;
+                this.rotation = this.playerRoataion - 180;
+                this.x -= this.playerSpeed;
             }
             else if (Player.moveRight) {
-                this.x += 1;
+                this.rotation = this.playerRoataion;
+                this.x += this.playerSpeed;
             }
             else if (Player.moveUp) {
-                this.y -= 1;
+                this.rotation = this.playerRoataion - 90;
+                this.y -= this.playerSpeed;
             }
             else if (Player.moveDown) {
-                this.y += 1;
+                this.rotation = this.playerRoataion + 90;
+                this.y += this.playerSpeed;
             }
         };
         return Player;
