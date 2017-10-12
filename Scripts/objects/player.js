@@ -19,6 +19,18 @@ var objects;
             _this.Start();
             return _this;
         }
+        //PUBLIC METHODS             
+        Player.prototype.Start = function () {
+            this.regXY();
+            this.x = 400;
+            this.y = 300;
+            this.scaleX = 0.3;
+            this.scaleY = 0.3;
+            this.keyboardInputListener();
+        };
+        Player.prototype.Update = function () {
+            this.playerMovement();
+        };
         //PRIVATE METHODS
         Player.prototype.regXY = function () {
             this.width = this.getBounds().width;
@@ -36,7 +48,7 @@ var objects;
                 this.x = this.halfWidth;
             }
         };
-        //--------------Player Keyboard Movement----------------
+        //-----------------------Player Keyboard Movement---------------------------
         Player.prototype.keyboardInputListener = function () {
             window.onkeydown = this.onControlDown;
         };
@@ -84,18 +96,6 @@ var objects;
             else if (Player.moveDown) {
                 this.y += 1;
             }
-        };
-        //PUBLIC METHODS             
-        Player.prototype.Start = function () {
-            this.regXY();
-            this.x = 400;
-            this.y = 300;
-            this.scaleX = 0.3;
-            this.scaleY = 0.3;
-            this.keyboardInputListener();
-        };
-        Player.prototype.Update = function () {
-            this.playerMovement();
         };
         return Player;
     }(createjs.Bitmap));
