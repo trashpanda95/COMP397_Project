@@ -12,7 +12,6 @@ var objects;
 (function (objects) {
     var Player = /** @class */ (function (_super) {
         __extends(Player, _super);
-        //Game
         //PUBLIC PROPERTIES
         //CONSTRUCTORS
         function Player(assetManager) {
@@ -23,6 +22,8 @@ var objects;
             _this.velocityX = 0;
             _this.velocityY = 0;
             _this.playerRoataion = 0;
+            //Game
+            _this.keyBoardKey = new core.keyBoardInput();
             _this.Start();
             return _this;
         }
@@ -31,7 +32,7 @@ var objects;
             this.regXY();
             this.x = 400;
             this.y = 300;
-            this.keyboardInputListener();
+            this.keyBoardKey = new core.keyBoardInput();
         };
         Player.prototype.Update = function () {
             this.checkBounds();
@@ -60,60 +61,18 @@ var objects;
                 this.y = this.halfWidth;
             }
         };
-        //-----------------------Player Movement---------------------------
-        Player.prototype.keyboardInputListener = function () {
-            window.onkeydown = this.onControlDown;
-            window.onkeyup = this.onControlUp;
-        };
-        Player.prototype.onControlDown = function (e) {
-            //LEFT ARROW
-            if (e.keyCode == 37) {
-                console.log("Left Arrow");
-                Player.moveLeft = true;
-            }
-            else if (e.keyCode == 38) {
-                console.log("Up Arrow");
-                Player.moveUp = true;
-            }
-            else if (e.keyCode == 39) {
-                console.log("Right Arrow");
-                Player.moveRight = true;
-            }
-            else if (e.keyCode == 40) {
-                console.log("Down Arrow");
-                Player.moveDown = true;
-            }
-        };
-        Player.prototype.onControlUp = function (e) {
-            //LEFT ARROW
-            if (e.keyCode == 37) {
-                console.log("Left Arrow");
-                Player.moveLeft = false;
-            }
-            else if (e.keyCode == 38) {
-                console.log("Up Arrow");
-                Player.moveUp = false;
-            }
-            else if (e.keyCode == 39) {
-                console.log("Right Arrow");
-                Player.moveRight = false;
-            }
-            else if (e.keyCode == 40) {
-                console.log("Down Arrow");
-                Player.moveDown = false;
-            }
-        };
         Player.prototype.playerMovement = function () {
-            if (Player.moveLeft) {
+            var getKey = this.keyBoardKey.getkeyInput();
+            if (getKey != null && getKey == 37) {
                 this.x -= this.playerSpeed;
             }
-            else if (Player.moveRight) {
-                this.x += this.playerSpeed;
-            }
-            else if (Player.moveUp) {
+            else if (getKey != null && getKey == 38) {
                 this.y -= this.playerSpeed;
             }
-            else if (Player.moveDown) {
+            else if (getKey != null && getKey == 39) {
+                this.x += this.playerSpeed;
+            }
+            else if (getKey != null && getKey == 40) {
                 this.y += this.playerSpeed;
             }
             this.setPlayerRotation();

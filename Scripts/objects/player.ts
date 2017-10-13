@@ -23,7 +23,8 @@ module objects {
         playerAngle: any;
 
         //Game
-
+        private keyBoardKey = new core.keyBoardInput();
+       
 
         //PUBLIC PROPERTIES
 
@@ -39,7 +40,7 @@ module objects {
             this.regXY();
             this.x = 400;
             this.y = 300;
-            this.keyboardInputListener();
+            this.keyBoardKey = new core.keyBoardInput();
         }
 
         public Update() //Update method runs 60fps
@@ -58,7 +59,8 @@ module objects {
             this.regX = this.halfWidth;
             this.regY = this.halfHeight;
         }
-        private checkBounds() {
+        private checkBounds() //Check and set player bounds within canvas
+        {
             if (this.x >= 850 - this.halfWidth) 
             {
                 this.x = 850 - this.halfWidth;
@@ -74,77 +76,27 @@ module objects {
                 this.y = this.halfWidth;
             }
         }
-
-        //-----------------------Player Movement---------------------------
-
-        private keyboardInputListener() //Call onControlDown method on key down
-        {
-            window.onkeydown = this.onControlDown;
-            window.onkeyup = this.onControlUp;
-        }
-        private onControlDown(e: KeyboardEvent) //Get value of key and set global variable
-        {
-            //LEFT ARROW
-            if (e.keyCode == 37) {
-                console.log("Left Arrow");
-                Player.moveLeft = true;
-            }
-            //UP ARROW
-            else if (e.keyCode == 38) {
-                console.log("Up Arrow");
-                Player.moveUp = true;
-            }
-            //RIGHT ARROW
-            else if (e.keyCode == 39) {
-                console.log("Right Arrow");
-                Player.moveRight = true;
-            }
-            //DOWN ARROW
-            else if (e.keyCode == 40) {
-                console.log("Down Arrow");
-                Player.moveDown = true;
-            }            
-        }
-        private onControlUp(e: KeyboardEvent) //Get value of key and set global variable
-        {
-            //LEFT ARROW
-            if (e.keyCode == 37) {
-                console.log("Left Arrow");
-                Player.moveLeft = false;  
-            }
-            //UP ARROW
-            else if (e.keyCode == 38) {
-                console.log("Up Arrow");
-                Player.moveUp = false;
-            }
-            //RIGHT ARROW
-            else if (e.keyCode == 39) {
-                console.log("Right Arrow");
-                Player.moveRight = false;
-            }
-            //DOWN ARROW
-            else if (e.keyCode == 40) {
-                console.log("Down Arrow");
-                Player.moveDown = false;
-            }            
-        }       
         private playerMovement() //Move player object
-        {           
-            if (Player.moveLeft) {
-                
+        {  
+            var getKey = this.keyBoardKey.getkeyInput();  
+                          
+            if (getKey !=null && getKey == 37)//Left
+            {
                 this.x -= this.playerSpeed;
-            }
-            else if (Player.moveRight) {
-                this.x += this.playerSpeed;
-            }
-            else if (Player.moveUp) {
+            }   
+            else if (getKey !=null && getKey == 38)//Up
+            {
                 this.y -= this.playerSpeed;
-            }
-            else if (Player.moveDown) {
-
+            } 
+            else if (getKey !=null && getKey == 39)//Right
+            {
+                this.x += this.playerSpeed;
+            } 
+            else if (getKey !=null && getKey == 40)//Down
+            {
                 this.y += this.playerSpeed;
-            }
-            this.setPlayerRotation();            
+            }   
+            this.setPlayerRotation(); 
         }
 
         private setPlayerRotation() //Method finds angle between Player and Mouse pointer, sets angle to player rotation
