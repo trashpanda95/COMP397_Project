@@ -44,6 +44,7 @@ module objects {
 
         public Update() //Update method runs 60fps
         {
+            this.checkBounds();
             this.playerMovement();
         }
 
@@ -58,11 +59,19 @@ module objects {
             this.regY = this.halfHeight;
         }
         private checkBounds() {
-            if (this.x >= 640 - this.halfWidth) {
-                this.x = 640 - this.halfWidth;
+            if (this.x >= 850 - this.halfWidth) 
+            {
+                this.x = 850 - this.halfWidth;
             }
             if (this.x <= this.halfWidth) {
                 this.x = this.halfWidth;
+            }
+            if (this.y >= 600 - this.halfWidth) 
+            {
+                this.y = 600 - this.halfWidth;
+            }
+            if (this.y <= this.halfWidth) {
+                this.y = this.halfWidth;
             }
         }
 
@@ -135,8 +144,7 @@ module objects {
 
                 this.y += this.playerSpeed;
             }
-            this.setPlayerRotation();
-
+            this.setPlayerRotation();            
         }
 
         private setPlayerRotation() //Method finds angle between Player and Mouse pointer, sets angle to player rotation

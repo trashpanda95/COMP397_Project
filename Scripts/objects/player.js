@@ -34,6 +34,7 @@ var objects;
             this.keyboardInputListener();
         };
         Player.prototype.Update = function () {
+            this.checkBounds();
             this.playerMovement();
         };
         //PRIVATE METHODS
@@ -46,11 +47,17 @@ var objects;
             this.regY = this.halfHeight;
         };
         Player.prototype.checkBounds = function () {
-            if (this.x >= 640 - this.halfWidth) {
-                this.x = 640 - this.halfWidth;
+            if (this.x >= 850 - this.halfWidth) {
+                this.x = 850 - this.halfWidth;
             }
             if (this.x <= this.halfWidth) {
                 this.x = this.halfWidth;
+            }
+            if (this.y >= 600 - this.halfWidth) {
+                this.y = 600 - this.halfWidth;
+            }
+            if (this.y <= this.halfWidth) {
+                this.y = this.halfWidth;
             }
         };
         //-----------------------Player Movement---------------------------
