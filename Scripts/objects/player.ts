@@ -9,18 +9,18 @@ module objects {
         halfHeight: number;
         
         //Controls
-        static moveLeft: boolean;
-        static moveUp: any;
-        static moveRight: any;
-        static moveDown: any;
+        private static moveLeft: boolean;
+        private static moveUp: any;
+        private static moveRight: any;
+        private static moveDown: any;
        
         //Player
-        playerSpeed: number = 2;
-        friction: number = 0.98;
-        velocityX: number= 0;
-        velocityY: number= 0;
-        playerRoataion: number = 0;
-        playerAngle: any;
+        private playerSpeed: number = 2;
+        private friction: number = 0.98;
+        private velocityX: number= 0;
+        private velocityY: number= 0;
+        private playerRoataion: number = 0;
+        private playerAngle: any;
 
         //Game
         private keyBoardKey = new core.keyBoardInput();
@@ -79,7 +79,6 @@ module objects {
         private playerMovement() //Move player object
         {  
             var getKey = this.keyBoardKey.getkeyInput();  
-                          
             if (getKey !=null && getKey == 37)//Left
             {
                 this.x -= this.playerSpeed;
@@ -95,7 +94,7 @@ module objects {
             else if (getKey !=null && getKey == 40)//Down
             {
                 this.y += this.playerSpeed;
-            }   
+            }        
             this.setPlayerRotation(); 
         }
 

@@ -6,7 +6,7 @@
     //Load Assets
     var assetManifest = [
         { id: "player", src: "../../Assets/images/player_test.png" },
-        { id: "enemy", src: "../../Assets/images/zombie_test.png" },
+        { id: "zombie", src: "../../Assets/images/zombie_test.png" },
         { id: "bg", src: "../../Assets/images/background_test.png" }
     ];
     var currentScene;
@@ -41,7 +41,7 @@
         switch (currentState) {
             //Add start scene to the stage, later add more scenes
             case config.START:
-                currentScene = new scenes.Start(assetManager, currentState);
+                currentScene = new scenes.Play(assetManager, currentState);
                 break;
         }
         stage.addChild(currentScene);

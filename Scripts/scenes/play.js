@@ -10,29 +10,39 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var scenes;
 (function (scenes) {
-    var Start = /** @class */ (function (_super) {
-        __extends(Start, _super);
+    var Play = /** @class */ (function (_super) {
+        __extends(Play, _super);
         //PUBLIC PROPETIES
         //CONSTRUCTORS
-        function Start(assetManager, currentScene) {
+        function Play(assetManager, currentScene) {
             var _this = _super.call(this) || this;
-            _this._assetManager = assetManager;
+            _this.assetManager = assetManager;
             _this.currentScene = currentScene;
             _this.Start();
             return _this;
         }
         //PRIVATE METHOS
         //PUBLIC METHODS
-        Start.prototype.Start = function () {
+        Play.prototype.Start = function () {
+            this.player = new objects.Player(this.assetManager);
+            this.zombie = new Array();
             this.Main();
         };
-        Start.prototype.Update = function () {
+        Play.prototype.Update = function () {
+            this.player.Update();
+            this.zombie.forEach(function (zombies) { zombies.Update(); });
             return this.currentScene;
         };
-        Start.prototype.Main = function () {
+        Play.prototype.Main = function () {
+            this.addChild(this.player);
+            for (var count = 0; count < 10; count++) {
+                this.zombie[count] = new objects.Zombie(this.assetManager);
+                this.addChild(this.zombie[count]);
+                console.log(this.zombie[count]);
+            }
         };
-        return Start;
+        return Play;
     }(objects.Scene));
-    scenes.Start = Start;
+    scenes.Play = Play;
 })(scenes || (scenes = {}));
-//# sourceMappingURL=start.js.map
+//# sourceMappingURL=play.js.map

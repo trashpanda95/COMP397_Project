@@ -3,7 +3,6 @@ module scenes {
     {
         //PRIVATE INSTANCE VARIABLES
         private _assetManager: createjs.LoadQueue;
-        private _player:objects.Player;
 
         //PUBLIC PROPETIES
 
@@ -21,19 +20,16 @@ module scenes {
         //PUBLIC METHODS
         public Start():void
         {
-            this._player = new objects.Player(this._assetManager);
             this.Main();
         }
 
         public Update():number
         {
-            this._player.Update();
             return this.currentScene;
         }
 
         public Main():void
         {
-            this.addChild(this._player);
         }
     }
 }
