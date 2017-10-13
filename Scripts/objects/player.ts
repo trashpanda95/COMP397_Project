@@ -1,21 +1,29 @@
 module objects {
     export class Player extends createjs.Bitmap {
         //PRIVATE INSTANCE VARIBALES 
+        
         //Bitmap  
         width: number;
         height: number;
         halfWidth: number;
         halfHeight: number;
+        
         //Controls
         static moveLeft: boolean;
         static moveUp: any;
         static moveRight: any;
         static moveDown: any;
+       
         //Player
         playerSpeed: number = 2;
+        friction: number = 0.98;
+        velocityX: number= 0;
+        velocityY: number= 0;
         playerRoataion: number = 0;
+        playerAngle: any;
+
         //Game
-        delta: any;
+
 
         //PUBLIC PROPERTIES
 
@@ -31,8 +39,6 @@ module objects {
             this.regXY();
             this.x = 400;
             this.y = 300;
-            this.scaleX = 0.3;
-            this.scaleY = 0.3;
             this.keyboardInputListener();
         }
 
@@ -46,8 +52,8 @@ module objects {
         {
             this.width = this.getBounds().width;
             this.height = this.getBounds().height;
-            this.halfWidth = this.width * 0.5;
-            this.halfHeight = this.height * 0.5;
+            this.halfWidth = this.width /2;
+            this.halfHeight = this.height /2;
             this.regX = this.halfWidth;
             this.regY = this.halfHeight;
         }
@@ -60,7 +66,7 @@ module objects {
             }
         }
 
-        //-----------------------Player Keyboard Movement---------------------------
+        //-----------------------Player Movement---------------------------
 
         private keyboardInputListener() //Call onControlDown method on key down
         {
@@ -73,34 +79,20 @@ module objects {
             if (e.keyCode == 37) {
                 console.log("Left Arrow");
                 Player.moveLeft = true;
-                Player.moveRight = false;
-                Player.moveUp = false;
-                Player.moveDown = false;
             }
             //UP ARROW
             else if (e.keyCode == 38) {
                 console.log("Up Arrow");
-                Player.moveLeft = false;
-                Player.moveRight = false;
                 Player.moveUp = true;
-                Player.moveDown = false;
-
             }
             //RIGHT ARROW
             else if (e.keyCode == 39) {
                 console.log("Right Arrow");
-                Player.moveLeft = false;
                 Player.moveRight = true;
-                Player.moveUp = false;
-                Player.moveDown = false;
-
             }
             //DOWN ARROW
             else if (e.keyCode == 40) {
                 console.log("Down Arrow");
-                Player.moveLeft = false;
-                Player.moveRight = false;
-                Player.moveUp = false;
                 Player.moveDown = true;
             }            
         }
@@ -109,57 +101,50 @@ module objects {
             //LEFT ARROW
             if (e.keyCode == 37) {
                 console.log("Left Arrow");
-                Player.moveLeft = false;
-                Player.moveRight = false;
-                Player.moveUp = false;
-                Player.moveDown = false;
+                Player.moveLeft = false;  
             }
             //UP ARROW
             else if (e.keyCode == 38) {
                 console.log("Up Arrow");
-                Player.moveLeft = false;
-                Player.moveRight = false;
                 Player.moveUp = false;
-                Player.moveDown = false;
-
             }
             //RIGHT ARROW
             else if (e.keyCode == 39) {
                 console.log("Right Arrow");
-                Player.moveLeft = false;
                 Player.moveRight = false;
-                Player.moveUp = false;
-                Player.moveDown = false;
-
             }
             //DOWN ARROW
             else if (e.keyCode == 40) {
                 console.log("Down Arrow");
-                Player.moveLeft = false;
-                Player.moveRight = false;
-                Player.moveUp = false;
                 Player.moveDown = false;
             }            
-        }
-        
+        }       
         private playerMovement() //Move player object
-        {
+        {           
             if (Player.moveLeft) {
-                this.rotation = this.playerRoataion - 180 ;
-                this.x -= this.playerSpeed ;
+                
+                this.x -= this.playerSpeed;
             }
             else if (Player.moveRight) {
-                this.rotation = this.playerRoataion ;
                 this.x += this.playerSpeed;
             }
             else if (Player.moveUp) {
-                this.rotation = this.playerRoataion -90 ;
                 this.y -= this.playerSpeed;
             }
             else if (Player.moveDown) {
-                this.rotation = this.playerRoataion + 90 ;
+
                 this.y += this.playerSpeed;
             }
+            this.setPlayerRotation();
+
+        }
+
+        private setPlayerRotation() //Method finds angle between Player and Mouse pointer, sets angle to player rotation
+        {
+            var xAngle = this.stage.mouseX- this.x;
+            var yAngle = this.stage.mouseY- this.y;
+            this.playerAngle = Math.atan2(yAngle,xAngle) * (180/ Math.PI);       
+            this.rotation = this.playerAngle;
         }
     }
 }

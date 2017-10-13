@@ -12,12 +12,16 @@ var objects;
 (function (objects) {
     var Player = /** @class */ (function (_super) {
         __extends(Player, _super);
+        //Game
         //PUBLIC PROPERTIES
         //CONSTRUCTORS
         function Player(assetManager) {
             var _this = _super.call(this, assetManager.getResult("player")) || this;
             //Player
             _this.playerSpeed = 2;
+            _this.friction = 0.98;
+            _this.velocityX = 0;
+            _this.velocityY = 0;
             _this.playerRoataion = 0;
             _this.Start();
             return _this;
@@ -27,8 +31,6 @@ var objects;
             this.regXY();
             this.x = 400;
             this.y = 300;
-            this.scaleX = 0.3;
-            this.scaleY = 0.3;
             this.keyboardInputListener();
         };
         Player.prototype.Update = function () {
@@ -38,8 +40,8 @@ var objects;
         Player.prototype.regXY = function () {
             this.width = this.getBounds().width;
             this.height = this.getBounds().height;
-            this.halfWidth = this.width * 0.5;
-            this.halfHeight = this.height * 0.5;
+            this.halfWidth = this.width / 2;
+            this.halfHeight = this.height / 2;
             this.regX = this.halfWidth;
             this.regY = this.halfHeight;
         };
@@ -51,7 +53,7 @@ var objects;
                 this.x = this.halfWidth;
             }
         };
-        //-----------------------Player Keyboard Movement---------------------------
+        //-----------------------Player Movement---------------------------
         Player.prototype.keyboardInputListener = function () {
             window.onkeydown = this.onControlDown;
             window.onkeyup = this.onControlUp;
@@ -61,29 +63,17 @@ var objects;
             if (e.keyCode == 37) {
                 console.log("Left Arrow");
                 Player.moveLeft = true;
-                Player.moveRight = false;
-                Player.moveUp = false;
-                Player.moveDown = false;
             }
             else if (e.keyCode == 38) {
                 console.log("Up Arrow");
-                Player.moveLeft = false;
-                Player.moveRight = false;
                 Player.moveUp = true;
-                Player.moveDown = false;
             }
             else if (e.keyCode == 39) {
                 console.log("Right Arrow");
-                Player.moveLeft = false;
                 Player.moveRight = true;
-                Player.moveUp = false;
-                Player.moveDown = false;
             }
             else if (e.keyCode == 40) {
                 console.log("Down Arrow");
-                Player.moveLeft = false;
-                Player.moveRight = false;
-                Player.moveUp = false;
                 Player.moveDown = true;
             }
         };
@@ -92,49 +82,40 @@ var objects;
             if (e.keyCode == 37) {
                 console.log("Left Arrow");
                 Player.moveLeft = false;
-                Player.moveRight = false;
-                Player.moveUp = false;
-                Player.moveDown = false;
             }
             else if (e.keyCode == 38) {
                 console.log("Up Arrow");
-                Player.moveLeft = false;
-                Player.moveRight = false;
                 Player.moveUp = false;
-                Player.moveDown = false;
             }
             else if (e.keyCode == 39) {
                 console.log("Right Arrow");
-                Player.moveLeft = false;
                 Player.moveRight = false;
-                Player.moveUp = false;
-                Player.moveDown = false;
             }
             else if (e.keyCode == 40) {
                 console.log("Down Arrow");
-                Player.moveLeft = false;
-                Player.moveRight = false;
-                Player.moveUp = false;
                 Player.moveDown = false;
             }
         };
         Player.prototype.playerMovement = function () {
             if (Player.moveLeft) {
-                this.rotation = this.playerRoataion - 180;
                 this.x -= this.playerSpeed;
             }
             else if (Player.moveRight) {
-                this.rotation = this.playerRoataion;
                 this.x += this.playerSpeed;
             }
             else if (Player.moveUp) {
-                this.rotation = this.playerRoataion - 90;
                 this.y -= this.playerSpeed;
             }
             else if (Player.moveDown) {
-                this.rotation = this.playerRoataion + 90;
                 this.y += this.playerSpeed;
             }
+            this.setPlayerRotation();
+        };
+        Player.prototype.setPlayerRotation = function () {
+            var xAngle = this.stage.mouseX - this.x;
+            var yAngle = this.stage.mouseY - this.y;
+            this.playerAngle = Math.atan2(yAngle, xAngle) * (180 / Math.PI);
+            this.rotation = this.playerAngle;
         };
         return Player;
     }(createjs.Bitmap));
