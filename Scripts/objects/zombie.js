@@ -24,8 +24,10 @@ var objects;
             this.reset();
         };
         Zombie.prototype.Update = function () {
-            this.y += this.verticalSpeed;
-            this.x += this.horizontalSpeed;
+            //this.y += this.verticalSpeed;
+            //this.x += this.horizontalSpeed;
+            this.position.x = this.x;
+            this.position.y = this.y;
             //this.checkBounds();
         };
         //PRIVATE METHODS

@@ -25,10 +25,15 @@ module objects {
         public playerRoataion: number = 0;
         public playerAngle: any;
 
+        //Game
+        public position: createjs.Point;
+        public isColliding: boolean;
+
         //CONSTRUCTORS
         constructor(assetManager: createjs.LoadQueue, imageString: string) 
         {
             super(assetManager.getResult(imageString));
+            this.name = imageString;
             this.initialize();
         }
 
@@ -41,6 +46,8 @@ module objects {
             this.halfHeight = this.height /2;
             this.regX = this.halfWidth;
             this.regY = this.halfHeight;
+            this.position = new createjs.Point(this.x, this.y);
+            this.isColliding = false;
         }
         public abstract Start(): void //Start method runs when object is instantiated
 

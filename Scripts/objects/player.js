@@ -32,6 +32,8 @@ var objects;
             this.keyBoardKey = new core.keyBoardInput();
         };
         Player.prototype.Update = function () {
+            this.position.x = this.x;
+            this.position.y = this.y;
             this.checkBounds();
             this.playerMovement();
         };

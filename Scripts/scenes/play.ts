@@ -30,7 +30,11 @@ module scenes {
         public Update():number
         {
             this.player.Update();
-            this.zombie.forEach(zombies =>{zombies.Update();});
+            this.zombie.forEach(zombies =>
+            {
+                zombies.Update();
+                this.zombieFollowPlayer(zombies);
+            });
             return this.currentScene;
         }
 
@@ -42,7 +46,30 @@ module scenes {
             {
                 this.zombie[count] = new objects.Zombie(this.assetManager);
                 this.addChild(this.zombie[count]);
-                console.log(this.zombie[count]);
+                
+            }
+        }
+
+        private zombieFollowPlayer(other:objects.GameObject)
+        {
+            if (this.player.x != other.x)
+            {
+                if(this.player.x > other.x)
+                {
+                    other.x += 0.1;   
+                }
+                else
+                {
+                    other.x -= 0.1;
+                }
+                if(this.player.y > other.y)
+                {
+                    other.y += 0.1;   
+                }
+                else
+                {
+                    other.y -= 0.1;
+                }
             }
         }
     }

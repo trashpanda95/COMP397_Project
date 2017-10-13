@@ -21,6 +21,7 @@ var objects;
             _this.velocityX = 0;
             _this.velocityY = 0;
             _this.playerRoataion = 0;
+            _this.name = imageString;
             _this.initialize();
             return _this;
         }
@@ -32,6 +33,8 @@ var objects;
             this.halfHeight = this.height / 2;
             this.regX = this.halfWidth;
             this.regY = this.halfHeight;
+            this.position = new createjs.Point(this.x, this.y);
+            this.isColliding = false;
         };
         return GameObject;
     }(createjs.Bitmap));

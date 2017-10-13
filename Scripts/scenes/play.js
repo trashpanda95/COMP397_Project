@@ -29,8 +29,12 @@ var scenes;
             this.Main();
         };
         Play.prototype.Update = function () {
+            var _this = this;
             this.player.Update();
-            this.zombie.forEach(function (zombies) { zombies.Update(); });
+            this.zombie.forEach(function (zombies) {
+                zombies.Update();
+                _this.zombieFollowPlayer(zombies);
+            });
             return this.currentScene;
         };
         Play.prototype.Main = function () {
@@ -38,7 +42,22 @@ var scenes;
             for (var count = 0; count < 10; count++) {
                 this.zombie[count] = new objects.Zombie(this.assetManager);
                 this.addChild(this.zombie[count]);
-                console.log(this.zombie[count]);
+            }
+        };
+        Play.prototype.zombieFollowPlayer = function (other) {
+            if (this.player.x != other.x) {
+                if (this.player.x > other.x) {
+                    other.x += 0.1;
+                }
+                else {
+                    other.x -= 0.1;
+                }
+                if (this.player.y > other.y) {
+                    other.y += 0.1;
+                }
+                else {
+                    other.y -= 0.1;
+                }
             }
         };
         return Play;

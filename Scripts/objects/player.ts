@@ -23,13 +23,14 @@ module objects {
             this.y = 300;
             this.keyBoardKey = new core.keyBoardInput();
         }
-
         public Update() //Update method runs 60fps
         {
+            this.position.x = this.x;
+            this.position.y = this.y;
             this.checkBounds();
             this.playerMovement();
         }
-
+        
         //PRIVATE METHODS
         private regXY(): void //Method to set bitmap registry point at the center
         {
