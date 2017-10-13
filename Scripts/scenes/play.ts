@@ -33,6 +33,7 @@ module scenes {
             this.zombie.forEach(zombies =>
             {
                 zombies.Update();
+                zombies.rotation = (Math.atan2(zombies.x- this.player.y, zombies.x- this.player.x) * (180/ Math.PI)) - 180; 
                 this.zombieFollowPlayer(zombies);
             });
             return this.currentScene;
@@ -46,11 +47,12 @@ module scenes {
             {
                 this.zombie[count] = new objects.Zombie(this.assetManager);
                 this.addChild(this.zombie[count]);
-                
+                this.zombie[count].x = Math.floor(Math.random() * (800-0 + 1)+ 0);
+                this.zombie[count].y = Math.floor(Math.random() * (800-0 + 1)+ 0);
             }
         }
 
-        private zombieFollowPlayer(other:objects.GameObject)
+        private zombieFollowPlayer(other:objects.GameObject) //Method for zombies to follow player position
         {
             if (this.player.x != other.x)
             {

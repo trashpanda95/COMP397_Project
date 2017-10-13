@@ -33,6 +33,7 @@ var scenes;
             this.player.Update();
             this.zombie.forEach(function (zombies) {
                 zombies.Update();
+                zombies.rotation = (Math.atan2(zombies.x - _this.player.y, zombies.x - _this.player.x) * (180 / Math.PI)) - 180;
                 _this.zombieFollowPlayer(zombies);
             });
             return this.currentScene;
@@ -42,6 +43,8 @@ var scenes;
             for (var count = 0; count < 10; count++) {
                 this.zombie[count] = new objects.Zombie(this.assetManager);
                 this.addChild(this.zombie[count]);
+                this.zombie[count].x = Math.floor(Math.random() * (800 - 0 + 1) + 0);
+                this.zombie[count].y = Math.floor(Math.random() * (800 - 0 + 1) + 0);
             }
         };
         Play.prototype.zombieFollowPlayer = function (other) {
