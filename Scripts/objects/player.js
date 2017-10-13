@@ -12,24 +12,21 @@ var objects;
 (function (objects) {
     var Player = /** @class */ (function (_super) {
         __extends(Player, _super);
-        //PUBLIC PROPERTIES
         //CONSTRUCTORS
         function Player(assetManager) {
-            var _this = _super.call(this, assetManager.getResult("player")) || this;
-            //Player
-            _this.playerSpeed = 2;
-            _this.friction = 0.98;
-            _this.velocityX = 0;
-            _this.velocityY = 0;
-            _this.playerRoataion = 0;
+            var _this = _super.call(this, assetManager, "player") || this;
+            //PRIVATE INSTANCE VARIBALES 
             //Game
             _this.keyBoardKey = new core.keyBoardInput();
             _this.Start();
             return _this;
         }
+        //PUBLIC PROPERTIES
+        Player.prototype.getPlayerXY = function () {
+            return this.x;
+        };
         //PUBLIC METHODS             
         Player.prototype.Start = function () {
-            this.regXY();
             this.x = 400;
             this.y = 300;
             this.keyBoardKey = new core.keyBoardInput();
@@ -84,7 +81,7 @@ var objects;
             this.rotation = this.playerAngle;
         };
         return Player;
-    }(createjs.Bitmap));
+    }(objects.GameObject));
     objects.Player = Player;
 })(objects || (objects = {}));
 //# sourceMappingURL=player.js.map

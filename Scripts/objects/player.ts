@@ -1,43 +1,24 @@
 module objects {
-    export class Player extends createjs.Bitmap {
+    export class Player extends objects.GameObject {
         //PRIVATE INSTANCE VARIBALES 
-        
-        //Bitmap  
-        width: number;
-        height: number;
-        halfWidth: number;
-        halfHeight: number;
-        
-        //Controls
-        private static moveLeft: boolean;
-        private static moveUp: any;
-        private static moveRight: any;
-        private static moveDown: any;
-       
-        //Player
-        private playerSpeed: number = 2;
-        private friction: number = 0.98;
-        private velocityX: number= 0;
-        private velocityY: number= 0;
-        private playerRoataion: number = 0;
-        private playerAngle: any;
-
         //Game
         private keyBoardKey = new core.keyBoardInput();
        
-
         //PUBLIC PROPERTIES
+        public getPlayerXY() : number
+        {
+            return this.x;
+        }
 
         //CONSTRUCTORS
         constructor(assetManager: createjs.LoadQueue) {
-            super(assetManager.getResult("player"));
+            super(assetManager, "player");
             this.Start();
         }
 
         //PUBLIC METHODS             
         public Start() //Start method runs when object is instantiated
         {
-            this.regXY();
             this.x = 400;
             this.y = 300;
             this.keyBoardKey = new core.keyBoardInput();
@@ -97,7 +78,6 @@ module objects {
             }        
             this.setPlayerRotation(); 
         }
-
         private setPlayerRotation() //Method finds angle between Player and Mouse pointer, sets angle to player rotation
         {
             var xAngle = this.stage.mouseX- this.x;

@@ -12,30 +12,23 @@ var objects;
 (function (objects) {
     var Zombie = /** @class */ (function (_super) {
         __extends(Zombie, _super);
+        //PRIVATE INSTANCE VARIBALES
         //CONSTRUCTORS
         function Zombie(assetManager) {
-            var _this = _super.call(this, assetManager.getResult("zombie")) || this;
+            var _this = _super.call(this, assetManager, "zombie") || this;
             _this.Start();
             return _this;
         }
         //PUBLIC METHODS
         Zombie.prototype.Start = function () {
-            this.regXY();
             this.reset();
         };
         Zombie.prototype.Update = function () {
-            this.y += this._verticalSpeed;
-            this.x += this._horizontalSpeed;
+            this.y += this.verticalSpeed;
+            this.x += this.horizontalSpeed;
+            //this.checkBounds();
         };
         //PRIVATE METHODS
-        Zombie.prototype.regXY = function () {
-            this.width = this.getBounds().width;
-            this.height = this.getBounds().height;
-            this.halfWidth = this.width / 2;
-            this.halfHeight = this.height / 2;
-            this.regX = this.halfWidth;
-            this.regY = this.halfHeight;
-        };
         Zombie.prototype.checkBounds = function () {
             if (this.x >= 850 - this.halfWidth) {
                 this.x = 850 - this.halfWidth;
@@ -53,11 +46,11 @@ var objects;
         Zombie.prototype.reset = function () {
             this.y = -this.height;
             this.x = (Math.random() * (640 - this.width)) + this.halfWidth;
-            this._verticalSpeed = (Math.random() * 5) + 5;
-            this._horizontalSpeed = (Math.random() * 4) - 2;
+            this.verticalSpeed = (Math.random() * 5) + 5;
+            this.horizontalSpeed = (Math.random() * 4) - 2;
         };
         return Zombie;
-    }(createjs.Bitmap));
+    }(objects.GameObject));
     objects.Zombie = Zombie;
 })(objects || (objects = {}));
 //# sourceMappingURL=zombie.js.map
