@@ -12,8 +12,8 @@ var objects;
 (function (objects) {
     var Zombie = /** @class */ (function (_super) {
         __extends(Zombie, _super);
-        //PRIVATE INSTANCE VARIBALES
-        //CONSTRUCTORS
+        // PRIVATE INSTANCE VARIBALES
+        // CONSTRUCTORS
         function Zombie(assetManager) {
             var _this = _super.call(this, assetManager, "zombie") || this;
             _this.Start();
@@ -28,7 +28,7 @@ var objects;
             this.position.y = this.y;
             //this.checkBounds();
         };
-        //PRIVATE METHODS
+        // PRIVATE METHODS
         Zombie.prototype.checkBounds = function () {
             if (this.x >= 850 - this.halfWidth) {
                 this.x = 850 - this.halfWidth;

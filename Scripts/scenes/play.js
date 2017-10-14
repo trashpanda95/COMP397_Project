@@ -12,8 +12,8 @@ var scenes;
 (function (scenes) {
     var Play = /** @class */ (function (_super) {
         __extends(Play, _super);
-        //PUBLIC PROPETIES
-        //CONSTRUCTORS
+        // PUBLIC PROPETIES --------------------------------------------------------------------------------------->
+        // CONSTRUCTORS --------------------------------------------------------------------------------------->
         function Play(assetManager, currentScene) {
             var _this = _super.call(this) || this;
             _this.assetManager = assetManager;
@@ -21,8 +21,7 @@ var scenes;
             _this.Start();
             return _this;
         }
-        //PRIVATE METHOS
-        //PUBLIC METHODS
+        // PUBLIC METHODS --------------------------------------------------------------------------------------->
         Play.prototype.Start = function () {
             this.player = new objects.Player(this.assetManager);
             this.zombie = new Array();
@@ -47,19 +46,20 @@ var scenes;
                 this.zombie[count].y = Math.floor(Math.random() * (800 - 0 + 1) + 0);
             }
         };
+        // PRIVATE METHOS --------------------------------------------------------------------------------------->
         Play.prototype.zombieFollowPlayer = function (other) {
             if (this.player.x != other.x) {
                 if (this.player.x > other.x) {
-                    other.x += 0.1;
+                    other.x += other.zombieSpeed;
                 }
                 else {
-                    other.x -= 0.1;
+                    other.x -= other.zombieSpeed;
                 }
                 if (this.player.y > other.y) {
-                    other.y += 0.1;
+                    other.y += other.zombieSpeed;
                 }
                 else {
-                    other.y -= 0.1;
+                    other.y -= other.zombieSpeed;
                 }
             }
         };

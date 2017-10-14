@@ -25,6 +25,9 @@ module objects {
         public playerRoataion: number = 0;
         public playerAngle: any;
 
+        //Zombie
+        public zombieSpeed: number = 0.2;
+
         //Game
         public position: createjs.Point;
         public isColliding: boolean;

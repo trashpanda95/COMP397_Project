@@ -17,8 +17,6 @@ module scenes {
             this.Start(); 
         }
 
-        
-
         // PUBLIC METHODS --------------------------------------------------------------------------------------->
         public Start():void
         {
@@ -59,19 +57,19 @@ module scenes {
             {
                 if(this.player.x > other.x)                                 // Checking if player x coords is greater than zombie's x coord
                 {
-                    other.x += 0.1;   
+                    other.x += other.zombieSpeed;   
                 }
                 else                                                        // Checks if the x coord is less than the zombie's
                 {
-                    other.x -= 0.1;
+                    other.x -= other.zombieSpeed;
                 }
                 if(this.player.y > other.y)                                 // Checks if player y coords is greater than zombie's y coords
                 {
-                    other.y += 0.1;   
+                    other.y += other.zombieSpeed;   
                 }
                 else                                                        // Checks if the y coords are less than the zombie's
                 {
-                    other.y -= 0.1;
+                    other.y -= other.zombieSpeed;
                 }
             }
         }

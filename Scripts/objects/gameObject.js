@@ -21,6 +21,8 @@ var objects;
             _this.velocityX = 0;
             _this.velocityY = 0;
             _this.playerRoataion = 0;
+            //Zombie
+            _this.zombieSpeed = 0.2;
             _this.name = imageString;
             _this.initialize();
             return _this;
