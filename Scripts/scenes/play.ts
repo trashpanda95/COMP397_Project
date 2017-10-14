@@ -1,14 +1,14 @@
 module scenes {
     export class Play extends objects.Scene
     {
-        //PRIVATE INSTANCE VARIABLES
+        // PRIVATE INSTANCE VARIABLES --------------------------------------------------------------------------------------->
         private assetManager: createjs.LoadQueue;
         private player:objects.Player;
         private zombie:objects.Zombie[];
 
-        //PUBLIC PROPETIES
+        // PUBLIC PROPETIES --------------------------------------------------------------------------------------->
 
-        //CONSTRUCTORS
+        // CONSTRUCTORS --------------------------------------------------------------------------------------->
         constructor(assetManager:createjs.LoadQueue, currentScene: number)
         {
             super();
@@ -17,9 +17,9 @@ module scenes {
             this.Start(); 
         }
 
-        //PRIVATE METHOS
+        
 
-        //PUBLIC METHODS
+        // PUBLIC METHODS --------------------------------------------------------------------------------------->
         public Start():void
         {
             this.player = new objects.Player(this.assetManager);
@@ -51,24 +51,25 @@ module scenes {
                 this.zombie[count].y = Math.floor(Math.random() * (800-0 + 1)+ 0);
             }
         }
+        // PRIVATE METHOS --------------------------------------------------------------------------------------->
 
-        private zombieFollowPlayer(other:objects.GameObject) //Method for zombies to follow player position
+        private zombieFollowPlayer(other:objects.GameObject)                // Method for zombies to follow player position
         {
-            if (this.player.x != other.x)
+            if (this.player.x != other.x)                                   // If player x coordinate is not the same as the zombie's x coordinate
             {
-                if(this.player.x > other.x)
+                if(this.player.x > other.x)                                 // Checking if player x coords is greater than zombie's x coord
                 {
                     other.x += 0.1;   
                 }
-                else
+                else                                                        // Checks if the x coord is less than the zombie's
                 {
                     other.x -= 0.1;
                 }
-                if(this.player.y > other.y)
+                if(this.player.y > other.y)                                 // Checks if player y coords is greater than zombie's y coords
                 {
                     other.y += 0.1;   
                 }
-                else
+                else                                                        // Checks if the y coords are less than the zombie's
                 {
                     other.y -= 0.1;
                 }

@@ -1,27 +1,27 @@
 module objects {
     export class Zombie extends objects.GameObject
     {
-        //PRIVATE INSTANCE VARIBALES
+        // PRIVATE INSTANCE VARIBALES
 
-        //CONSTRUCTORS
+        // CONSTRUCTORS
         constructor(assetManager: createjs.LoadQueue) {
             super(assetManager, "zombie");
             this.Start();
         }
 
         //PUBLIC METHODS
-        public Start() //Start method runs when object is instantiated
+        public Start()                  // Start method runs when object is instantiated
         {
             this.reset();
         }
-        public Update() //Update method runs 60fps
+        public Update()                 // Update method runs 60fps
         {
             this.position.x = this.x;
             this.position.y = this.y;
             //this.checkBounds();
         }
-        //PRIVATE METHODS
-        private checkBounds() //Check and set object bounds within canvas
+        // PRIVATE METHODS
+        private checkBounds()           // Check and set object bounds within canvas
         {
             if (this.x >= 850 - this.halfWidth) 
             {
