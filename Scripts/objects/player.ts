@@ -17,13 +17,13 @@ module objects {
         }
 
         //PUBLIC METHODS             
-        public Start() //Start method runs when object is instantiated
+        public Start()                                      // Start method runs when object is instantiated
         {
             this.x = 400;
             this.y = 300;
             this.keyBoardKey = new core.keyBoardInput();
         }
-        public Update() //Update method runs 60fps
+        public Update()                                     // Update method runs 60fps
         {
             this.position.x = this.x;
             this.position.y = this.y;
@@ -32,7 +32,7 @@ module objects {
         }
         
         //PRIVATE METHODS
-        private regXY(): void //Method to set bitmap registry point at the center
+        private regXY(): void                               //Method to set bitmap registry point at the center
         {
             this.width = this.getBounds().width;
             this.height = this.getBounds().height;
@@ -41,7 +41,7 @@ module objects {
             this.regX = this.halfWidth;
             this.regY = this.halfHeight;
         }
-        private checkBounds() //Check and set player bounds within canvas
+        private checkBounds()                               // Check and set player bounds within canvas
         {
             if (this.x >= 850 - this.halfWidth) 
             {
@@ -58,28 +58,28 @@ module objects {
                 this.y = this.halfWidth;
             }
         }
-        private playerMovement() //Move player object
+        private playerMovement()                            // Move player object
         {  
             var getKey = this.keyBoardKey.getkeyInput();  
-            if (getKey !=null && getKey == 37)//Left
+            if (getKey !=null && getKey == 37)              // Left
             {
                 this.x -= this.playerSpeed;
             }   
-            else if (getKey !=null && getKey == 38)//Up
+            else if (getKey !=null && getKey == 38)         // Up
             {
                 this.y -= this.playerSpeed;
             } 
-            else if (getKey !=null && getKey == 39)//Right
+            else if (getKey !=null && getKey == 39)         // Right
             {
                 this.x += this.playerSpeed;
             } 
-            else if (getKey !=null && getKey == 40)//Down
+            else if (getKey !=null && getKey == 40)         // Down
             {
                 this.y += this.playerSpeed;
             }        
             this.setPlayerRotation(); 
         }
-        private setPlayerRotation() //Method finds angle between Player and Mouse pointer, sets angle to player rotation
+        private setPlayerRotation()                         // Method finds angle between Player and Mouse pointer, sets angle to player rotation
         {
             var xAngle = this.stage.mouseX- this.x;
             var yAngle = this.stage.mouseY- this.y;
