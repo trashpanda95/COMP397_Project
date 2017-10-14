@@ -32,8 +32,8 @@ var scenes;
             var _this = this;
             this.player.Update();
             this.zombie.forEach(function (zombies) {
-                zombies.Update();
                 zombies.rotation = (Math.atan2(zombies.x - _this.player.y, zombies.x - _this.player.x) * (180 / Math.PI)) - 180;
+                zombies.Update();
                 _this.zombieFollowPlayer(zombies);
             });
             return this.currentScene;

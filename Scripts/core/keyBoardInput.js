@@ -1,22 +1,27 @@
 var core;
 (function (core) {
     var keyBoardInput = /** @class */ (function () {
-        //CONSTRUCTORS
+        // CONSTRUCTORS
         function keyBoardInput() {
             this.keyboardInputListener();
             //this.keyPressed();        
         }
-        //PUBLIC PROPERTIES
+        // PUBLIC PROPERTIES
         keyBoardInput.prototype.getkeyInput = function () {
             return keyBoardInput.key;
         };
         //-----------------------Player Movement---------------------------
+        /*
+        * keyboardInputListener checks to see if a key is being pressed on the keyboard
+        */
         keyBoardInput.prototype.keyboardInputListener = function () {
             window.onkeydown = this.onControlDown;
             window.onkeyup = this.onControlUp;
         };
+        /*
+        * onControlDown determines what action will take place when a key being pressed is detected
+        */
         keyBoardInput.prototype.onControlDown = function (e) {
-            //LEFT ARROW
             if (e.keyCode == 37) {
                 console.log("Left Arrow");
                 keyBoardInput.moveLeft = true;
@@ -38,8 +43,10 @@ var core;
                 keyBoardInput.key = e.keyCode;
             }
         };
+        /*
+        * onControlUp determines what action will take place when a key released
+        */
         keyBoardInput.prototype.onControlUp = function (e) {
-            //LEFT ARROW
             if (e.keyCode == 37) {
                 keyBoardInput.moveLeft = false;
                 keyBoardInput.key = null;

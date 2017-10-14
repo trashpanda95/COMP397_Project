@@ -3,7 +3,7 @@
     var stage;
     var canvas;
     var assetManager;
-    //Load Assets
+    // Load Assets
     var assetManifest = [
         { id: "player", src: "../../Assets/images/player_test.png" },
         { id: "zombie", src: "../../Assets/images/zombie_test.png" },
@@ -12,20 +12,19 @@
     var currentScene;
     var currentState = 0;
     function Init() {
-        //Load Assets
+        // Load Assets
         assetManager = new createjs.LoadQueue();
         assetManager.installPlugin(createjs.Sound);
         assetManager.on("complete", Start);
         assetManager.loadManifest(assetManifest);
     }
     function Start() {
-        //Setup createjs
-        canvas = document.getElementById("canvas"); //reference to canvas element
-        stage = new createjs.Stage(canvas); //passing canvas to stage
-        createjs.Ticker.framerate = 60; //set frame rate to 60 fps
-        createjs.Ticker.on("tick", Update); //update game every frame
-        //Enable mouse movement within stage
-        stage.enableMouseOver(20);
+        // Setup createjs
+        canvas = document.getElementById("canvas"); // reference to canvas element
+        stage = new createjs.Stage(canvas); // passing canvas to stage
+        createjs.Ticker.framerate = 60; // set frame rate to 60 fps
+        createjs.Ticker.on("tick", Update); // update game every frame
+        stage.enableMouseOver(20); // Enable mouse movement within stage
         Main();
     }
     function Update() {
@@ -39,7 +38,7 @@
     function Main() {
         stage.removeAllChildren();
         switch (currentState) {
-            //Add start scene to the stage, later add more scenes
+            // Add start scene to the stage, later add more scenes
             case config.START:
                 currentScene = new scenes.Play(assetManager, currentState);
                 break;
