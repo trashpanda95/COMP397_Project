@@ -26,7 +26,7 @@ module objects {
         public playerAngle: any;
 
         //Zombie
-        public zombieSpeed: number = 0.2;
+        public zombieSpeed: number = 0.05;
 
         //Game
         public position: createjs.Point;

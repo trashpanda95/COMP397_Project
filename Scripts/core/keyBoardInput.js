@@ -4,7 +4,6 @@ var core;
         // CONSTRUCTORS
         function keyBoardInput() {
             this.keyboardInputListener();
-            //this.keyPressed();        
         }
         // PUBLIC PROPERTIES
         keyBoardInput.prototype.getkeyInput = function () {

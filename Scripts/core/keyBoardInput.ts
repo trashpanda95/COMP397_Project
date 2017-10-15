@@ -18,8 +18,7 @@ module core {
         // CONSTRUCTORS
         constructor()
         {
-            this.keyboardInputListener();  
-            //this.keyPressed();        
+            this.keyboardInputListener();      
         }
 
         //-----------------------Player Movement---------------------------

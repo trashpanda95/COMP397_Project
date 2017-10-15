@@ -1,14 +1,14 @@
 module scenes {
     export class Play extends objects.Scene
     {
-        // PRIVATE INSTANCE VARIABLES --------------------------------------------------------------------------------------->
+        // PRIVATE INSTANCE VARIABLES 
         private assetManager: createjs.LoadQueue;
         private player:objects.Player;
         private zombie:objects.Zombie[];
 
-        // PUBLIC PROPETIES --------------------------------------------------------------------------------------->
+        // PUBLIC PROPETIES
 
-        // CONSTRUCTORS --------------------------------------------------------------------------------------->
+        // CONSTRUCTORS
         constructor(assetManager:createjs.LoadQueue, currentScene: number)
         {
             super();
@@ -17,7 +17,7 @@ module scenes {
             this.Start(); 
         }
 
-        // PUBLIC METHODS --------------------------------------------------------------------------------------->
+        // PUBLIC METHODS
         public Start():void
         {
             this.player = new objects.Player(this.assetManager);
@@ -30,26 +30,27 @@ module scenes {
             this.player.Update();
             this.zombie.forEach(zombies =>
             {
-                zombies.rotation = (Math.atan2(zombies.x- this.player.y, zombies.x- this.player.x) * (180/ Math.PI)) - 180; 
-                zombies.Update();               
+                zombies.Update();
                 this.zombieFollowPlayer(zombies);
+                zombies.rotation = ((Math.atan2(zombies.x- this.player.y, zombies.x- this.player.x) * (180/ Math.PI)) - 180);                                          
             });
             return this.currentScene;
         }
 
         public Main():void
         {
-            this.addChild(this.player);
+            this.addChild(this.player);                                     //Add Player
 
             for (let count = 0; count < 10; count++)
             {
-                this.zombie[count] = new objects.Zombie(this.assetManager);
-                this.addChild(this.zombie[count]);
-                this.zombie[count].x = Math.floor(Math.random() * (800-0 + 1)+ 0);
-                this.zombie[count].y = Math.floor(Math.random() * (800-0 + 1)+ 0);
+                this.zombie[count] = new objects.Zombie(this.assetManager);      
+                //this.zombie[count].x = Math.floor(Math.random() * 800) + 800;
+                //this.zombie[count].y = Math.floor(Math.random() * 600) + 600;
+                console.log();
+                this.addChild(this.zombie[count]);                          // Add Zombies
             }
         }
-        // PRIVATE METHOS --------------------------------------------------------------------------------------->
+        // PRIVATE METHOD
 
         private zombieFollowPlayer(other:objects.GameObject)                // Method for zombies to follow player position
         {

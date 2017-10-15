@@ -22,7 +22,7 @@ var objects;
             _this.velocityY = 0;
             _this.playerRoataion = 0;
             //Zombie
-            _this.zombieSpeed = 0.2;
+            _this.zombieSpeed = 0.05;
             _this.name = imageString;
             _this.initialize();
             return _this;
