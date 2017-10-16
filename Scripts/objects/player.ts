@@ -1,20 +1,10 @@
 module objects {
     export class Player extends objects.GameObject {
         //PRIVATE INSTANCE VARIBALES 
-        private health:number = 100;
         //Game
         private keyBoardKey = new core.keyBoardInput();
        
         //PUBLIC PROPERTIES
-        public getHealth (){                                // Getter for current HP
-            return this.health;
-        }
-
-        public setHealth (newHealth:number){                // Setter for new HP
-            this.health = newHealth;
-        }
-
-
         public getPlayerXY() : number
         {
             return this.x;
