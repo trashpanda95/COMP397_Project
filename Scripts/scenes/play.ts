@@ -74,5 +74,30 @@ module scenes {
                 }
             }
         }
+
+        
+        private checkPrimCollision (other:objects.GameObject){              // Primary Collision Check
+
+            let pos1 : createjs.Point = new createjs.Point(this.player.x,this.player.y);
+            let pos2: createjs.Point = other.position;
+
+            if ((Math.sqrt(Math.pow(pos2.x - pos1.x, 2)+ Math.pow(pos2.y - pos1.y, 2))) <
+                (this.player.halfHeight + other.halfHeight)){
+                    if (!other.isColliding) {                                   // If no collision with player
+                        other.isColliding = false;
+                        if (other.name == "zombie"){
+                            // Check if bullet hit
+                        }
+                    } else {                                                    // If collision with player is true
+                        other.isColliding = true;
+                        this.player.setHealth(this.player.getHealth() - 1);     // Apply damage onto the player if there is collision
+                        if (this.player.getHealth() <= 0) {                     // Checks if HP is <= ZERO
+                            this.currentScene = config.END;                     // Stops the scene if player's HP is at ZERO
+                        
+                        }
+                }
+            }
+            
+        }
     }
 }
