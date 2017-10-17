@@ -5,6 +5,7 @@ module scenes {
         private assetManager: createjs.LoadQueue;
         private player:objects.Player;
         private zombie:objects.Zombie[];
+        private playerHealth:objects.Label;
 
         // PUBLIC PROPETIES
 
@@ -20,6 +21,7 @@ module scenes {
         // PUBLIC METHODS
         public Start():void
         {
+            this.playerHealth = new objects.Label("Health: " + this.player.getHealth(), "30px","Verdana", "#FFFF00", 10, 10, false);    // Display Health Points - mod. 10/16/17
             this.player = new objects.Player(this.assetManager);
             this.zombie = new Array<objects.Zombie>();
             this.Main();
@@ -32,7 +34,8 @@ module scenes {
             {
                 zombies.Update();
                 this.zombieFollowPlayer(zombies);
-                zombies.rotation = ((Math.atan2(zombies.x- this.player.y, zombies.x- this.player.x) * (180/ Math.PI)) - 180);                                          
+                zombies.rotation = ((Math.atan2(zombies.x- this.player.y, zombies.x- this.player.x) * (180/ Math.PI)) - 180); 
+                this.checkZombieCollision(zombies);
             });
             return this.currentScene;
         }
@@ -74,30 +77,32 @@ module scenes {
                 }
             }
         }
-
+        private dealDamage (){
+            this.player.setHealth(this.player.getHealth() - 1);
+            this.playerHealth.text = "Health: " + this.player.getHealth();
+        }
         
-        private checkPrimCollision (other:objects.GameObject){              // Primary Collision Check
+        private checkZombieCollision (other:objects.GameObject){              // Zombie Collision Check - mod. 10/16/17
+            
+            let pos1 : createjs.Point = new createjs.Point(this.player.x, this.player.y);
+            let pos2 : createjs.Point = other.position;
 
-            let pos1 : createjs.Point = new createjs.Point(this.player.x,this.player.y);
-            let pos2: createjs.Point = other.position;
-
-            if ((Math.sqrt(Math.pow(pos2.x - pos1.x, 2)+ Math.pow(pos2.y - pos1.y, 2))) <
-                (this.player.halfHeight + other.halfHeight)){
-                    if (!other.isColliding) {                                   // If no collision with player
-                        other.isColliding = false;
-                        if (other.name == "zombie"){
-                            // Check if bullet hit
+            if ((Math.sqrt(Math.pow(pos2.x - pos1.x, 2)+ Math.pow(pos2.y - pos1.y, 2))) < (this.player.halfHeight + other.halfHeight)) {
+                // If no collision with player
+                if (!other.isColliding) {
+                    if (other.name == "zombie"){
+                        this.dealDamage();                                    // Update health on Player
+                        if (this.player.getHealth() <= 0) {
+                            this.currentScene = config.END;
+                            this.removeAllChildren();
                         }
-                    } else {                                                    // If collision with player is true
-                        other.isColliding = true;
-                        this.player.setHealth(this.player.getHealth() - 1);     // Apply damage onto the player if there is collision
-                        if (this.player.getHealth() <= 0) {                     // Checks if HP is <= ZERO
-                            this.currentScene = config.END;                     // Stops the scene if player's HP is at ZERO
-                        
-                        }
+                        this.playerHealth.text = "Health: " + this.player.getHealth();
+                    }
+                    other.isColliding = true;
+                } else {
+                    other.isColliding = false;
                 }
             }
-            
         }
     }
 }
