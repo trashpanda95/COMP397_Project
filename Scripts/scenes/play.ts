@@ -81,12 +81,18 @@ module scenes {
             this.player.setHealth(this.player.getHealth() - 1);
             this.playerHealth.text = "Health: " + this.player.getHealth();
         }
-        
+        /*
+         * To Do: Zombie on Zombie collision 
+         */
+
+
+        // Zombie on Player collision check
         private checkZombieCollision (other:objects.GameObject){              // Zombie Collision Check - mod. 10/16/17
             
             let pos1 : createjs.Point = new createjs.Point(this.player.x, this.player.y);
             let pos2 : createjs.Point = other.position;
-
+            
+            // Comparing the distance between Player and Zombie is less than half the height of each obj
             if ((Math.sqrt(Math.pow(pos2.x - pos1.x, 2)+ Math.pow(pos2.y - pos1.y, 2))) < (this.player.halfHeight + other.halfHeight)) {
                 // If no collision with player
                 if (!other.isColliding) {
@@ -99,10 +105,13 @@ module scenes {
                         this.playerHealth.text = "Health: " + this.player.getHealth();
                     }
                     other.isColliding = true;
+                    console.log ("true");                                   // Debugger
+                    console.log(this.player.getHealth());                   // Debugger
                 } else {
                     other.isColliding = false;
                 }
             }
+            console.log(this.player.getHealth());
         }
     }
 }
