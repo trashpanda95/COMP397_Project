@@ -30,3 +30,4 @@ var objects;
     }(createjs.Bitmap));
     objects.bgmap = bgmap;
 })(objects || (objects = {}));
+//# sourceMappingURL=bgmap.js.map

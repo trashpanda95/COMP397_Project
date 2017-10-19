@@ -23,9 +23,24 @@ var scenes;
         }
         // PUBLIC METHODS
         Play.prototype.Start = function () {
+            //Add Player
             this.player = new objects.Player(this.assetManager);
+            this.addChild(this.player);
+            // Add Zombies
             this.zombie = new Array();
-            this.Main();
+            for (var count = 0; count < 10; count++) {
+                this.zombie[count] = new objects.Zombie(this.assetManager);
+                this.zombie[count].x = Math.floor(Math.random() * 800);
+                this.zombie[count].y = Math.floor(Math.random() * 600);
+                console.log();
+                this.addChild(this.zombie[count]);
+            }
+            //Add Collision
+            this.collision = new core.Collision(this.player);
+            //this.Main();
+            //Add Labels
+            this.playerHealth = new objects.Label("Health: " + this.player.health, "20px", "Verdana", "#000000", 20, 560, false); // Display Health Points - mod. 10/16/17
+            this.addChild(this.playerHealth);
         };
         Play.prototype.Update = function () {
             var _this = this;
@@ -34,20 +49,21 @@ var scenes;
                 zombies.Update();
                 _this.zombieFollowPlayer(zombies);
                 zombies.rotation = ((Math.atan2(zombies.x - _this.player.y, zombies.x - _this.player.x) * (180 / Math.PI)) - 180);
+                _this.collision.checkCollision(zombies);
             });
+            this.updateLabels();
+            if (this.player.isAlive == false) {
+                this.currentScene = config.Scene.END;
+                this.removeAllChildren();
+            }
             return this.currentScene;
         };
         Play.prototype.Main = function () {
-            this.addChild(this.player); //Add Player
-            for (var count = 0; count < 10; count++) {
-                this.zombie[count] = new objects.Zombie(this.assetManager);
-                this.zombie[count].x = Math.floor(Math.random() * 800) + 800;
-                this.zombie[count].y = Math.floor(Math.random() * 600) + 600;
-                console.log();
-                this.addChild(this.zombie[count]); // Add Zombies
-            }
         };
         // PRIVATE METHOD
+        Play.prototype.updateLabels = function () {
+            this.playerHealth.text = "Health: " + this.player.health;
+        };
         Play.prototype.zombieFollowPlayer = function (other) {
             if (this.player.x != other.x) {
                 if (this.player.x > other.x) {

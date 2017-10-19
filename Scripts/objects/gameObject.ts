@@ -10,6 +10,8 @@ module objects {
         public halfHeight:number;
         public verticalSpeed:number;
         public horizontalSpeed:number;
+        public regX :number;
+        public regY : number;
                
         //Controls
         public static moveLeft: boolean;
@@ -24,11 +26,13 @@ module objects {
         public velocityY: number= 0;
         public playerRoataion: number = 0;
         public playerAngle: any;
+        public isAlive: boolean;
 
         //Zombie
         public zombieSpeed: number = 0.05;
 
         //Game
+        public health: number;
         public position: createjs.Point;
         public isColliding: boolean;
 

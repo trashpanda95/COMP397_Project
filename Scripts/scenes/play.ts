@@ -6,6 +6,8 @@ module scenes {
         private player:objects.Player;
         private zombie:objects.Zombie[];
         private playerHealth:objects.Label;
+        private collision: core.Collision;
+
 
         // PUBLIC PROPETIES
 
@@ -20,11 +22,29 @@ module scenes {
 
         // PUBLIC METHODS
         public Start():void
-        {
-            this.playerHealth = new objects.Label("Health: " + this.player.getHealth(), "30px","Verdana", "#FFFF00", 10, 10, false);    // Display Health Points - mod. 10/16/17
+        {         
+            //Add Player
             this.player = new objects.Player(this.assetManager);
+            this.addChild(this.player); 
+                   
+            // Add Zombies
             this.zombie = new Array<objects.Zombie>();
-            this.Main();
+            for (let count = 0; count < 10; count++)
+            {
+                this.zombie[count] = new objects.Zombie(this.assetManager);      
+                this.zombie[count].x = Math.floor(Math.random() * 800);
+                this.zombie[count].y = Math.floor(Math.random() * 600);
+                console.log();
+                this.addChild(this.zombie[count]);                          
+            }
+
+            //Add Collision
+            this.collision = new core.Collision(this.player);
+            //this.Main();
+
+            //Add Labels
+            this.playerHealth = new objects.Label("Health: " +this.player.health, "20px","Verdana", "#000000", 20, 560, false);    // Display Health Points - mod. 10/16/17
+            this.addChild(this.playerHealth);
         }
 
         public Update():number
@@ -34,27 +54,28 @@ module scenes {
             {
                 zombies.Update();
                 this.zombieFollowPlayer(zombies);
-                zombies.rotation = ((Math.atan2(zombies.x- this.player.y, zombies.x- this.player.x) * (180/ Math.PI)) - 180); 
-                this.checkZombieCollision(zombies);
-            });
+                zombies.rotation = ((Math.atan2(zombies.x- this.player.y, zombies.x- this.player.x) * (180/ Math.PI)) - 180);
+                this.collision.checkCollision(zombies);
+            });               
+            this.updateLabels();
+            if (this.player.isAlive == false)
+            {
+                this.currentScene = config.Scene.END;
+                this.removeAllChildren();
+            }  
             return this.currentScene;
         }
 
         public Main():void
-        {
-            this.addChild(this.player);                                     //Add Player
-
-            for (let count = 0; count < 10; count++)
-            {
-                this.zombie[count] = new objects.Zombie(this.assetManager);      
-                //this.zombie[count].x = Math.floor(Math.random() * 800) + 800;
-                //this.zombie[count].y = Math.floor(Math.random() * 600) + 600;
-                console.log();
-                this.addChild(this.zombie[count]);                          // Add Zombies
-            }
+        {      
         }
+
         // PRIVATE METHOD
 
+        private updateLabels()
+        {
+            this.playerHealth.text = "Health: "+this.player.health;
+        }
         private zombieFollowPlayer(other:objects.GameObject)                // Method for zombies to follow player position
         {
             if (this.player.x != other.x)                                   // If player x coordinate is not the same as the zombie's x coordinate
@@ -76,42 +97,6 @@ module scenes {
                     other.y -= other.zombieSpeed;
                 }
             }
-        }
-        private dealDamage (){
-            this.player.setHealth(this.player.getHealth() - 1);
-            this.playerHealth.text = "Health: " + this.player.getHealth();
-        }
-        /*
-         * To Do: Zombie on Zombie collision 
-         */
-
-
-        // Zombie on Player collision check
-        private checkZombieCollision (other:objects.GameObject){              // Zombie Collision Check - mod. 10/16/17
-            
-            let pos1 : createjs.Point = new createjs.Point(this.player.x, this.player.y);
-            let pos2 : createjs.Point = other.position;
-            
-            // Comparing the distance between Player and Zombie is less than half the height of each obj
-            if ((Math.sqrt(Math.pow(pos2.x - pos1.x, 2)+ Math.pow(pos2.y - pos1.y, 2))) < (this.player.halfHeight + other.halfHeight)) {
-                // If no collision with player
-                if (!other.isColliding) {
-                    if (other.name == "zombie"){
-                        this.dealDamage();                                    // Update health on Player
-                        if (this.player.getHealth() <= 0) {
-                            this.currentScene = config.END;
-                            this.removeAllChildren();
-                        }
-                        this.playerHealth.text = "Health: " + this.player.getHealth();
-                    }
-                    other.isColliding = true;
-                    console.log ("true");                                   // Debugger
-                    console.log(this.player.getHealth());                   // Debugger
-                } else {
-                    other.isColliding = false;
-                }
-            }
-            console.log(this.player.getHealth());
         }
     }
 }

@@ -10,11 +10,11 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var scenes;
 (function (scenes) {
-    var Start = /** @class */ (function (_super) {
-        __extends(Start, _super);
+    var End = /** @class */ (function (_super) {
+        __extends(End, _super);
         //PUBLIC PROPETIES
         //CONSTRUCTORS
-        function Start(assetManager, currentScene) {
+        function End(assetManager, currentScene) {
             var _this = _super.call(this) || this;
             _this.assetManager = assetManager;
             _this.currentScene = currentScene;
@@ -23,25 +23,25 @@ var scenes;
         }
         //PRIVATE METHOS
         //PUBLIC METHODS
-        Start.prototype.Start = function () {
-            this.gameTitle = new objects.Label("THE INVASION", "80px", "Dock51", "#00000", 400, 250, true);
+        End.prototype.Start = function () {
+            this.gameTitle = new objects.Label("GAME OVER", "80px", "Dock51", "#ff0000", 400, 250, true);
             this.addChild(this.gameTitle);
-            this.startButton = new objects.Button(this.assetManager, "startBtn", 400, 350, true);
+            this.startButton = new objects.Button(this.assetManager, "reStartBtn", 400, 350, true);
             this.addChild(this.startButton);
             this.onClickStartBtn();
         };
-        Start.prototype.Update = function () {
+        End.prototype.Update = function () {
             return this.currentScene;
         };
-        Start.prototype.onClickStartBtn = function () {
+        End.prototype.onClickStartBtn = function () {
             var _this = this;
             this.startButton.on("click", function () {
                 _this.currentScene = config.Scene.PLAY;
                 _this.removeAllChildren();
             });
         };
-        return Start;
+        return End;
     }(objects.Scene));
-    scenes.Start = Start;
+    scenes.End = End;
 })(scenes || (scenes = {}));
-//# sourceMappingURL=start.js.map
+//# sourceMappingURL=end.js.map

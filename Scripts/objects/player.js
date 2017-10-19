@@ -22,6 +22,12 @@ var objects;
             return _this;
         }
         //PUBLIC PROPERTIES
+        Player.prototype.getHealth = function () {
+            return this.health;
+        };
+        Player.prototype.setHealth = function (newHealth) {
+            this.health = newHealth;
+        };
         Player.prototype.getPlayerXY = function () {
             return this.x;
         };
@@ -29,6 +35,7 @@ var objects;
         Player.prototype.Start = function () {
             this.x = 400;
             this.y = 300;
+            this.health = 100;
             this.keyBoardKey = new core.keyBoardInput();
         };
         Player.prototype.Update = function () {
