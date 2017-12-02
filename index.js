@@ -4,7 +4,7 @@ var path = require('path');
 
 
 
-app.get('/', function (req, res) {
+app.get(function (req, res) {
   res.sendfile('index.html');
 })
 
