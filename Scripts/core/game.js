@@ -12,7 +12,7 @@
         { id: "reStartBtn", src: "./Assets/reStartButton.png" },
         { id: "player", src: "./Assets/images/player_test.png" },
         { id: "zombie", src: "./Assets/images/zombie_test.png" },
-        { id: "bg", src: "./Assets/images/background_test.png" }
+        { id: "sbg", src: "./Assets/images/startscreenbg.jpg" }
     ];
     function Init() {
         // Load Assets

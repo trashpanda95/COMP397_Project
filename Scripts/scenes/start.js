@@ -24,9 +24,21 @@ var scenes;
         //PRIVATE METHOS
         //PUBLIC METHODS
         Start.prototype.Start = function () {
+            // Outlines the Title
+            this.gameTitleOutline = new objects.Label("THE INVASION", "80px", "Dock51", "#FFFFFF", 400, 250, true);
+            this.gameTitleOutline.outline = 1;
+            // Fills the Title Outline in Black
             this.gameTitle = new objects.Label("THE INVASION", "80px", "Dock51", "#00000", 400, 250, true);
-            this.addChild(this.gameTitle);
+            // Initialize Background Image
+            this.backgroundImage = new objects.StartBackGround(this.assetManager);
+            // Initialize Start Button
             this.startButton = new objects.Button(this.assetManager, "startBtn", 400, 350, true);
+            // Adds Background Image to Screen
+            this.addChild(this.backgroundImage);
+            // Adds Both the Label Outline & Fill onto Screen
+            this.addChild(this.gameTitleOutline);
+            this.addChild(this.gameTitle);
+            // Adds Start Button onto Screen
             this.addChild(this.startButton);
             this.onClickStartBtn();
         };
