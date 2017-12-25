@@ -12,6 +12,8 @@
         { id: "reStartBtn", src: "./Assets/reStartButton.png" },
         { id: "player", src: "./Assets/images/player_test.png" },
         { id: "zombie", src: "./Assets/images/zombie_test.png" },
+        { id: "fillBlack", src: "./Assets/images/blackScreen.jpg" },
+        { id: "dead", src: "./Assets/images/death_screen.jpg" },
         { id: "sbg", src: "./Assets/images/startscreenbg.jpg" }
     ];
     function Init() {

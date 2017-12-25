@@ -24,10 +24,24 @@ var scenes;
         //PRIVATE METHOS
         //PUBLIC METHODS
         End.prototype.Start = function () {
+            // Initialize Game Title Outline
+            this.gameTitleOutline = new objects.Label("GAME OVER", "80px", "Dock51", "#000000", 400, 250, true);
+            this.gameTitleOutline.outline = 1; // Set Outline Property to True
+            // Initialize Game Title
             this.gameTitle = new objects.Label("GAME OVER", "80px", "Dock51", "#ff0000", 400, 250, true);
-            this.addChild(this.gameTitle);
-            this.startButton = new objects.Button(this.assetManager, "reStartBtn", 400, 350, true);
-            this.addChild(this.startButton);
+            // Initialize BackGroundImage
+            this.backgroundImage = new objects.DeathScreen(this.assetManager);
+            this.backgroundImageFill = new objects.BlackScreen(this.assetManager);
+            // Initialize Restart Button
+            this.restartButton = new objects.Button(this.assetManager, "reStartBtn", 400, 350, true);
+            // Add Background Image to Screen
+            this.addChild(this.backgroundImageFill);
+            this.addChild(this.backgroundImage);
+            // Add Outline & Title onto Screen - Unnecessary since background image has text
+            //this.addChild(this.gameTitleOutline);      
+            //this.addChild(this.gameTitle);    
+            // Add Restart Button onto Screen
+            this.addChild(this.restartButton);
             this.onClickStartBtn();
         };
         End.prototype.Update = function () {
@@ -35,7 +49,7 @@ var scenes;
         };
         End.prototype.onClickStartBtn = function () {
             var _this = this;
-            this.startButton.on("click", function () {
+            this.restartButton.on("click", function () {
                 _this.currentScene = config.Scene.PLAY;
                 _this.removeAllChildren();
             });

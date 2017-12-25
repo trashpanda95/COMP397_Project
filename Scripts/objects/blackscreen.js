@@ -9,27 +9,27 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 /*
-  Sets the background for the start screen
+  Sets the background for the End screen
 */
 var objects;
 (function (objects) {
-    var StartBackGround = /** @class */ (function (_super) {
-        __extends(StartBackGround, _super);
+    var BlackScreen = /** @class */ (function (_super) {
+        __extends(BlackScreen, _super);
         // PUBLIC PROPERTIES
         // CONSTRUCTORS
-        function StartBackGround(assetManager) {
-            var _this = _super.call(this, assetManager.getResult("sbg")) || this;
+        function BlackScreen(assetManager) {
+            var _this = _super.call(this, assetManager.getResult("fillBlack")) || this;
             _this.Start();
             return _this;
         }
         // PRIVATE METHODS
         // PUBLIC METHODS
-        StartBackGround.prototype.Start = function () {
+        BlackScreen.prototype.Start = function () {
         };
-        StartBackGround.prototype.Update = function () {
+        BlackScreen.prototype.Update = function () {
         };
-        return StartBackGround;
+        return BlackScreen;
     }(createjs.Bitmap));
-    objects.StartBackGround = StartBackGround;
+    objects.BlackScreen = BlackScreen;
 })(objects || (objects = {}));
-//# sourceMappingURL=startbackground.js.map
+//# sourceMappingURL=blackscreen.js.map

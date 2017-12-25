@@ -1,3 +1,6 @@
+/*
+  Sets the background for the start screen
+*/
 module objects {
   export class StartBackGround extends createjs.Bitmap {
     // PUBLIC PROPERTIES
