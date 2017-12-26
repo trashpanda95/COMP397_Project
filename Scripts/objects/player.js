@@ -15,9 +15,8 @@ var objects;
         //CONSTRUCTORS
         function Player(assetManager) {
             var _this = _super.call(this, assetManager, "player") || this;
-            //PRIVATE INSTANCE VARIBALES 
-            //Game
             _this.keyBoardKey = new core.keyBoardInput();
+            _this.assetManager = assetManager;
             _this.Start();
             return _this;
         }
@@ -37,10 +36,11 @@ var objects;
             this.y = 300;
             this.health = 100;
             this.keyBoardKey = new core.keyBoardInput();
+            this.bulletSpawn = new createjs.Point(this.y - 35, this.x);
         };
         Player.prototype.Update = function () {
-            this.position.x = this.x;
-            this.position.y = this.y;
+            this.bulletSpawn.x = this.x;
+            this.bulletSpawn.y = this.y;
             this.checkBounds();
             this.playerMovement();
         };
@@ -54,21 +54,22 @@ var objects;
             this.regY = this.halfHeight;
         };
         Player.prototype.checkBounds = function () {
-            if (this.x >= 850 - this.halfWidth) {
-                this.x = 850 - this.halfWidth;
+            if (this.x >= config.Screen.WIDTH - this.halfWidth) {
+                this.x = config.Screen.WIDTH - this.halfWidth;
             }
             if (this.x <= this.halfWidth) {
                 this.x = this.halfWidth;
             }
-            if (this.y >= 600 - this.halfWidth) {
-                this.y = 600 - this.halfWidth;
+            if (this.y >= config.Screen.HEIGHT - this.halfHeight) {
+                this.y = config.Screen.HEIGHT - this.halfHeight;
             }
-            if (this.y <= this.halfWidth) {
-                this.y = this.halfWidth;
+            if (this.y <= this.halfHeight) {
+                this.y = this.halfHeight;
             }
         };
         Player.prototype.playerMovement = function () {
             var getKey = this.keyBoardKey.getkeyInput();
+            console.log(getKey);
             if (getKey != null && getKey == 37) {
                 this.x -= this.playerSpeed;
             }
@@ -86,8 +87,8 @@ var objects;
         Player.prototype.setPlayerRotation = function () {
             var xAngle = this.stage.mouseX - this.x;
             var yAngle = this.stage.mouseY - this.y;
-            this.playerAngle = Math.atan2(yAngle, xAngle) * (180 / Math.PI);
-            this.rotation = this.playerAngle;
+            this.playerRotation = Math.atan2(yAngle, xAngle) * (180 / Math.PI);
+            this.rotation = this.playerRotation;
         };
         return Player;
     }(objects.GameObject));

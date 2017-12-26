@@ -17,12 +17,8 @@ var objects;
             var _this = _super.call(this, assetManager.getResult(imageString)) || this;
             //Player
             _this.playerSpeed = 2;
-            _this.friction = 0.98;
-            _this.velocityX = 0;
-            _this.velocityY = 0;
-            _this.playerRoataion = 0;
             //Zombie
-            _this.zombieSpeed = 0.05;
+            _this.zombieSpeed = 0.1;
             _this.name = imageString;
             _this.initialize();
             return _this;
@@ -37,6 +33,9 @@ var objects;
             this.regY = this.halfHeight;
             this.position = new createjs.Point(this.x, this.y);
             this.isColliding = false;
+        };
+        GameObject.prototype.Destroy = function () {
+            this.parent.removeChild(this);
         };
         return GameObject;
     }(createjs.Bitmap));

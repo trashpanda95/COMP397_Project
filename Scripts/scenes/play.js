@@ -14,71 +14,98 @@ var scenes;
         __extends(Play, _super);
         // PUBLIC PROPETIES
         // CONSTRUCTORS
-        function Play(assetManager, currentScene) {
+        function Play(assetManager, currentScene, gameCanvas) {
             var _this = _super.call(this) || this;
+            _this.zombieCount = 5;
+            _this.bulletCount = 10;
+            _this.bulletCounter = 0;
+            _this.timeTillSpawn = 60000;
+            _this.lastSpawn = -1;
+            _this.time = Date.now();
             _this.assetManager = assetManager;
             _this.currentScene = currentScene;
+            _this.mouseEnabled = true;
+            _this.gameCanvas = gameCanvas;
             _this.Start();
             return _this;
         }
         // PUBLIC METHODS
         Play.prototype.Start = function () {
+            var _this = this;
             //Add Player
             this.player = new objects.Player(this.assetManager);
             this.addChild(this.player);
             // Add Zombies
             this.zombie = new Array();
-            for (var count = 0; count < 10; count++) {
-                this.zombie[count] = new objects.Zombie(this.assetManager);
-                this.zombie[count].x = Math.floor(Math.random() * 800);
-                this.zombie[count].y = Math.floor(Math.random() * 600);
-                console.log();
-                this.addChild(this.zombie[count]);
-            }
+            this.zombieSpawn();
+            this.lastSpawn = this.time;
+            //Add Bullets
+            this.bullet = new Array();
+            this.bulletSpawn();
             //Add Collision
             this.collision = new core.Collision(this.player);
-            //this.Main();
             //Add Labels
-            this.playerHealth = new objects.Label("Health: " + this.player.health, "20px", "Verdana", "#000000", 20, 560, false); // Display Health Points - mod. 10/16/17
+            this.playerHealth = new objects.Label("Health: " + this.player.health, "20px", "Verdana", "#000000", 20, 560, false);
             this.addChild(this.playerHealth);
+            this.mouse = new managers.Mouse(this.player, this.gameCanvas);
+            this.mouse.AddClickListener(function (event) {
+                _this.bulletFire();
+            });
         };
         Play.prototype.Update = function () {
             var _this = this;
+            //Update Player
             this.player.Update();
+            this.time = Date.now();
+            //Update Zombie
+            /* if (this.time > (this.lastSpawn+ this.timeTillSpawn))
+            {
+                console.log(this.time)
+                this.lastSpawn = this.time;
+            } */
             this.zombie.forEach(function (zombies) {
                 zombies.Update();
-                _this.zombieFollowPlayer(zombies);
-                zombies.rotation = ((Math.atan2(zombies.x - _this.player.y, zombies.x - _this.player.x) * (180 / Math.PI)) - 180);
                 _this.collision.checkCollision(zombies);
             });
+            //Update bullet
+            this.bullet.forEach(function (bullet) {
+                bullet.Update();
+            });
+            //Update Labels           
             this.updateLabels();
+            //Change Scene Condition
             if (this.player.isAlive == false) {
                 this.currentScene = config.Scene.END;
                 this.removeAllChildren();
             }
             return this.currentScene;
         };
-        Play.prototype.Main = function () {
+        // PRIVATE METHODS
+        Play.prototype.zombieSpawn = function () {
+            var count;
+            for (count = 0; count < this.zombieCount; count++) {
+                this.zombie[count] = new objects.Zombie(this.assetManager, this.player);
+                this.addChild(this.zombie[count]);
+            }
+            count = 0;
         };
-        // PRIVATE METHOD
+        Play.prototype.bulletSpawn = function () {
+            for (var count = 0; count < this.bulletCount; count++) {
+                this.bullet[count] = new objects.Bullet(this.assetManager, this.player.bulletSpawn);
+                this.addChild(this.bullet[count]);
+            }
+        };
+        Play.prototype.bulletFire = function () {
+            console.log("firing");
+            this.bullet[this.bulletCounter].x = this.player.bulletSpawn.x;
+            this.bullet[this.bulletCounter].y = this.player.bulletSpawn.y;
+            this.bulletCounter++;
+            if (this.bulletCounter >= this.bulletCount - 1) {
+                this.bulletCounter = 0;
+            }
+        };
         Play.prototype.updateLabels = function () {
             this.playerHealth.text = "Health: " + this.player.health;
-        };
-        Play.prototype.zombieFollowPlayer = function (other) {
-            if (this.player.x != other.x) {
-                if (this.player.x > other.x) {
-                    other.x += other.zombieSpeed;
-                }
-                else {
-                    other.x -= other.zombieSpeed;
-                }
-                if (this.player.y > other.y) {
-                    other.y += other.zombieSpeed;
-                }
-                else {
-                    other.y -= other.zombieSpeed;
-                }
-            }
         };
         return Play;
     }(objects.Scene));

@@ -7,7 +7,9 @@ module core {
         private static moveUp: boolean;
         private static moveRight: boolean;
         private static moveDown: boolean;
+        private static spaceBar : boolean;
         private static key: number;
+
 
         // PUBLIC PROPERTIES
         public getkeyInput() : number
@@ -38,28 +40,32 @@ module core {
         {
             
             if (e.keyCode == 37) {                      // LEFT ARROW
-                console.log("Left Arrow");
+                //console.log("Left Arrow");
                 keyBoardInput.moveLeft = true;
                 keyBoardInput.key = e.keyCode;
             }
             
             else if (e.keyCode == 38) {                 // UP ARROW
-                console.log("Up Arrow");
+                //console.log("Up Arrow");
                 keyBoardInput.moveUp = true;
                 keyBoardInput.key = e.keyCode;
             }
             
             else if (e.keyCode == 39) {                 // RIGHT ARROW
-                console.log("Right Arrow");
+                //console.log("Right Arrow");
                 keyBoardInput.moveRight = true;
                 keyBoardInput.key = e.keyCode;
             }
             
             else if (e.keyCode == 40) {                 // DOWN ARROW
-                console.log("Down Arrow");
+                //console.log("Down Arrow");
                 keyBoardInput.moveDown = true;
                 keyBoardInput.key = e.keyCode;
-            }            
+            }    
+            else if (e.keyCode ==32) {                  // SPACE BAR
+                keyBoardInput.spaceBar = true;
+                keyBoardInput.key = e.keyCode;
+            }     
         }
         /*
         * onControlUp determines what action will take place when a key released
@@ -83,7 +89,11 @@ module core {
             else if (e.keyCode == 40) {                 // DOWN ARROW
                 keyBoardInput.moveDown = false;
                 keyBoardInput.key = null;
-            }            
+            }     
+            else if (e.keyCode == 32) {                 // SPACE BAR
+                keyBoardInput.spaceBar = false;
+                keyBoardInput.key = null;
+            }          
         }           
     }
 }

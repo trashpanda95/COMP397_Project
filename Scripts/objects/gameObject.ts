@@ -21,15 +21,11 @@ module objects {
         
         //Player
         public playerSpeed: number = 2;
-        public friction: number = 0.98;
-        public velocityX: number= 0;
-        public velocityY: number= 0;
-        public playerRoataion: number = 0;
-        public playerAngle: any;
+        public playerRotation: number;
         public isAlive: boolean;
 
         //Zombie
-        public zombieSpeed: number = 0.05;
+        public zombieSpeed: number = 0.1;
 
         //Game
         public health: number;
@@ -43,7 +39,7 @@ module objects {
             this.name = imageString;
             this.initialize();
         }
-
+        
         //PUBLIC METHODS
         private initialize()
         {
@@ -59,6 +55,11 @@ module objects {
         public abstract Start(): void //Start method runs when object is instantiated
 
         public abstract Update(): void //Update method runs 60fps
+
+        public Destroy(): void 
+        {
+            this.parent.removeChild(this);
+        }
         
         //PRIVATE METHODS
     }

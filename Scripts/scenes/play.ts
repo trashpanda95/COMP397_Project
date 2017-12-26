@@ -3,20 +3,34 @@ module scenes {
     {
         // PRIVATE INSTANCE VARIABLES 
         private assetManager: createjs.LoadQueue;
+        private mouse: managers.Mouse;
+        public gameCanvas:HTMLElement;
+
         private player:objects.Player;
         private zombie:objects.Zombie[];
+        private bullet: objects.Bullet[];
+
         private playerHealth:objects.Label;
         private collision: core.Collision;
 
+        private zombieCount: number =5;
+        private bulletCount: number =10;
+        private bulletCounter: number=0;
+        private timeTillSpawn = 60000;
+        private lastSpawn = -1;
+        private time = Date.now();
 
         // PUBLIC PROPETIES
 
         // CONSTRUCTORS
-        constructor(assetManager:createjs.LoadQueue, currentScene: number)
+        constructor(assetManager:createjs.LoadQueue, currentScene: number, gameCanvas:HTMLElement)
         {
             super();
             this.assetManager = assetManager;
             this.currentScene = currentScene;
+            this.mouseEnabled = true;
+            this.gameCanvas = gameCanvas;
+
             this.Start(); 
         }
 
@@ -29,35 +43,57 @@ module scenes {
                    
             // Add Zombies
             this.zombie = new Array<objects.Zombie>();
-            for (let count = 0; count < 10; count++)
-            {
-                this.zombie[count] = new objects.Zombie(this.assetManager);      
-                this.zombie[count].x = Math.floor(Math.random() * 800);
-                this.zombie[count].y = Math.floor(Math.random() * 600);
-                console.log();
-                this.addChild(this.zombie[count]);                          
-            }
+            this.zombieSpawn();
+            this.lastSpawn = this.time;
+
+            //Add Bullets
+            this.bullet = new Array<objects.Bullet>();
+            this.bulletSpawn();
+
 
             //Add Collision
             this.collision = new core.Collision(this.player);
-            //this.Main();
 
             //Add Labels
-            this.playerHealth = new objects.Label("Health: " +this.player.health, "20px","Verdana", "#000000", 20, 560, false);    // Display Health Points - mod. 10/16/17
+            this.playerHealth = new objects.Label("Health: " +this.player.health, "20px","Verdana", "#000000", 20, 560, false);    
             this.addChild(this.playerHealth);
+
+            this.mouse = new managers.Mouse(this.player, this.gameCanvas);
+            this.mouse.AddClickListener((event)=> 
+            {
+                this.bulletFire();
+            });
         }
 
         public Update():number
         {
+            //Update Player
             this.player.Update();
+            this.time = Date.now();
+            
+            //Update Zombie
+            
+            /* if (this.time > (this.lastSpawn+ this.timeTillSpawn)) 
+            {
+                console.log(this.time)
+                this.lastSpawn = this.time;               
+            } */
             this.zombie.forEach(zombies =>
             {
-                zombies.Update();
-                this.zombieFollowPlayer(zombies);
-                zombies.rotation = ((Math.atan2(zombies.x- this.player.y, zombies.x- this.player.x) * (180/ Math.PI)) - 180);
-                this.collision.checkCollision(zombies);
-            });               
+                zombies.Update();             
+                this.collision.checkCollision(zombies);            
+            });   
+
+            //Update bullet
+            this.bullet.forEach(bullet =>
+            {
+                bullet.Update();
+            });
+                   
+            //Update Labels           
             this.updateLabels();
+            
+            //Change Scene Condition
             if (this.player.isAlive == false)
             {
                 this.currentScene = config.Scene.END;
@@ -66,37 +102,44 @@ module scenes {
             return this.currentScene;
         }
 
-        public Main():void
-        {      
+        // PRIVATE METHODS
+        private zombieSpawn()
+        {  
+            let count;
+            for (count= 0; count < this.zombieCount; count++)
+            {
+                this.zombie[count] = new objects.Zombie(this.assetManager, this.player);      
+                this.addChild(this.zombie[count]);                          
+            }
+            count = 0;
         }
 
-        // PRIVATE METHOD
+        private bulletSpawn()
+        {
+            for (let count= 0; count < this.bulletCount; count++)
+            {
+                this.bullet[count] = new objects.Bullet(this.assetManager, this.player.bulletSpawn);      
+                this.addChild(this.bullet[count]);                          
+            }
+        }
 
+        private bulletFire(): void
+        {
+            console.log("firing");
+            this.bullet[this.bulletCounter].x = this.player.bulletSpawn.x;
+            this.bullet[this.bulletCounter].y = this.player.bulletSpawn.y;
+
+            this.bulletCounter ++;
+            if (this.bulletCounter >= this.bulletCount -1)
+            {
+                this.bulletCounter = 0;
+            }
+        }
+        
         private updateLabels()
         {
             this.playerHealth.text = "Health: "+this.player.health;
         }
-        private zombieFollowPlayer(other:objects.GameObject)                // Method for zombies to follow player position
-        {
-            if (this.player.x != other.x)                                   // If player x coordinate is not the same as the zombie's x coordinate
-            {
-                if(this.player.x > other.x)                                 // Checking if player x coords is greater than zombie's x coord
-                {
-                    other.x += other.zombieSpeed;   
-                }
-                else                                                        // Checks if the x coord is less than the zombie's
-                {
-                    other.x -= other.zombieSpeed;
-                }
-                if(this.player.y > other.y)                                 // Checks if player y coords is greater than zombie's y coords
-                {
-                    other.y += other.zombieSpeed;   
-                }
-                else                                                        // Checks if the y coords are less than the zombie's
-                {
-                    other.y -= other.zombieSpeed;
-                }
-            }
-        }
+        
     }
 }

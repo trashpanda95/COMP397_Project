@@ -2,48 +2,113 @@ module objects {
     export class Zombie extends objects.GameObject
     {
         // PRIVATE INSTANCE VARIBALES
+        target: objects.Player;
+        range: number = 200;
+        screenWidth: number = 640;
+        screenHeight: number = 480;
+        spawnMax = 1;
+        spawnMin = -1;
+
+        //Public Properties
+        public health: number;
 
         // CONSTRUCTORS
-        constructor(assetManager: createjs.LoadQueue) {
+        constructor(assetManager: createjs.LoadQueue, target:objects.Player) {
             super(assetManager, "zombie");
             this.Start();
+            this.health = 1;
+            this.target = target;
         }
 
         //PUBLIC METHODS
-        public Start()                  // Start method runs when object is instantiated
+        public Start()                  
         {
-            this.reset();
+           this.Reset();
         }
-        public Update()                 // Update method runs 60fps
+        public Update()                 
         {
-            this.position.x = this.x;
-            this.position.y = this.y;
-            //this.checkBounds();
+            //this.CheckBounds()
+            this.ChasePlayer();
         }
-        // PRIVATE METHODS
-        private checkBounds()           // Check and set object bounds within canvas
+        //Zombie gets hit by bullet
+        public GetHit(): void
         {
-            if (this.x >= 850 - this.halfWidth) 
+            this.health --;
+            if (this.health <= 0)
             {
-                this.x = 850 - this.halfWidth;
+                this.parent.removeChild(this);
+            }
+        }
+
+        // PRIVATE METHODS
+        private Reset():void 
+        {
+            this.health = 1;
+            let borderRandNum = Math.random();
+            let spawnPoint = new core.Vector(0, 0);
+            //console.log(borderRandNum);
+
+            if (borderRandNum >0.75)
+            {
+                //Spawn Top
+                spawnPoint.x = (Math.random() * this.screenWidth)+(this.spawnMax- this.spawnMin)+this.spawnMin ;
+                spawnPoint.y = -0.1 * this.screenHeight;
+                //console.log("Spawned top"+ spawnPoint.y);
+            }
+            else if (borderRandNum > 0.5)
+            {
+                //Spaen Left
+                spawnPoint.x = -0.1 * this.screenWidth;
+                spawnPoint.y = Math.random() * this.screenHeight;
+            }
+            else if (borderRandNum > 0.25) {
+                //Spawn Right
+                spawnPoint.x = 1.1 * this.screenWidth;
+                spawnPoint.y = Math.random() * this.screenHeight;
+            } else {
+                //Spwan Bottom
+                spawnPoint.x = Math.random() * this.screenWidth;
+                spawnPoint.y = 1.1 * this.screenHeight;
+            }
+
+            this.x = spawnPoint.x;
+            this.y = spawnPoint.y;
+            
+        }
+        private CheckBounds()                // Check and set object bounds within canvas
+        {
+            if (this.x >= config.Screen.WIDTH - this.halfWidth) 
+            {
+                this.x =  config.Screen.WIDTH - this.halfWidth;
             }
             if (this.x <= this.halfWidth) {
                 this.x = this.halfWidth;
             }
-            if (this.y >= 600 - this.halfWidth) 
+            if (this.y >= config.Screen.HEIGHT - this.halfHeight) 
             {
-                this.y = 600 - this.halfWidth;
+                this.y = config.Screen.HEIGHT - this.halfHeight;
             }
-            if (this.y <= this.halfWidth) {
-                this.y = this.halfWidth;
+            if (this.y <= this.halfHeight) {
+                this.y = this.halfHeight;
             }
-        }
-        private reset():void 
+        }     
+        private ChasePlayer()                // Method for zombies to follow player rotation and position
         {
-            this.y = -this.height;
-            this.x = (Math.random() * (640-this.width))+this.halfWidth;
-            this.verticalSpeed = (Math.random() * 5) + 5;
-            this.horizontalSpeed = (Math.random() *4) -2;
-        }
+            //Zombie rotation
+            this.rotation = core.Vector.RotateTowardPosition(new core.Vector(this.x, this.y), new core.Vector (this.target.x, this.target.y));
+
+            //If player is not in range, move slowly
+            if (new core.Vector(this.target.x, this.target.y).Add(new core.Vector(-this.x, -this.y)).Magnitude() > this.range) 
+            {
+                this.x += core.Vector.DegreeToVector(this.rotation).x * 0.1;
+                this.y += core.Vector.DegreeToVector(this.rotation).y * 0.1;
+            }
+            //Else if in range, move fast
+            else
+            {
+                this.x += core.Vector.DegreeToVector(this.rotation).x * 0.3;
+                this.y += core.Vector.DegreeToVector(this.rotation).y * 0.3;
+            }
+        }     
     }
 }

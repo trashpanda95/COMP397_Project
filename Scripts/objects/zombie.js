@@ -12,42 +12,90 @@ var objects;
 (function (objects) {
     var Zombie = /** @class */ (function (_super) {
         __extends(Zombie, _super);
-        // PRIVATE INSTANCE VARIBALES
         // CONSTRUCTORS
-        function Zombie(assetManager) {
+        function Zombie(assetManager, target) {
             var _this = _super.call(this, assetManager, "zombie") || this;
+            _this.range = 200;
+            _this.screenWidth = 640;
+            _this.screenHeight = 480;
+            _this.spawnMax = 1;
+            _this.spawnMin = -1;
             _this.Start();
+            _this.health = 1;
+            _this.target = target;
             return _this;
         }
         //PUBLIC METHODS
         Zombie.prototype.Start = function () {
-            this.reset();
+            this.Reset();
         };
         Zombie.prototype.Update = function () {
-            this.position.x = this.x;
-            this.position.y = this.y;
-            //this.checkBounds();
+            //this.CheckBounds()
+            this.ChasePlayer();
+        };
+        //Zombie gets hit by bullet
+        Zombie.prototype.GetHit = function () {
+            this.health--;
+            if (this.health <= 0) {
+                this.parent.removeChild(this);
+            }
         };
         // PRIVATE METHODS
-        Zombie.prototype.checkBounds = function () {
-            if (this.x >= 850 - this.halfWidth) {
-                this.x = 850 - this.halfWidth;
+        Zombie.prototype.Reset = function () {
+            this.health = 1;
+            var borderRandNum = Math.random();
+            var spawnPoint = new core.Vector(0, 0);
+            //console.log(borderRandNum);
+            if (borderRandNum > 0.75) {
+                //Spawn Top
+                spawnPoint.x = (Math.random() * this.screenWidth) + (this.spawnMax - this.spawnMin) + this.spawnMin;
+                spawnPoint.y = -0.1 * this.screenHeight;
+                //console.log("Spawned top"+ spawnPoint.y);
+            }
+            else if (borderRandNum > 0.5) {
+                //Spaen Left
+                spawnPoint.x = -0.1 * this.screenWidth;
+                spawnPoint.y = Math.random() * this.screenHeight;
+            }
+            else if (borderRandNum > 0.25) {
+                //Spawn Right
+                spawnPoint.x = 1.1 * this.screenWidth;
+                spawnPoint.y = Math.random() * this.screenHeight;
+            }
+            else {
+                //Spwan Bottom
+                spawnPoint.x = Math.random() * this.screenWidth;
+                spawnPoint.y = 1.1 * this.screenHeight;
+            }
+            this.x = spawnPoint.x;
+            this.y = spawnPoint.y;
+        };
+        Zombie.prototype.CheckBounds = function () {
+            if (this.x >= config.Screen.WIDTH - this.halfWidth) {
+                this.x = config.Screen.WIDTH - this.halfWidth;
             }
             if (this.x <= this.halfWidth) {
                 this.x = this.halfWidth;
             }
-            if (this.y >= 600 - this.halfWidth) {
-                this.y = 600 - this.halfWidth;
+            if (this.y >= config.Screen.HEIGHT - this.halfHeight) {
+                this.y = config.Screen.HEIGHT - this.halfHeight;
             }
-            if (this.y <= this.halfWidth) {
-                this.y = this.halfWidth;
+            if (this.y <= this.halfHeight) {
+                this.y = this.halfHeight;
             }
         };
-        Zombie.prototype.reset = function () {
-            this.y = -this.height;
-            this.x = (Math.random() * (640 - this.width)) + this.halfWidth;
-            this.verticalSpeed = (Math.random() * 5) + 5;
-            this.horizontalSpeed = (Math.random() * 4) - 2;
+        Zombie.prototype.ChasePlayer = function () {
+            //Zombie rotation
+            this.rotation = core.Vector.RotateTowardPosition(new core.Vector(this.x, this.y), new core.Vector(this.target.x, this.target.y));
+            //If player is not in range, move slowly
+            if (new core.Vector(this.target.x, this.target.y).Add(new core.Vector(-this.x, -this.y)).Magnitude() > this.range) {
+                this.x += core.Vector.DegreeToVector(this.rotation).x * 0.1;
+                this.y += core.Vector.DegreeToVector(this.rotation).y * 0.1;
+            }
+            else {
+                this.x += core.Vector.DegreeToVector(this.rotation).x * 0.3;
+                this.y += core.Vector.DegreeToVector(this.rotation).y * 0.3;
+            }
         };
         return Zombie;
     }(objects.GameObject));

@@ -12,7 +12,8 @@
         { id: "reStartBtn", src: "./Assets/reStartButton.png" },
         { id: "player", src: "./Assets/images/player_test.png" },
         { id: "zombie", src: "./Assets/images/zombie_test.png" },
-        { id: "bg", src: "./Assets/images/background_test.png" }
+        { id: "bg", src: "./Assets/images/background_test.png" },
+        { id: "bullet", src: "./Assets/images/bullet.png" }
     ];
     function Init() {
         // Load Assets
@@ -46,7 +47,7 @@
                 currentScene = new scenes.Start(assetManager, currentState);
                 break;
             case config.Scene.PLAY:
-                currentScene = new scenes.Play(assetManager, currentState);
+                currentScene = new scenes.Play(assetManager, currentState, canvas);
                 break;
             case config.Scene.END:
                 currentScene = new scenes.End(assetManager, currentState);

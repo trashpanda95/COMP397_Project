@@ -1,8 +1,10 @@
 module objects {
     export class Player extends objects.GameObject {
         //PRIVATE INSTANCE VARIBALES 
-        //Game
+        private assetManager: createjs.LoadQueue;
         private keyBoardKey = new core.keyBoardInput();
+        bulletSpawn:createjs.Point;
+
        
         //PUBLIC PROPERTIES
         public getHealth (){                                // Getter for current HP
@@ -19,8 +21,10 @@ module objects {
         }
 
         //CONSTRUCTORS
-        constructor(assetManager: createjs.LoadQueue) {
+        constructor(assetManager: createjs.LoadQueue) 
+        {
             super(assetManager, "player");
+            this.assetManager = assetManager;
             this.Start();
         }
 
@@ -31,11 +35,12 @@ module objects {
             this.y = 300;
             this.health = 100;
             this.keyBoardKey = new core.keyBoardInput();
+            this.bulletSpawn = new createjs.Point(this.y -35, this.x);
         }
         public Update()                                     // Update method runs 60fps
         {
-            this.position.x = this.x;
-            this.position.y = this.y;
+            this.bulletSpawn.x = this.x;
+            this.bulletSpawn.y = this.y;
             this.checkBounds();
             this.playerMovement();
         }
@@ -50,26 +55,27 @@ module objects {
             this.regX = this.halfWidth;
             this.regY = this.halfHeight;
         }
-        private checkBounds()                               // Check and set player bounds within canvas
+        private checkBounds() 
         {
-            if (this.x >= 850 - this.halfWidth) 
-            {
-                this.x = 850 - this.halfWidth;
+            if(this.x >= config.Screen.WIDTH - this.halfWidth) {
+              this.x = config.Screen.WIDTH - this.halfWidth;
             }
-            if (this.x <= this.halfWidth) {
-                this.x = this.halfWidth;
+            if(this.x <= this.halfWidth) {
+              this.x = this.halfWidth;
             }
-            if (this.y >= 600 - this.halfWidth) 
-            {
-                this.y = 600 - this.halfWidth;
+      
+            if(this.y >= config.Screen.HEIGHT - this.halfHeight) {
+              this.y = config.Screen.HEIGHT - this.halfHeight;
             }
-            if (this.y <= this.halfWidth) {
-                this.y = this.halfWidth;
+      
+            if(this.y <= this.halfHeight) {
+              this.y = this.halfHeight;
             }
         }
         private playerMovement()                            // Move player object
         {  
-            var getKey = this.keyBoardKey.getkeyInput();  
+            var getKey = this.keyBoardKey.getkeyInput(); 
+            console.log(getKey); 
             if (getKey !=null && getKey == 37)              // Left
             {
                 this.x -= this.playerSpeed;
@@ -92,8 +98,8 @@ module objects {
         {
             var xAngle = this.stage.mouseX- this.x;
             var yAngle = this.stage.mouseY- this.y;
-            this.playerAngle = Math.atan2(yAngle,xAngle) * (180/ Math.PI);       
-            this.rotation = this.playerAngle;
+            this.playerRotation = Math.atan2(yAngle,xAngle) * (180/ Math.PI);       
+            this.rotation = this.playerRotation;
         }
     }
 }

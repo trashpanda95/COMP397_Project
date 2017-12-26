@@ -9,11 +9,13 @@ module core {
             this.player = Player;
         }
 
+        //Check distance between player and zombie
         public distance(startPoint: createjs.Point, endPoint: createjs.Point): number 
         {
             return Math.sqrt(Math.pow((endPoint.x - startPoint.x), 2) + Math.pow(endPoint.y - startPoint.y, 2))
         }
 
+        //Check if colliding
         public checkCollision(object: objects.GameObject)
         {
             var startPoint: createjs.Point = new createjs.Point();
@@ -33,13 +35,13 @@ module core {
                 if(!object.isColliding)
                 {
                     if(object.name =="zombie")
-                    {
-                        
+                    {                  
                         console.log("Colliding with zombie")
-                        this.player.health --;
+                        this.player.health -5;
                         if (this.player.health <=0)
                         {        
                             this.player.isAlive = false;
+                            this.player.parent.removeChild(this.player);
                         }
                         object.isColliding = true;
                     }
