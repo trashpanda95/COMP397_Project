@@ -4,7 +4,6 @@ module objects {
         private assetManager: createjs.LoadQueue;
         private keyBoardKey = new core.keyBoardInput();
         bulletSpawn:createjs.Point;
-
        
         //PUBLIC PROPERTIES
         public getHealth (){                                // Getter for current HP
@@ -100,8 +99,8 @@ module objects {
         }
         public fire()
         {
-           // let bullet = new objects.Bullet(this.assetManager, this.bulletSpawn);
-            //this.parent.addChild(bullet);
+           let bullet = new objects.Bullet(this.assetManager, this.bulletSpawn)
+           this.parent.addChild(bullet);
             //bullet.Update();
         }
     }

@@ -10,15 +10,15 @@ module objects {
             this.position = position;
             this.Start();
 
-            //this.x = position.x;
-            //this.y = position.y;
+            this.x = position.x;
+            this.y = position.y;
         }
 
         public Start():void 
         {
             this.regXY();
             this.speed = 10;
-            this.Reset();
+            //this.Reset();
         }
 
         private Reset():void 
@@ -27,12 +27,11 @@ module objects {
             this.x = -1000;
         }
 
-        
-
         public Update():void 
         {
+            console.log("bullet update");
             //this.CheckBounds();
-            if (this.speed > 0) 
+            /* if (this.speed > 0) 
             {
                //this.position = core.Vector.DegreeToVector(this.rotation).Multiply(this.speed);
                 var deltaX = this.stage.mouseX - (this.x + this.regX);
@@ -41,7 +40,10 @@ module objects {
 
                 this.x += Math.cos(this.rotation)* this.speed;
                 this.y += Math.sin (this.rotation)* this.speed;
-            }
+            } */
+            this.y +=this.speed;
+            this.position.x = this.x;
+            this.position.y = this.y;
         }
 
         //PRIVATE

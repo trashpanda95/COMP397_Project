@@ -16,29 +16,35 @@ var objects;
             var _this = _super.call(this, assetManager, "bullet") || this;
             _this.position = position;
             _this.Start();
+            _this.x = position.x;
+            _this.y = position.y;
             return _this;
-            //this.x = position.x;
-            //this.y = position.y;
         }
         Bullet.prototype.Start = function () {
             this.regXY();
             this.speed = 10;
-            this.Reset();
+            //this.Reset();
         };
         Bullet.prototype.Reset = function () {
             this.y = -1000;
             this.x = -1000;
         };
         Bullet.prototype.Update = function () {
+            console.log("bullet update");
             //this.CheckBounds();
-            if (this.speed > 0) {
-                //this.position = core.Vector.DegreeToVector(this.rotation).Multiply(this.speed);
+            /* if (this.speed > 0)
+            {
+               //this.position = core.Vector.DegreeToVector(this.rotation).Multiply(this.speed);
                 var deltaX = this.stage.mouseX - (this.x + this.regX);
                 var deltaY = this.stage.mouseY - (this.y + this.regY);
-                this.rotation = Math.atan2(deltaY, deltaX);
-                this.x += Math.cos(this.rotation) * this.speed;
-                this.y += Math.sin(this.rotation) * this.speed;
-            }
+                this.rotation= Math.atan2(deltaY, deltaX);
+
+                this.x += Math.cos(this.rotation)* this.speed;
+                this.y += Math.sin (this.rotation)* this.speed;
+            } */
+            this.y += this.speed;
+            this.position.x = this.x;
+            this.position.y = this.y;
         };
         //PRIVATE
         Bullet.prototype.regXY = function () {

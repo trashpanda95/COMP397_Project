@@ -89,8 +89,8 @@ var objects;
             this.rotation = this.playerRotation;
         };
         Player.prototype.fire = function () {
-            // let bullet = new objects.Bullet(this.assetManager, this.bulletSpawn);
-            //this.parent.addChild(bullet);
+            var bullet = new objects.Bullet(this.assetManager, this.bulletSpawn);
+            this.parent.addChild(bullet);
             //bullet.Update();
         };
         return Player;

@@ -19,7 +19,6 @@ module scenes {
         private timeTillSpawn = 60000;
         private lastSpawn = -1;
         private time = Date.now();
-        private bulletFire : boolean;
 
         // PUBLIC PROPETIES
 
@@ -62,7 +61,7 @@ module scenes {
             this.mouse.AddClickListener((event)=> 
             {
                 //Add Bullets
-                this.bulletFire = true;
+                this.bulletFire();
             });
         }
 
@@ -86,13 +85,10 @@ module scenes {
             });   
 
             //Update bullet
-            if (this.bulletFire)
+            this.bullet.forEach(bullet => 
             {
-                this.bullet.forEach(bullet =>
-                {
-                    bullet.Update();
-                });
-             }
+                bullet.Update();
+            });
                     
             //Update Labels           
             this.updateLabels();
@@ -124,6 +120,16 @@ module scenes {
             {
                 this.bullet[count] = new objects.Bullet(this.assetManager, this.player.bulletSpawn);      
                 this.addChild(this.bullet[count]);                          
+            }
+        }
+        private bulletFire()
+        {
+            this.bullet[this.bulletCounter].x = this.player.bulletSpawn.x;
+            this.bullet[this.bulletCounter].y = this.player.bulletSpawn.y;
+    
+            this.bulletCounter++;
+            if(this.bulletCounter >= this.bulletCount -1) {
+              this.bulletCounter = 0;
             }
         }
 
