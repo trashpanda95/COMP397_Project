@@ -20,27 +20,38 @@ var objects;
             //this.x = position.x;
             //this.y = position.y;
         }
+        Bullet.prototype.Start = function () {
+            this.regXY();
+            this.speed = 10;
+            this.Reset();
+        };
         Bullet.prototype.Reset = function () {
             this.y = -1000;
             this.x = -1000;
         };
-        Bullet.prototype.CheckBounds = function () {
-            if (this.y <= 0 + this.height || this.y >= 0 + this.height) {
-                // this.Reset();
+        Bullet.prototype.Update = function () {
+            //this.CheckBounds();
+            if (this.speed > 0) {
+                //this.position = core.Vector.DegreeToVector(this.rotation).Multiply(this.speed);
+                var deltaX = this.stage.mouseX - (this.x + this.regX);
+                var deltaY = this.stage.mouseY - (this.y + this.regY);
+                this.rotation = Math.atan2(deltaY, deltaX);
+                this.x += Math.cos(this.rotation) * this.speed;
+                this.y += Math.sin(this.rotation) * this.speed;
             }
         };
-        Bullet.prototype.Start = function () {
-            this.speed = 10;
-            this.Reset();
+        //PRIVATE
+        Bullet.prototype.regXY = function () {
+            this.width = this.getBounds().width;
+            this.height = this.getBounds().height;
+            this.halfWidth = this.width / 2;
+            this.halfHeight = this.height / 2;
+            this.regX = this.halfWidth;
+            this.regY = this.halfHeight;
         };
-        Bullet.prototype.Update = function () {
-            this.CheckBounds();
-            if (this.speed > 0) {
-                console.log("firing bullets update");
-                this.position = core.Vector.DegreeToVector(this.rotation).Multiply(this.speed);
-                //this.y += this.speed;
-                //this.x += this.speed;
-                //this.rotation = this.playerRotation;
+        Bullet.prototype.CheckBounds = function () {
+            if (this.y <= 0 + this.height || this.y >= 0 + this.height) {
+                this.Reset();
             }
         };
         return Bullet;

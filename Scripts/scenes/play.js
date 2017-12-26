@@ -39,7 +39,7 @@ var scenes;
             this.zombie = new Array();
             this.zombieSpawn();
             this.lastSpawn = this.time;
-            //Add Bullets
+            // Add Bullets
             this.bullet = new Array();
             this.bulletSpawn();
             //Add Collision
@@ -49,7 +49,8 @@ var scenes;
             this.addChild(this.playerHealth);
             this.mouse = new managers.Mouse(this.player, this.gameCanvas);
             this.mouse.AddClickListener(function (event) {
-                _this.bulletFire();
+                //Add Bullets
+                _this.bulletFire = true;
             });
         };
         Play.prototype.Update = function () {
@@ -68,9 +69,11 @@ var scenes;
                 _this.collision.checkCollision(zombies);
             });
             //Update bullet
-            this.bullet.forEach(function (bullet) {
-                bullet.Update();
-            });
+            if (this.bulletFire) {
+                this.bullet.forEach(function (bullet) {
+                    bullet.Update();
+                });
+            }
             //Update Labels           
             this.updateLabels();
             //Change Scene Condition
@@ -93,15 +96,6 @@ var scenes;
             for (var count = 0; count < this.bulletCount; count++) {
                 this.bullet[count] = new objects.Bullet(this.assetManager, this.player.bulletSpawn);
                 this.addChild(this.bullet[count]);
-            }
-        };
-        Play.prototype.bulletFire = function () {
-            console.log("firing");
-            this.bullet[this.bulletCounter].x = this.player.bulletSpawn.x;
-            this.bullet[this.bulletCounter].y = this.player.bulletSpawn.y;
-            this.bulletCounter++;
-            if (this.bulletCounter >= this.bulletCount - 1) {
-                this.bulletCounter = 0;
             }
         };
         Play.prototype.updateLabels = function () {

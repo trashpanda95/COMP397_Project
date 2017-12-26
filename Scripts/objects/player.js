@@ -32,8 +32,7 @@ var objects;
         };
         //PUBLIC METHODS             
         Player.prototype.Start = function () {
-            this.x = 400;
-            this.y = 300;
+            this.regXY();
             this.health = 100;
             this.keyBoardKey = new core.keyBoardInput();
             this.bulletSpawn = new createjs.Point(this.y - 35, this.x);
@@ -69,7 +68,6 @@ var objects;
         };
         Player.prototype.playerMovement = function () {
             var getKey = this.keyBoardKey.getkeyInput();
-            console.log(getKey);
             if (getKey != null && getKey == 37) {
                 this.x -= this.playerSpeed;
             }
@@ -89,6 +87,11 @@ var objects;
             var yAngle = this.stage.mouseY - this.y;
             this.playerRotation = Math.atan2(yAngle, xAngle) * (180 / Math.PI);
             this.rotation = this.playerRotation;
+        };
+        Player.prototype.fire = function () {
+            // let bullet = new objects.Bullet(this.assetManager, this.bulletSpawn);
+            //this.parent.addChild(bullet);
+            //bullet.Update();
         };
         return Player;
     }(objects.GameObject));

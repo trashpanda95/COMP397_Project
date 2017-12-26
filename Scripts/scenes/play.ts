@@ -19,6 +19,7 @@ module scenes {
         private timeTillSpawn = 60000;
         private lastSpawn = -1;
         private time = Date.now();
+        private bulletFire : boolean;
 
         // PUBLIC PROPETIES
 
@@ -46,10 +47,9 @@ module scenes {
             this.zombieSpawn();
             this.lastSpawn = this.time;
 
-            //Add Bullets
+            // Add Bullets
             this.bullet = new Array<objects.Bullet>();
             this.bulletSpawn();
-
 
             //Add Collision
             this.collision = new core.Collision(this.player);
@@ -61,7 +61,8 @@ module scenes {
             this.mouse = new managers.Mouse(this.player, this.gameCanvas);
             this.mouse.AddClickListener((event)=> 
             {
-                this.bulletFire();
+                //Add Bullets
+                this.bulletFire = true;
             });
         }
 
@@ -85,11 +86,14 @@ module scenes {
             });   
 
             //Update bullet
-            this.bullet.forEach(bullet =>
+            if (this.bulletFire)
             {
-                bullet.Update();
-            });
-                   
+                this.bullet.forEach(bullet =>
+                {
+                    bullet.Update();
+                });
+             }
+                    
             //Update Labels           
             this.updateLabels();
             
@@ -123,19 +127,6 @@ module scenes {
             }
         }
 
-        private bulletFire(): void
-        {
-            console.log("firing");
-            this.bullet[this.bulletCounter].x = this.player.bulletSpawn.x;
-            this.bullet[this.bulletCounter].y = this.player.bulletSpawn.y;
-
-            this.bulletCounter ++;
-            if (this.bulletCounter >= this.bulletCount -1)
-            {
-                this.bulletCounter = 0;
-            }
-        }
-        
         private updateLabels()
         {
             this.playerHealth.text = "Health: "+this.player.health;

@@ -19,7 +19,6 @@ module objects {
         {
             return this.x;
         }
-
         //CONSTRUCTORS
         constructor(assetManager: createjs.LoadQueue) 
         {
@@ -31,8 +30,7 @@ module objects {
         //PUBLIC METHODS             
         public Start()                                      // Start method runs when object is instantiated
         {
-            this.x = 400;
-            this.y = 300;
+            this.regXY();
             this.health = 100;
             this.keyBoardKey = new core.keyBoardInput();
             this.bulletSpawn = new createjs.Point(this.y -35, this.x);
@@ -75,7 +73,6 @@ module objects {
         private playerMovement()                            // Move player object
         {  
             var getKey = this.keyBoardKey.getkeyInput(); 
-            console.log(getKey); 
             if (getKey !=null && getKey == 37)              // Left
             {
                 this.x -= this.playerSpeed;
@@ -100,6 +97,12 @@ module objects {
             var yAngle = this.stage.mouseY- this.y;
             this.playerRotation = Math.atan2(yAngle,xAngle) * (180/ Math.PI);       
             this.rotation = this.playerRotation;
+        }
+        public fire()
+        {
+           // let bullet = new objects.Bullet(this.assetManager, this.bulletSpawn);
+            //this.parent.addChild(bullet);
+            //bullet.Update();
         }
     }
 }
