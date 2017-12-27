@@ -3,7 +3,7 @@ module objects {
      {
         //PRIVATE INSTANCE VARIBALES 
         private assetManager: createjs.LoadQueue;
-        private keyBoardKey = new core.keyBoardInput();
+        private keyBoardKey = new managers.keyBoardInput();
         private bullet: objects.Bullet;
         bulletSpawn:createjs.Point;
        
@@ -41,7 +41,7 @@ module objects {
         {
             this.regXY();
             this.health = 100;
-            this.keyBoardKey = new core.keyBoardInput();
+            this.keyBoardKey = new managers.keyBoardInput();
             this.bulletSpawn = new createjs.Point(this.y -35, this.x);
         }
         public Update()                                     // Update method runs 60fps

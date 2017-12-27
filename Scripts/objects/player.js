@@ -15,7 +15,7 @@ var objects;
         //CONSTRUCTORS
         function Player(assetManager) {
             var _this = _super.call(this, assetManager, "player") || this;
-            _this.keyBoardKey = new core.keyBoardInput();
+            _this.keyBoardKey = new managers.keyBoardInput();
             _this.assetManager = assetManager;
             _this.Start();
             return _this;
@@ -40,7 +40,7 @@ var objects;
         Player.prototype.Start = function () {
             this.regXY();
             this.health = 100;
-            this.keyBoardKey = new core.keyBoardInput();
+            this.keyBoardKey = new managers.keyBoardInput();
             this.bulletSpawn = new createjs.Point(this.y - 35, this.x);
         };
         Player.prototype.Update = function () {

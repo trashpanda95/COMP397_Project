@@ -1,4 +1,4 @@
-module core {
+module managers {
     export class keyBoardInput{
 
         // PRIVATE INSTANCE VARIBALES

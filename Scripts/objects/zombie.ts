@@ -45,7 +45,7 @@ module objects {
         {
             this.health = 1;
             let borderRandNum = Math.random();
-            let spawnPoint = new core.Vector(0, 0);
+            let spawnPoint = new managers.Vector(0, 0);
             //console.log(borderRandNum);
 
             if (borderRandNum >0.75)
@@ -95,19 +95,19 @@ module objects {
         private ChasePlayer()                // Method for zombies to follow player rotation and position
         {
             //Zombie rotation
-            this.rotation = core.Vector.RotateTowardPosition(new core.Vector(this.x, this.y), new core.Vector (this.target.x, this.target.y));
+            this.rotation = managers.Vector.RotateTowardPosition(new managers.Vector(this.x, this.y), new managers.Vector (this.target.x, this.target.y));
 
             //If player is not in range, move slowly
-            if (new core.Vector(this.target.x, this.target.y).Add(new core.Vector(-this.x, -this.y)).Magnitude() > this.range) 
+            if (new managers.Vector(this.target.x, this.target.y).Add(new managers.Vector(-this.x, -this.y)).Magnitude() > this.range) 
             {
-                this.x += core.Vector.DegreeToVector(this.rotation).x * 0.1;
-                this.y += core.Vector.DegreeToVector(this.rotation).y * 0.1;
+                this.x += managers.Vector.DegreeToVector(this.rotation).x * 0.1;
+                this.y += managers.Vector.DegreeToVector(this.rotation).y * 0.1;
             }
             //Else if in range, move fast
             else
             {
-                this.x += core.Vector.DegreeToVector(this.rotation).x * 0.3;
-                this.y += core.Vector.DegreeToVector(this.rotation).y * 0.3;
+                this.x += managers.Vector.DegreeToVector(this.rotation).x * 0.3;
+                this.y += managers.Vector.DegreeToVector(this.rotation).y * 0.3;
             }
         }     
     }

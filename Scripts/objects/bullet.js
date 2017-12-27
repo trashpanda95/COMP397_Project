@@ -53,7 +53,7 @@ var objects;
         //Checkbonds and reset if outside
         Bullet.prototype.checkBounds = function () {
             if (this.y <= 0 + this.height || this.y >= config.Screen.HEIGHT || this.x <= 0 + this.width || this.x >= config.Screen.WIDTH) {
-                console.log("Bullet left screen, Destroyed");
+                //console.log("Bullet left screen, Destroyed");
                 this.reset();
             }
         };

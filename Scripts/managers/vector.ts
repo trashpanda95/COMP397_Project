@@ -1,4 +1,4 @@
-module core {
+module managers{
     
         //Vector - inherit Point class
         export class Vector extends createjs.Point {

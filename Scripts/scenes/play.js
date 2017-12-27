@@ -43,7 +43,7 @@ var scenes;
             this.bullet = new Array();
             this.bulletSpawn();
             //Add Collision
-            this.collision = new core.Collision(this.player);
+            this.collision = new managers.Collision(this.player, this.bullet);
             //Add Labels
             this.playerHealth = new objects.Label("Health: " + this.player.health, "20px", "Verdana", "#000000", 20, 560, false);
             this.addChild(this.playerHealth);
@@ -55,6 +55,7 @@ var scenes;
             });
         };
         Play.prototype.Update = function () {
+            var _this = this;
             //Update Player
             this.player.Update();
             this.time = Date.now();
@@ -64,11 +65,13 @@ var scenes;
                 console.log(this.time)
                 this.lastSpawn = this.time;
             } */
-            /* this.zombie.forEach(zombies =>
-            {
+            this.zombie.forEach(function (zombies) {
                 zombies.Update();
-                this.collision.checkCollision(zombies);
-            }); */
+                _this.collision.checkCollision(zombies);
+                if (_this.gunFired) {
+                    _this.collision.checkCollisionBullet(zombies);
+                }
+            });
             //Update bullet
             this.bullet.forEach(function (bullet) {
                 bullet.Update();
@@ -102,6 +105,7 @@ var scenes;
             this.bullet[this.bulletCounter].x = this.player.bulletSpawn.x;
             this.bullet[this.bulletCounter].y = this.player.bulletSpawn.y;
             this.bullet[this.bulletCounter].isFired = true;
+            this.gunFired = true;
             this.bullet[this.bulletCounter].bulletRotation = this.player.playerRotation;
             this.bulletCounter++;
             if (this.bulletCounter >= this.bulletNum - 1) {

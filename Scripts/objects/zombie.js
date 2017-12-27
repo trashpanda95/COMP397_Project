@@ -44,7 +44,7 @@ var objects;
         Zombie.prototype.Reset = function () {
             this.health = 1;
             var borderRandNum = Math.random();
-            var spawnPoint = new core.Vector(0, 0);
+            var spawnPoint = new managers.Vector(0, 0);
             //console.log(borderRandNum);
             if (borderRandNum > 0.75) {
                 //Spawn Top
@@ -86,15 +86,15 @@ var objects;
         };
         Zombie.prototype.ChasePlayer = function () {
             //Zombie rotation
-            this.rotation = core.Vector.RotateTowardPosition(new core.Vector(this.x, this.y), new core.Vector(this.target.x, this.target.y));
+            this.rotation = managers.Vector.RotateTowardPosition(new managers.Vector(this.x, this.y), new managers.Vector(this.target.x, this.target.y));
             //If player is not in range, move slowly
-            if (new core.Vector(this.target.x, this.target.y).Add(new core.Vector(-this.x, -this.y)).Magnitude() > this.range) {
-                this.x += core.Vector.DegreeToVector(this.rotation).x * 0.1;
-                this.y += core.Vector.DegreeToVector(this.rotation).y * 0.1;
+            if (new managers.Vector(this.target.x, this.target.y).Add(new managers.Vector(-this.x, -this.y)).Magnitude() > this.range) {
+                this.x += managers.Vector.DegreeToVector(this.rotation).x * 0.1;
+                this.y += managers.Vector.DegreeToVector(this.rotation).y * 0.1;
             }
             else {
-                this.x += core.Vector.DegreeToVector(this.rotation).x * 0.3;
-                this.y += core.Vector.DegreeToVector(this.rotation).y * 0.3;
+                this.x += managers.Vector.DegreeToVector(this.rotation).x * 0.3;
+                this.y += managers.Vector.DegreeToVector(this.rotation).y * 0.3;
             }
         };
         return Zombie;

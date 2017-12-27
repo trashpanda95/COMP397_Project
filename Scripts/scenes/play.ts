@@ -11,7 +11,7 @@ module scenes {
         private bullet: objects.Bullet[];
 
         private playerHealth:objects.Label;
-        private collision: core.Collision;
+        private collision: managers.Collision;
 
         private zombieCount: number =5;
         private bulletNum: number =10;
@@ -19,7 +19,7 @@ module scenes {
         private timeTillSpawn = 60000;
         private lastSpawn = -1;
         private time = Date.now();
-        private fired: boolean;
+        private gunFired : boolean;
 
         // PUBLIC PROPETIES
 
@@ -52,7 +52,7 @@ module scenes {
             this.bulletSpawn();
 
             //Add Collision
-            this.collision = new core.Collision(this.player);
+            this.collision = new managers.Collision(this.player, this.bullet);
 
             //Add Labels
             this.playerHealth = new objects.Label("Health: " +this.player.health, "20px","Verdana", "#000000", 20, 560, false);    
@@ -80,11 +80,15 @@ module scenes {
                 console.log(this.time)
                 this.lastSpawn = this.time;               
             } */
-            /* this.zombie.forEach(zombies =>
+             this.zombie.forEach(zombies =>
             {
                 zombies.Update();             
-                this.collision.checkCollision(zombies);            
-            }); */   
+                this.collision.checkCollision(zombies);  
+                if (this.gunFired)
+                { 
+                this.collision.checkCollisionBullet(zombies); 
+                }         
+            });  
 
             //Update bullet
             this.bullet.forEach(bullet => 
@@ -130,6 +134,7 @@ module scenes {
             this.bullet[this.bulletCounter].x = this.player.bulletSpawn.x;
             this.bullet[this.bulletCounter].y = this.player.bulletSpawn.y;
             this.bullet[this.bulletCounter].isFired = true;
+            this.gunFired = true;
             this.bullet[this.bulletCounter].bulletRotation = this.player.playerRotation;
     
             this.bulletCounter++;

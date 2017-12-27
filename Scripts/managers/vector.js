@@ -8,8 +8,8 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var core;
-(function (core) {
+var managers;
+(function (managers) {
     //Vector - inherit Point class
     var Vector = /** @class */ (function (_super) {
         __extends(Vector, _super);
@@ -135,6 +135,6 @@ var core;
         Vector.RIGHT = new Vector(0, 1);
         return Vector;
     }(createjs.Point));
-    core.Vector = Vector;
-})(core || (core = {}));
+    managers.Vector = Vector;
+})(managers || (managers = {}));
 //# sourceMappingURL=vector.js.map

@@ -1,5 +1,5 @@
-var core;
-(function (core) {
+var managers;
+(function (managers) {
     var keyBoardInput = /** @class */ (function () {
         // CONSTRUCTORS
         function keyBoardInput() {
@@ -73,6 +73,6 @@ var core;
         };
         return keyBoardInput;
     }());
-    core.keyBoardInput = keyBoardInput;
-})(core || (core = {}));
+    managers.keyBoardInput = keyBoardInput;
+})(managers || (managers = {}));
 //# sourceMappingURL=keyBoardInput.js.map
