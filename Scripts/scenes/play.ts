@@ -14,11 +14,12 @@ module scenes {
         private collision: core.Collision;
 
         private zombieCount: number =5;
-        private bulletCount: number =10;
+        private bulletNum: number =10;
         private bulletCounter: number=0;
         private timeTillSpawn = 60000;
         private lastSpawn = -1;
         private time = Date.now();
+        private fired: boolean;
 
         // PUBLIC PROPETIES
 
@@ -57,6 +58,7 @@ module scenes {
             this.playerHealth = new objects.Label("Health: " +this.player.health, "20px","Verdana", "#000000", 20, 560, false);    
             this.addChild(this.playerHealth);
 
+            //Add Mouse Listener
             this.mouse = new managers.Mouse(this.player, this.gameCanvas);
             this.mouse.AddClickListener((event)=> 
             {
@@ -78,11 +80,11 @@ module scenes {
                 console.log(this.time)
                 this.lastSpawn = this.time;               
             } */
-            this.zombie.forEach(zombies =>
+            /* this.zombie.forEach(zombies =>
             {
                 zombies.Update();             
                 this.collision.checkCollision(zombies);            
-            });   
+            }); */   
 
             //Update bullet
             this.bullet.forEach(bullet => 
@@ -114,21 +116,25 @@ module scenes {
             count = 0;
         }
 
-        private bulletSpawn()
+        //Bullet
+        private bulletSpawn():void
         {
-            for (let count= 0; count < this.bulletCount; count++)
+            for (let count= 0; count < this.bulletNum; count++)
             {
-                this.bullet[count] = new objects.Bullet(this.assetManager, this.player.bulletSpawn);      
+                this.bullet[count] = new objects.Bullet(this.assetManager);      
                 this.addChild(this.bullet[count]);                          
             }
         }
-        private bulletFire()
+        private bulletFire():void
         {
             this.bullet[this.bulletCounter].x = this.player.bulletSpawn.x;
             this.bullet[this.bulletCounter].y = this.player.bulletSpawn.y;
+            this.bullet[this.bulletCounter].fired = true;
+            this.bullet[this.bulletCounter].bulletRotation = this.player.playerRotation;
     
             this.bulletCounter++;
-            if(this.bulletCounter >= this.bulletCount -1) {
+            if(this.bulletCounter >= this.bulletNum -1) 
+            {
               this.bulletCounter = 0;
             }
         }

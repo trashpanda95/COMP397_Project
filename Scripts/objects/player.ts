@@ -1,22 +1,32 @@
 module objects {
-    export class Player extends objects.GameObject {
+    export class Player extends objects.GameObject
+     {
         //PRIVATE INSTANCE VARIBALES 
         private assetManager: createjs.LoadQueue;
         private keyBoardKey = new core.keyBoardInput();
+        private bullet: objects.Bullet;
         bulletSpawn:createjs.Point;
        
         //PUBLIC PROPERTIES
-        public getHealth (){                                // Getter for current HP
+        public getHealth ()
+        {                                // Getter for current HP
             return this.health;
         }
-
-        public setHealth (newHealth:number){                // Setter for new HP
+        public setHealth (newHealth:number)
+        {               
             this.health = newHealth;
         }
-
-        public getPlayerXY() : number
+        public getPlayerX() : number
         {
             return this.x;
+        }
+        public getPlayerY(): number
+        {
+            return this.y;
+        }
+        public getPayerRotation():number
+        {
+            return this.playerRotation;
         }
         //CONSTRUCTORS
         constructor(assetManager: createjs.LoadQueue) 
@@ -94,14 +104,10 @@ module objects {
         {
             var xAngle = this.stage.mouseX- this.x;
             var yAngle = this.stage.mouseY- this.y;
-            this.playerRotation = Math.atan2(yAngle,xAngle) * (180/ Math.PI);       
+            this.playerRotation = Math.atan2(yAngle,xAngle) * (180/ Math.PI);    
             this.rotation = this.playerRotation;
+            //console.log("Player Rotation: " +this.playerRotation);
         }
-        public fire()
-        {
-           let bullet = new objects.Bullet(this.assetManager, this.bulletSpawn)
-           this.parent.addChild(bullet);
-            //bullet.Update();
-        }
+
     }
 }

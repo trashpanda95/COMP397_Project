@@ -1,53 +1,50 @@
 module objects {
     export class Bullet extends objects.GameObject
     {
-        public speed: number;
+        //PRIVATE INSTANCE VARIBALES
+        public bulletSpeed: number;
+        private isFired: boolean;
+        private bulletRotation: number;
 
-        
-        constructor(assetManager:createjs.LoadQueue, position: createjs.Point)
+        constructor(assetManager:createjs.LoadQueue)
         {
             super(assetManager, "bullet");
-            this.position = position;
             this.Start();
-
-            this.x = position.x;
-            this.y = position.y;
         }
 
         public Start():void 
         {
+            this.bulletSpeed = 20;
             this.regXY();
-            this.speed = 10;
-            //this.Reset();
+            this.reset();                 
         }
 
-        private Reset():void 
+        public Update():void 
+        {    
+            //If bullet is in screen then run the block
+            if (this.y > 0 && this.y < config.Screen.HEIGHT)
+            {  
+                //If bullet fired, update rotation          
+                if (this.isFired)
+                {
+                    this.setFireCoord();
+                    this.isFired = false;//Set fired to false
+                }
+                //Update position every frame
+                this.x += Math.cos(this.rotation)* this.bulletSpeed;
+                this.y += Math.sin(this.rotation)* this.bulletSpeed;      
+                this.checkBounds();         
+            }    
+        }    
+
+        //PRIVATE
+        private reset():void 
         {
             this.y = -1000;
             this.x = -1000;
         }
-
-        public Update():void 
-        {
-            console.log("bullet update");
-            //this.CheckBounds();
-            /* if (this.speed > 0) 
-            {
-               //this.position = core.Vector.DegreeToVector(this.rotation).Multiply(this.speed);
-                var deltaX = this.stage.mouseX - (this.x + this.regX);
-                var deltaY = this.stage.mouseY - (this.y + this.regY);
-                this.rotation= Math.atan2(deltaY, deltaX);
-
-                this.x += Math.cos(this.rotation)* this.speed;
-                this.y += Math.sin (this.rotation)* this.speed;
-            } */
-            this.y +=this.speed;
-            this.position.x = this.x;
-            this.position.y = this.y;
-        }
-
-        //PRIVATE
-        private regXY(): void                               //Method to set bitmap registry point at the center
+        //Method to set bitmap registry point at the center
+        private regXY(): void                               
         {
             this.width = this.getBounds().width;
             this.height = this.getBounds().height;
@@ -56,16 +53,24 @@ module objects {
             this.regX = this.halfWidth;
             this.regY = this.halfHeight;
         }
-
-        private CheckBounds():void
+        //Checkbonds and reset if outside
+        private checkBounds():void
         {
-            if (this.y <= 0 + this.height || this.y >= 0 + this.height) {
-               this.Reset();
+            if (this.y <= 0 + this.height || this.y >= config.Screen.HEIGHT || this.x <= 0 + this.width|| this.x >= config.Screen.WIDTH) 
+            {
+                console.log("Bullet left screen, Destroyed");
+                this.reset();
             }
         }
-
-       
-
-        
+        //Set bullet rotation by calculating it's position to mouse
+        private setFireCoord()
+        {
+            var centerX = this.x + this.regX;
+            var centerY = this.y + this.regY;        
+            var mouseX = this.stage.mouseX;
+            var mouseY = this.stage.mouseY;
+            var angle = Math.atan2(mouseY - centerY, mouseX- centerX);
+            this.rotation = angle;
+        }
     }
 }

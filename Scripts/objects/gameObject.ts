@@ -12,17 +12,14 @@ module objects {
         public horizontalSpeed:number;
         public regX :number;
         public regY : number;
-               
-        //Controls
-        public static moveLeft: boolean;
-        public static moveUp: any;
-        public static moveRight: any;
-        public static moveDown: any;
-        
+                     
         //Player
         public playerSpeed: number = 2;
         public playerRotation: number;
         public isAlive: boolean;
+
+        //Bullet
+        public bulletSpeed: number= 2;
 
         //Zombie
         public zombieSpeed: number = 0.1;

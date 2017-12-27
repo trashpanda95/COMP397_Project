@@ -17,6 +17,8 @@ var objects;
             var _this = _super.call(this, assetManager.getResult(imageString)) || this;
             //Player
             _this.playerSpeed = 2;
+            //Bullet
+            _this.bulletSpeed = 2;
             //Zombie
             _this.zombieSpeed = 0.1;
             _this.name = imageString;

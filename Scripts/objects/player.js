@@ -27,8 +27,14 @@ var objects;
         Player.prototype.setHealth = function (newHealth) {
             this.health = newHealth;
         };
-        Player.prototype.getPlayerXY = function () {
+        Player.prototype.getPlayerX = function () {
             return this.x;
+        };
+        Player.prototype.getPlayerY = function () {
+            return this.y;
+        };
+        Player.prototype.getPayerRotation = function () {
+            return this.playerRotation;
         };
         //PUBLIC METHODS             
         Player.prototype.Start = function () {
@@ -87,11 +93,7 @@ var objects;
             var yAngle = this.stage.mouseY - this.y;
             this.playerRotation = Math.atan2(yAngle, xAngle) * (180 / Math.PI);
             this.rotation = this.playerRotation;
-        };
-        Player.prototype.fire = function () {
-            var bullet = new objects.Bullet(this.assetManager, this.bulletSpawn);
-            this.parent.addChild(bullet);
-            //bullet.Update();
+            //console.log("Player Rotation: " +this.playerRotation);
         };
         return Player;
     }(objects.GameObject));
