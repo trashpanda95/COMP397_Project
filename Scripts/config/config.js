@@ -15,7 +15,7 @@ var config;
         function Screen() {
         }
         Screen.WIDTH = 800;
-        Screen.HEIGHT = 550;
+        Screen.HEIGHT = 600;
         return Screen;
     }());
     config.Screen = Screen;

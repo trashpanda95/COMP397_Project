@@ -1,10 +1,11 @@
 module objects {
     export class Bullet extends objects.GameObject
     {
-        //PRIVATE INSTANCE VARIBALES
+        //INSTANCE VARIBALES
         public bulletSpeed: number;
-        private isFired: boolean;
-        private bulletRotation: number;
+        public bulletRotation: number;
+        public isFired: boolean;
+        
 
         constructor(assetManager:createjs.LoadQueue)
         {

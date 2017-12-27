@@ -101,7 +101,7 @@ var scenes;
         Play.prototype.bulletFire = function () {
             this.bullet[this.bulletCounter].x = this.player.bulletSpawn.x;
             this.bullet[this.bulletCounter].y = this.player.bulletSpawn.y;
-            this.bullet[this.bulletCounter].fired = true;
+            this.bullet[this.bulletCounter].isFired = true;
             this.bullet[this.bulletCounter].bulletRotation = this.player.playerRotation;
             this.bulletCounter++;
             if (this.bulletCounter >= this.bulletNum - 1) {
