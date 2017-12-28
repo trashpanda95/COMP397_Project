@@ -20,7 +20,7 @@ var objects;
         Bullet.prototype.Start = function () {
             this.bulletSpeed = 20;
             this.regXY();
-            this.reset();
+            this.Reset();
         };
         Bullet.prototype.Update = function () {
             //If bullet is in screen then run the block
@@ -37,7 +37,7 @@ var objects;
             }
         };
         //PRIVATE
-        Bullet.prototype.reset = function () {
+        Bullet.prototype.Reset = function () {
             this.y = -1000;
             this.x = -1000;
         };
@@ -54,7 +54,7 @@ var objects;
         Bullet.prototype.checkBounds = function () {
             if (this.y <= 0 + this.height || this.y >= config.Screen.HEIGHT || this.x <= 0 + this.width || this.x >= config.Screen.WIDTH) {
                 //console.log("Bullet left screen, Destroyed");
-                this.reset();
+                this.Reset();
             }
         };
         //Set bullet rotation by calculating it's position to mouse

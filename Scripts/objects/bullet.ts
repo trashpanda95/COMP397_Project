@@ -17,7 +17,7 @@ module objects {
         {
             this.bulletSpeed = 20;
             this.regXY();
-            this.reset();                 
+            this.Reset();                 
         }
 
         public Update():void 
@@ -39,7 +39,7 @@ module objects {
         }    
 
         //PRIVATE
-        private reset():void 
+        public Reset():void 
         {
             this.y = -1000;
             this.x = -1000;
@@ -60,7 +60,7 @@ module objects {
             if (this.y <= 0 + this.height || this.y >= config.Screen.HEIGHT || this.x <= 0 + this.width|| this.x >= config.Screen.WIDTH) 
             {
                 //console.log("Bullet left screen, Destroyed");
-                this.reset();
+                this.Reset();
             }
         }
         //Set bullet rotation by calculating it's position to mouse

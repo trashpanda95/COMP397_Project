@@ -30,7 +30,7 @@ var objects;
             this.Reset();
         };
         Zombie.prototype.Update = function () {
-            //this.CheckBounds()
+            this.CheckBounds();
             this.ChasePlayer();
         };
         //Zombie gets hit by bullet

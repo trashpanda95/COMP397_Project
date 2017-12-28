@@ -8,14 +8,6 @@ module objects {
         bulletSpawn:createjs.Point;
        
         //PUBLIC PROPERTIES
-        public getHealth ()
-        {                                // Getter for current HP
-            return this.health;
-        }
-        public setHealth (newHealth:number)
-        {               
-            this.health = newHealth;
-        }
         public getPlayerX() : number
         {
             return this.x;
@@ -40,7 +32,7 @@ module objects {
         public Start()                                      // Start method runs when object is instantiated
         {
             this.regXY();
-            this.health = 100;
+            this.playerHealth = 50;
             this.keyBoardKey = new managers.keyBoardInput();
             this.bulletSpawn = new createjs.Point(this.y -35, this.x);
         }

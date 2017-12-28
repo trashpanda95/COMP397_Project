@@ -43,9 +43,9 @@ var scenes;
             this.bullet = new Array();
             this.bulletSpawn();
             //Add Collision
-            this.collision = new managers.Collision(this.player, this.bullet);
+            this.collision = new managers.Collision();
             //Add Labels
-            this.playerHealth = new objects.Label("Health: " + this.player.health, "20px", "Verdana", "#000000", 20, 560, false);
+            this.playerHealth = new objects.Label("Health: " + this.player.playerHealth, "20px", "Verdana", "#000000", 20, 560, false);
             this.addChild(this.playerHealth);
             //Add Mouse Listener
             this.mouse = new managers.Mouse(this.player, this.gameCanvas);
@@ -67,13 +67,18 @@ var scenes;
             } */
             this.zombie.forEach(function (zombies) {
                 zombies.Update();
-                _this.collision.checkCollision(zombies);
-                if (_this.gunFired) {
-                    _this.collision.checkCollisionBullet(zombies);
-                }
+                //Checks collision with the player and each zombie         
+                _this.collision.checkCollision(_this.player, zombies);
+            });
+            //Checks collisions between each zombie and each bullet
+            this.zombie.forEach(function (zombie) {
+                _this.bullet.forEach(function (bullet) {
+                    _this.collision.checkCollision(zombie, bullet);
+                });
             });
             //Update bullet
             this.bullet.forEach(function (bullet) {
+                //Update Bullet
                 bullet.Update();
             });
             //Update Labels           
@@ -87,12 +92,12 @@ var scenes;
         };
         // PRIVATE METHODS
         Play.prototype.zombieSpawn = function () {
+            var drawLine = new createjs.Shape();
             var count;
             for (count = 0; count < this.zombieCount; count++) {
                 this.zombie[count] = new objects.Zombie(this.assetManager, this.player);
-                this.addChild(this.zombie[count]);
+                this.addChild(this.zombie[count], drawLine);
             }
-            count = 0;
         };
         //Bullet
         Play.prototype.bulletSpawn = function () {
@@ -113,7 +118,7 @@ var scenes;
             }
         };
         Play.prototype.updateLabels = function () {
-            this.playerHealth.text = "Health: " + this.player.health;
+            this.playerHealth.text = "Health: " + this.player.playerHealth;
         };
         return Play;
     }(objects.Scene));

@@ -27,7 +27,7 @@ module objects {
         }
         public Update()                 
         {
-            //this.CheckBounds()
+            this.CheckBounds()
             this.ChasePlayer();
         }
         //Zombie gets hit by bullet
@@ -41,7 +41,7 @@ module objects {
         }
 
         // PRIVATE METHODS
-        private Reset():void 
+        public Reset():void 
         {
             this.health = 1;
             let borderRandNum = Math.random();

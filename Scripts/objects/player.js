@@ -21,12 +21,6 @@ var objects;
             return _this;
         }
         //PUBLIC PROPERTIES
-        Player.prototype.getHealth = function () {
-            return this.health;
-        };
-        Player.prototype.setHealth = function (newHealth) {
-            this.health = newHealth;
-        };
         Player.prototype.getPlayerX = function () {
             return this.x;
         };
@@ -39,7 +33,7 @@ var objects;
         //PUBLIC METHODS             
         Player.prototype.Start = function () {
             this.regXY();
-            this.health = 100;
+            this.playerHealth = 50;
             this.keyBoardKey = new managers.keyBoardInput();
             this.bulletSpawn = new createjs.Point(this.y - 35, this.x);
         };

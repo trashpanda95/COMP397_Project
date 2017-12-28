@@ -52,10 +52,10 @@ module scenes {
             this.bulletSpawn();
 
             //Add Collision
-            this.collision = new managers.Collision(this.player, this.bullet);
+            this.collision = new managers.Collision();
 
             //Add Labels
-            this.playerHealth = new objects.Label("Health: " +this.player.health, "20px","Verdana", "#000000", 20, 560, false);    
+            this.playerHealth = new objects.Label("Health: " +this.player.playerHealth, "20px","Verdana", "#000000", 20, 560, false);    
             this.addChild(this.playerHealth);
 
             //Add Mouse Listener
@@ -80,20 +80,25 @@ module scenes {
                 console.log(this.time)
                 this.lastSpawn = this.time;               
             } */
-             this.zombie.forEach(zombies =>
+            this.zombie.forEach(zombies =>
             {
-                zombies.Update();             
-                this.collision.checkCollision(zombies);  
-                if (this.gunFired)
-                { 
-                this.collision.checkCollisionBullet(zombies); 
-                }         
+                zombies.Update();    
+                //Checks collision with the player and each zombie         
+                this.collision.checkCollision(this.player, zombies);         
             });  
+
+            //Checks collisions between each zombie and each bullet
+            this.zombie.forEach(zombie=> {
+                 this.bullet.forEach(bullet => {
+                    this.collision.checkCollision(zombie, bullet); 
+                 });
+            });
 
             //Update bullet
             this.bullet.forEach(bullet => 
             {
-                bullet.Update();
+                //Update Bullet
+                bullet.Update(); 
             });
                     
             //Update Labels           
@@ -111,13 +116,14 @@ module scenes {
         // PRIVATE METHODS
         private zombieSpawn()
         {  
+            var drawLine = new createjs.Shape();
+
             let count;
             for (count= 0; count < this.zombieCount; count++)
             {
                 this.zombie[count] = new objects.Zombie(this.assetManager, this.player);      
-                this.addChild(this.zombie[count]);                          
+                this.addChild(this.zombie[count], drawLine);                          
             }
-            count = 0;
         }
 
         //Bullet
@@ -146,7 +152,7 @@ module scenes {
 
         private updateLabels()
         {
-            this.playerHealth.text = "Health: "+this.player.health;
+            this.playerHealth.text = "Health: "+ this.player.playerHealth;
         }
         
     }

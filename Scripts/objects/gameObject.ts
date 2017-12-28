@@ -16,18 +16,21 @@ module objects {
         //Player
         public playerSpeed: number = 2;
         public playerRotation: number;
+        public playerHealth: number;
         public isAlive: boolean;
 
         //Bullet
         public bulletSpeed: number= 2;
+        public bulletSpawn: createjs.Point;
 
         //Zombie
         public zombieSpeed: number = 0.1;
 
         //Game
-        public health: number;
         public position: createjs.Point;
         public isColliding: boolean;
+
+        
 
         //CONSTRUCTORS
         constructor(assetManager: createjs.LoadQueue, imageString: string) 
@@ -35,6 +38,7 @@ module objects {
             super(assetManager.getResult(imageString));
             this.name = imageString;
             this.initialize();
+            
         }
         
         //PUBLIC METHODS
@@ -52,6 +56,8 @@ module objects {
         public abstract Start(): void //Start method runs when object is instantiated
 
         public abstract Update(): void //Update method runs 60fps
+
+        public abstract Reset(): void 
 
         public Destroy(): void 
         {
