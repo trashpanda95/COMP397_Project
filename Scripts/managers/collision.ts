@@ -14,8 +14,11 @@ module managers {
             var endPoint: createjs.Point = new createjs.Point();
             var objectHalfHeight: number = object1.height*0.5;
             var object2HalfHeight: number = object2.height* 0.5;
+            var objectHalfWidth: number = object1.width;
+            var object2HalfWidth: number = object2.width;
             
             var minimumDistance: number = objectHalfHeight + object2HalfHeight;
+            var minimumDistance2: number = objectHalfWidth + object2HalfWidth;
 
             startPoint.x = object1.regX + object1.x;
             startPoint.y = object1.regY + object1.y;
@@ -27,12 +30,14 @@ module managers {
             if (object2.name =="bullet" && object2.bulletCollided)
             {
                 //Check if distance between zombie and bullet is less than the height of bullet + half height of zombie
-                if (this.objectToObject2Dist(startPoint, endPoint) < (object1.halfHeight+ object1.halfWidth))
+                if (this.objectToObject2Dist(startPoint, endPoint) <= minimumDistance2)
+                //if (object1.x < object2.x + object2.width && object1.x + object1.width > object2.x 
+                   // && object1.y < object2.y + object2.height && object1.y + object1.height > object2.y)
                 {
                     //Decrease zombie health
                     object1.zombieHealth --;
                     object2.Reset();
-                    console.log(object1.zombieHealth);
+                    //console.log(object1.zombieHealth);
                     
                     //Check if zombie health is 0, then reset the object
                     if (object1.zombieHealth <=0)

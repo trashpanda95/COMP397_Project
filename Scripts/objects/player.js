@@ -43,6 +43,7 @@ var objects;
             this.checkBounds();
             this.playerMovement();
         };
+        Player.prototype.Reset = function () { };
         //PRIVATE METHODS
         Player.prototype.regXY = function () {
             this.width = this.getBounds().width;

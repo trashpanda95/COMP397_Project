@@ -4,8 +4,8 @@ module objects {
         // PRIVATE INSTANCE VARIBALES
         private target: objects.Player;
         private range: number = 200;
-        private spawnMax = 5;
-        private spawnMin = -1;
+        private spawnMax = 500;
+        private spawnMin = 100;
 
         //Public Properties
         public health: number;
@@ -25,50 +25,20 @@ module objects {
         }
         public Update()                 
         {
-            this.CheckBounds()
+           // this.CheckBounds()
             this.ChasePlayer();
         }
         public Reset():void 
         {
-            this.generateHealth();
-            let borderRandNum = Math.random();
-            let spawnPoint = new managers.Vector(0, 0);
-            //console.log(borderRandNum);
-
-            if (borderRandNum >0.75)
-            {
-                //Spawn Top
-                spawnPoint.x = (Math.random() * config.Screen.WIDTH)+(this.spawnMax- this.spawnMin)+this.spawnMin ;
-                spawnPoint.y = -0.1 * config.Screen.HEIGHT;
-                //console.log("Spawned top"+ spawnPoint.y);
-            }
-            else if (borderRandNum > 0.5)
-            {
-                //Spaen Left
-                spawnPoint.x = -0.1 * config.Screen.WIDTH;
-                spawnPoint.y = Math.random() * config.Screen.HEIGHT;
-            }
-            else if (borderRandNum > 0.25) {
-                //Spawn Right
-                spawnPoint.x = 1.1 * config.Screen.WIDTH;
-                spawnPoint.y = Math.random() * config.Screen.HEIGHT;
-            } else {
-                //Spwan Bottom
-                spawnPoint.x = Math.random() * config.Screen.WIDTH;
-                spawnPoint.y = 1.1 * config.Screen.HEIGHT;
-            }
-
-            this.x = spawnPoint.x;
-            this.y = spawnPoint.y;
-            
+           this.generateHealth();
+           this.zombieSpawnPoint();      
         }
 
         // PRIVATE METHODS  
         private generateHealth()
         {
-            this.zombieHealth = Math.random()* (10- 5)+ 5 ;
+            this.zombieHealth = Math.random()* (8- 5)+ 5 ;
         }
-
         private generateNormalSpeed()
         {
             return Math.random()* (0.2- 0.03)+ 0.03 ;
@@ -112,5 +82,40 @@ module objects {
                 this.y += managers.Vector.DegreeToVector(this.rotation).y * this.generateCloseSpeed();
             }
         }     
+        private zombieSpawnPoint()
+        {
+
+            let borderRandNum = Math.random();
+            let spawnPoint = new managers.Vector(0, 0);
+
+            if (borderRandNum >0.75)
+            {
+                //Spawn Top
+                spawnPoint.x = (Math.random() * config.Screen.WIDTH)+(this.spawnMax- this.spawnMin)+this.spawnMin ;
+                spawnPoint.y = ((config.Screen.HEIGHT*-0.1) - (Math.random()* (this.spawnMax- this.spawnMin)+ this.spawnMin)); 
+                console.log("Spawned Top "+ spawnPoint.y);
+            }
+            else if (borderRandNum > 0.5)
+            {
+                //Spawn Left
+                spawnPoint.x = ((config.Screen.WIDTH*-0.1) - (Math.random()* (this.spawnMax- this.spawnMin)+ this.spawnMin)); 
+                spawnPoint.y = (Math.random() * config.Screen.HEIGHT)+ (this.spawnMax- this.spawnMin)+this.spawnMin;
+                console.log("Spawned Left "+ spawnPoint.x);
+            }
+            else if (borderRandNum > 0.25) {
+                //Spawn Right
+                spawnPoint.x = ((config.Screen.WIDTH) + (Math.random()* (this.spawnMax- this.spawnMin)+ this.spawnMin)); 
+                spawnPoint.y = (Math.random() * config.Screen.HEIGHT) + (this.spawnMax- this.spawnMin)+this.spawnMin;
+                console.log("Spawned Right "+ spawnPoint.x);
+            } else {
+                //Spwan Bottom
+                spawnPoint.x =(Math.random() * config.Screen.WIDTH)+(this.spawnMax- this.spawnMin)+this.spawnMin;
+                spawnPoint.y = (config.Screen.HEIGHT + (Math.random()* (this.spawnMax- this.spawnMin)+ this.spawnMin));    
+                console.log("Spawned Bottom "+ spawnPoint.y);
+            }
+
+            this.x = spawnPoint.x;
+            this.y = spawnPoint.y;
+        }
     }
 }

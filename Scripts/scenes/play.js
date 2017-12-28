@@ -16,7 +16,7 @@ var scenes;
         // CONSTRUCTORS
         function Play(assetManager, currentScene, gameCanvas) {
             var _this = _super.call(this) || this;
-            _this.zombieCount = 5;
+            _this.zombieCount = 10;
             _this.bulletNum = 10;
             _this.bulletCounter = 0;
             _this.assetManager = assetManager;

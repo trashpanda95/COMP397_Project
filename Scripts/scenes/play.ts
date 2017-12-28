@@ -13,7 +13,7 @@ module scenes {
         private playerHealth:objects.Label;
         private collision: managers.Collision;
 
-        private zombieCount: number =5;
+        private zombieCount: number =10;
         private bulletNum: number =10;
         private bulletCounter: number=0;
 

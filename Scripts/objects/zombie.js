@@ -16,8 +16,8 @@ var objects;
         function Zombie(assetManager, target) {
             var _this = _super.call(this, assetManager, "zombie") || this;
             _this.range = 200;
-            _this.spawnMax = 5;
-            _this.spawnMin = -1;
+            _this.spawnMax = 500;
+            _this.spawnMin = 100;
             _this.target = target;
             _this.Start();
             return _this;
@@ -28,41 +28,16 @@ var objects;
             this.Reset();
         };
         Zombie.prototype.Update = function () {
-            this.CheckBounds();
+            // this.CheckBounds()
             this.ChasePlayer();
         };
         Zombie.prototype.Reset = function () {
             this.generateHealth();
-            var borderRandNum = Math.random();
-            var spawnPoint = new managers.Vector(0, 0);
-            //console.log(borderRandNum);
-            if (borderRandNum > 0.75) {
-                //Spawn Top
-                spawnPoint.x = (Math.random() * config.Screen.WIDTH) + (this.spawnMax - this.spawnMin) + this.spawnMin;
-                spawnPoint.y = -0.1 * config.Screen.HEIGHT;
-                //console.log("Spawned top"+ spawnPoint.y);
-            }
-            else if (borderRandNum > 0.5) {
-                //Spaen Left
-                spawnPoint.x = -0.1 * config.Screen.WIDTH;
-                spawnPoint.y = Math.random() * config.Screen.HEIGHT;
-            }
-            else if (borderRandNum > 0.25) {
-                //Spawn Right
-                spawnPoint.x = 1.1 * config.Screen.WIDTH;
-                spawnPoint.y = Math.random() * config.Screen.HEIGHT;
-            }
-            else {
-                //Spwan Bottom
-                spawnPoint.x = Math.random() * config.Screen.WIDTH;
-                spawnPoint.y = 1.1 * config.Screen.HEIGHT;
-            }
-            this.x = spawnPoint.x;
-            this.y = spawnPoint.y;
+            this.zombieSpawnPoint();
         };
         // PRIVATE METHODS  
         Zombie.prototype.generateHealth = function () {
-            this.zombieHealth = Math.random() * (10 - 5) + 5;
+            this.zombieHealth = Math.random() * (8 - 5) + 5;
         };
         Zombie.prototype.generateNormalSpeed = function () {
             return Math.random() * (0.2 - 0.03) + 0.03;
@@ -96,6 +71,36 @@ var objects;
                 this.x += managers.Vector.DegreeToVector(this.rotation).x * this.generateCloseSpeed();
                 this.y += managers.Vector.DegreeToVector(this.rotation).y * this.generateCloseSpeed();
             }
+        };
+        Zombie.prototype.zombieSpawnPoint = function () {
+            var borderRandNum = Math.random();
+            var spawnPoint = new managers.Vector(0, 0);
+            if (borderRandNum > 0.75) {
+                //Spawn Top
+                spawnPoint.x = (Math.random() * config.Screen.WIDTH) + (this.spawnMax - this.spawnMin) + this.spawnMin;
+                spawnPoint.y = ((config.Screen.HEIGHT * -0.1) - (Math.random() * (this.spawnMax - this.spawnMin) + this.spawnMin));
+                console.log("Spawned Top " + spawnPoint.y);
+            }
+            else if (borderRandNum > 0.5) {
+                //Spawn Left
+                spawnPoint.x = ((config.Screen.WIDTH * -0.1) - (Math.random() * (this.spawnMax - this.spawnMin) + this.spawnMin));
+                spawnPoint.y = (Math.random() * config.Screen.HEIGHT) + (this.spawnMax - this.spawnMin) + this.spawnMin;
+                console.log("Spawned Left " + spawnPoint.x);
+            }
+            else if (borderRandNum > 0.25) {
+                //Spawn Right
+                spawnPoint.x = ((config.Screen.WIDTH) + (Math.random() * (this.spawnMax - this.spawnMin) + this.spawnMin));
+                spawnPoint.y = (Math.random() * config.Screen.HEIGHT) + (this.spawnMax - this.spawnMin) + this.spawnMin;
+                console.log("Spawned Right " + spawnPoint.x);
+            }
+            else {
+                //Spwan Bottom
+                spawnPoint.x = (Math.random() * config.Screen.WIDTH) + (this.spawnMax - this.spawnMin) + this.spawnMin;
+                spawnPoint.y = (config.Screen.HEIGHT + (Math.random() * (this.spawnMax - this.spawnMin) + this.spawnMin));
+                console.log("Spawned Bottom " + spawnPoint.y);
+            }
+            this.x = spawnPoint.x;
+            this.y = spawnPoint.y;
         };
         return Zombie;
     }(objects.GameObject));

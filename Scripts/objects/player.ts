@@ -43,6 +43,8 @@ module objects {
             this.checkBounds();
             this.playerMovement();
         }
+        public Reset()
+        {}
         
         //PRIVATE METHODS
         private regXY(): void                               //Method to set bitmap registry point at the center
