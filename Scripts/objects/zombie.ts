@@ -2,12 +2,10 @@ module objects {
     export class Zombie extends objects.GameObject
     {
         // PRIVATE INSTANCE VARIBALES
-        target: objects.Player;
-        range: number = 200;
-        screenWidth: number = 640;
-        screenHeight: number = 480;
-        spawnMax = 1;
-        spawnMin = -1;
+        private target: objects.Player;
+        private range: number = 200;
+        private spawnMax = 5;
+        private spawnMin = -1;
 
         //Public Properties
         public health: number;
@@ -15,35 +13,24 @@ module objects {
         // CONSTRUCTORS
         constructor(assetManager: createjs.LoadQueue, target:objects.Player) {
             super(assetManager, "zombie");
-            this.Start();
-            this.health = 1;
             this.target = target;
+            this.Start();
         }
 
         //PUBLIC METHODS
         public Start()                  
         {
-           this.Reset();
+            this.generateHealth();
+            this.Reset();
         }
         public Update()                 
         {
             this.CheckBounds()
             this.ChasePlayer();
         }
-        //Zombie gets hit by bullet
-        public GetHit(): void
-        {
-            this.health --;
-            if (this.health <= 0)
-            {
-                this.parent.removeChild(this);
-            }
-        }
-
-        // PRIVATE METHODS
         public Reset():void 
         {
-            this.health = 1;
+            this.generateHealth();
             let borderRandNum = Math.random();
             let spawnPoint = new managers.Vector(0, 0);
             //console.log(borderRandNum);
@@ -51,29 +38,44 @@ module objects {
             if (borderRandNum >0.75)
             {
                 //Spawn Top
-                spawnPoint.x = (Math.random() * this.screenWidth)+(this.spawnMax- this.spawnMin)+this.spawnMin ;
-                spawnPoint.y = -0.1 * this.screenHeight;
+                spawnPoint.x = (Math.random() * config.Screen.WIDTH)+(this.spawnMax- this.spawnMin)+this.spawnMin ;
+                spawnPoint.y = -0.1 * config.Screen.HEIGHT;
                 //console.log("Spawned top"+ spawnPoint.y);
             }
             else if (borderRandNum > 0.5)
             {
                 //Spaen Left
-                spawnPoint.x = -0.1 * this.screenWidth;
-                spawnPoint.y = Math.random() * this.screenHeight;
+                spawnPoint.x = -0.1 * config.Screen.WIDTH;
+                spawnPoint.y = Math.random() * config.Screen.HEIGHT;
             }
             else if (borderRandNum > 0.25) {
                 //Spawn Right
-                spawnPoint.x = 1.1 * this.screenWidth;
-                spawnPoint.y = Math.random() * this.screenHeight;
+                spawnPoint.x = 1.1 * config.Screen.WIDTH;
+                spawnPoint.y = Math.random() * config.Screen.HEIGHT;
             } else {
                 //Spwan Bottom
-                spawnPoint.x = Math.random() * this.screenWidth;
-                spawnPoint.y = 1.1 * this.screenHeight;
+                spawnPoint.x = Math.random() * config.Screen.WIDTH;
+                spawnPoint.y = 1.1 * config.Screen.HEIGHT;
             }
 
             this.x = spawnPoint.x;
             this.y = spawnPoint.y;
             
+        }
+
+        // PRIVATE METHODS  
+        private generateHealth()
+        {
+            this.zombieHealth = Math.random()* (10- 5)+ 5 ;
+        }
+
+        private generateNormalSpeed()
+        {
+            return Math.random()* (0.2- 0.03)+ 0.03 ;
+        }
+        private generateCloseSpeed()
+        {
+            return Math.random()* (0.5- 0.2)+ 0.2 ;
         }
         private CheckBounds()                // Check and set object bounds within canvas
         {
@@ -100,14 +102,14 @@ module objects {
             //If player is not in range, move slowly
             if (new managers.Vector(this.target.x, this.target.y).Add(new managers.Vector(-this.x, -this.y)).Magnitude() > this.range) 
             {
-                this.x += managers.Vector.DegreeToVector(this.rotation).x * 0.1;
-                this.y += managers.Vector.DegreeToVector(this.rotation).y * 0.1;
+                this.x += managers.Vector.DegreeToVector(this.rotation).x * this.generateNormalSpeed();
+                this.y += managers.Vector.DegreeToVector(this.rotation).y * this.generateNormalSpeed();
             }
             //Else if in range, move fast
             else
             {
-                this.x += managers.Vector.DegreeToVector(this.rotation).x * 0.3;
-                this.y += managers.Vector.DegreeToVector(this.rotation).y * 0.3;
+                this.x += managers.Vector.DegreeToVector(this.rotation).x * this.generateCloseSpeed();
+                this.y += managers.Vector.DegreeToVector(this.rotation).y * this.generateCloseSpeed();
             }
         }     
     }

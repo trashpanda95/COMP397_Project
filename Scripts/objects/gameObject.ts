@@ -22,9 +22,11 @@ module objects {
         //Bullet
         public bulletSpeed: number= 2;
         public bulletSpawn: createjs.Point;
+        public bulletCollided: boolean;
 
         //Zombie
-        public zombieSpeed: number = 0.1;
+        public zombieSpeed: number;
+        public zombieHealth: number;
 
         //Game
         public position: createjs.Point;
@@ -52,6 +54,7 @@ module objects {
             this.regY = this.halfHeight;
             this.position = new createjs.Point(this.x, this.y);
             this.isColliding = false;
+            this.bulletCollided =false;
         }
         public abstract Start(): void //Start method runs when object is instantiated
 

@@ -4,8 +4,7 @@ module objects {
         //INSTANCE VARIBALES
         public bulletSpeed: number;
         public bulletRotation: number;
-        public isFired: boolean;
-        
+        public gunFired: boolean;
 
         constructor(assetManager:createjs.LoadQueue)
         {
@@ -15,6 +14,7 @@ module objects {
 
         public Start():void 
         {
+            this.gunFired = false;
             this.bulletSpeed = 20;
             this.regXY();
             this.Reset();                 
@@ -26,10 +26,10 @@ module objects {
             if (this.y > 0 && this.y < config.Screen.HEIGHT)
             {  
                 //If bullet fired, update rotation          
-                if (this.isFired)
+                if (this.gunFired)
                 {
                     this.setFireCoord();
-                    this.isFired = false;//Set fired to false
+                    this.gunFired = false;//Set fired to false
                 }
                 //Update position every frame
                 this.x += Math.cos(this.rotation)* this.bulletSpeed;

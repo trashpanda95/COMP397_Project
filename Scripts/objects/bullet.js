@@ -18,6 +18,7 @@ var objects;
             return _this;
         }
         Bullet.prototype.Start = function () {
+            this.gunFired = false;
             this.bulletSpeed = 20;
             this.regXY();
             this.Reset();
@@ -26,9 +27,9 @@ var objects;
             //If bullet is in screen then run the block
             if (this.y > 0 && this.y < config.Screen.HEIGHT) {
                 //If bullet fired, update rotation          
-                if (this.isFired) {
+                if (this.gunFired) {
                     this.setFireCoord();
-                    this.isFired = false; //Set fired to false
+                    this.gunFired = false; //Set fired to false
                 }
                 //Update position every frame
                 this.x += Math.cos(this.rotation) * this.bulletSpeed;

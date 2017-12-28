@@ -22,23 +22,41 @@ module managers {
             endPoint.x = object2.regX + object2.x;
             endPoint.y = object2.regY + object2.y;
   
-
-            if (object2.name =="bullet")
+            
+            //Check if object is bullet and if gun fire is true
+            if (object2.name =="bullet" && object2.bulletCollided)
             {
-                if (this.objectToObject2Dist(startPoint, endPoint) < (object2.height+object1.halfHeight))
+                //Check if distance between zombie and bullet is less than the height of bullet + half height of zombie
+                if (this.objectToObject2Dist(startPoint, endPoint) < (object1.halfHeight+ object1.halfWidth))
                 {
-                    object1.Reset();
+                    //Decrease zombie health
+                    object1.zombieHealth --;
+                    object2.Reset();
+                    console.log(object1.zombieHealth);
+                    
+                    //Check if zombie health is 0, then reset the object
+                    if (object1.zombieHealth <=0)
+                    {
+                        object1.Reset();
+                        //this.parent.removeChild(this);
+                    }
+                    //Reset gun fire to false
+                    object2.bulletCollided = false;
                 }
             }
 
-            if (object2.name == "zombie") {
+            //Check if object is zombie
+            if (object2.name == "zombie") 
+            {
                 //Check if the distance between object 1 and object 2 is less than the minimum distance  
                 if (this.objectToObject2Dist(startPoint, endPoint) < minimumDistance) 
                 {
+                    //Check if objects are currently colliding, default = false
                     if (!object1.isColliding) 
                     {
-                        //console.log("Colliding with zombie")
+                        //Decrease player health
                         object1.playerHealth -= 0.01;
+                        //Check if player health is 0, then remove child and change scene
                         if (object1.playerHealth <= 0) 
                         {
                             object1.isAlive = false;

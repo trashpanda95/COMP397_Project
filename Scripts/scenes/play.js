@@ -19,9 +19,6 @@ var scenes;
             _this.zombieCount = 5;
             _this.bulletNum = 10;
             _this.bulletCounter = 0;
-            _this.timeTillSpawn = 60000;
-            _this.lastSpawn = -1;
-            _this.time = Date.now();
             _this.assetManager = assetManager;
             _this.currentScene = currentScene;
             _this.mouseEnabled = true;
@@ -38,7 +35,6 @@ var scenes;
             // Add Zombies
             this.zombie = new Array();
             this.zombieSpawn();
-            this.lastSpawn = this.time;
             // Add Bullets
             this.bullet = new Array();
             this.bulletSpawn();
@@ -58,13 +54,7 @@ var scenes;
             var _this = this;
             //Update Player
             this.player.Update();
-            this.time = Date.now();
             //Update Zombie
-            /* if (this.time > (this.lastSpawn+ this.timeTillSpawn))
-            {
-                console.log(this.time)
-                this.lastSpawn = this.time;
-            } */
             this.zombie.forEach(function (zombies) {
                 zombies.Update();
                 //Checks collision with the player and each zombie         
@@ -92,11 +82,10 @@ var scenes;
         };
         // PRIVATE METHODS
         Play.prototype.zombieSpawn = function () {
-            var drawLine = new createjs.Shape();
             var count;
             for (count = 0; count < this.zombieCount; count++) {
                 this.zombie[count] = new objects.Zombie(this.assetManager, this.player);
-                this.addChild(this.zombie[count], drawLine);
+                this.addChild(this.zombie[count]);
             }
         };
         //Bullet
@@ -109,8 +98,8 @@ var scenes;
         Play.prototype.bulletFire = function () {
             this.bullet[this.bulletCounter].x = this.player.bulletSpawn.x;
             this.bullet[this.bulletCounter].y = this.player.bulletSpawn.y;
-            this.bullet[this.bulletCounter].isFired = true;
-            this.gunFired = true;
+            this.bullet[this.bulletCounter].gunFired = true;
+            this.bullet[this.bulletCounter].bulletCollided = true;
             this.bullet[this.bulletCounter].bulletRotation = this.player.playerRotation;
             this.bulletCounter++;
             if (this.bulletCounter >= this.bulletNum - 1) {

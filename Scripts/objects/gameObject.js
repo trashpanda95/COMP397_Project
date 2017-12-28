@@ -19,8 +19,6 @@ var objects;
             _this.playerSpeed = 2;
             //Bullet
             _this.bulletSpeed = 2;
-            //Zombie
-            _this.zombieSpeed = 0.1;
             _this.name = imageString;
             _this.initialize();
             return _this;
@@ -35,6 +33,7 @@ var objects;
             this.regY = this.halfHeight;
             this.position = new createjs.Point(this.x, this.y);
             this.isColliding = false;
+            this.bulletCollided = false;
         };
         GameObject.prototype.Destroy = function () {
             this.parent.removeChild(this);

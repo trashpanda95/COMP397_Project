@@ -16,10 +16,6 @@ module scenes {
         private zombieCount: number =5;
         private bulletNum: number =10;
         private bulletCounter: number=0;
-        private timeTillSpawn = 60000;
-        private lastSpawn = -1;
-        private time = Date.now();
-        private gunFired : boolean;
 
         // PUBLIC PROPETIES
 
@@ -45,7 +41,6 @@ module scenes {
             // Add Zombies
             this.zombie = new Array<objects.Zombie>();
             this.zombieSpawn();
-            this.lastSpawn = this.time;
 
             // Add Bullets
             this.bullet = new Array<objects.Bullet>();
@@ -71,15 +66,8 @@ module scenes {
         {
             //Update Player
             this.player.Update();
-            this.time = Date.now();
             
             //Update Zombie
-            
-            /* if (this.time > (this.lastSpawn+ this.timeTillSpawn)) 
-            {
-                console.log(this.time)
-                this.lastSpawn = this.time;               
-            } */
             this.zombie.forEach(zombies =>
             {
                 zombies.Update();    
@@ -90,7 +78,7 @@ module scenes {
             //Checks collisions between each zombie and each bullet
             this.zombie.forEach(zombie=> {
                  this.bullet.forEach(bullet => {
-                    this.collision.checkCollision(zombie, bullet); 
+                    this.collision.checkCollision(zombie, bullet);     
                  });
             });
 
@@ -116,13 +104,11 @@ module scenes {
         // PRIVATE METHODS
         private zombieSpawn()
         {  
-            var drawLine = new createjs.Shape();
-
             let count;
             for (count= 0; count < this.zombieCount; count++)
             {
                 this.zombie[count] = new objects.Zombie(this.assetManager, this.player);      
-                this.addChild(this.zombie[count], drawLine);                          
+                this.addChild(this.zombie[count]);                          
             }
         }
 
@@ -139,8 +125,8 @@ module scenes {
         {
             this.bullet[this.bulletCounter].x = this.player.bulletSpawn.x;
             this.bullet[this.bulletCounter].y = this.player.bulletSpawn.y;
-            this.bullet[this.bulletCounter].isFired = true;
-            this.gunFired = true;
+            this.bullet[this.bulletCounter].gunFired = true;
+            this.bullet[this.bulletCounter].bulletCollided = true;
             this.bullet[this.bulletCounter].bulletRotation = this.player.playerRotation;
     
             this.bulletCounter++;
