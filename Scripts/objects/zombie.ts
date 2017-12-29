@@ -11,8 +11,8 @@ module objects {
         public health: number;
 
         // CONSTRUCTORS
-        constructor(assetManager: createjs.LoadQueue, target:objects.Player) {
-            super(assetManager, "zombie");
+        constructor(target:objects.Player) {
+            super("zombie");
             this.target = target;
             this.Start();
         }

@@ -6,9 +6,9 @@ module objects {
         public bulletRotation: number;
         public gunFired: boolean;
 
-        constructor(assetManager:createjs.LoadQueue)
+        constructor()
         {
-            super(assetManager, "bullet");
+            super("bullet");
             this.Start();
         }
 

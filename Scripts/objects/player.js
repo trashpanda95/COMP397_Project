@@ -13,10 +13,9 @@ var objects;
     var Player = /** @class */ (function (_super) {
         __extends(Player, _super);
         //CONSTRUCTORS
-        function Player(assetManager) {
-            var _this = _super.call(this, assetManager, "player") || this;
+        function Player() {
+            var _this = _super.call(this, "player") || this;
             _this.keyBoardKey = new managers.keyBoardInput();
-            _this.assetManager = assetManager;
             _this.Start();
             return _this;
         }

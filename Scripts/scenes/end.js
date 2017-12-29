@@ -14,9 +14,8 @@ var scenes;
         __extends(End, _super);
         //PUBLIC PROPETIES
         //CONSTRUCTORS
-        function End(assetManager, currentScene) {
+        function End(currentScene) {
             var _this = _super.call(this) || this;
-            _this.assetManager = assetManager;
             _this.currentScene = currentScene;
             _this.Start();
             return _this;
@@ -26,7 +25,7 @@ var scenes;
         End.prototype.Start = function () {
             this.gameTitle = new objects.Label("GAME OVER", "80px", "Dock51", "#ff0000", 400, 250, true);
             this.addChild(this.gameTitle);
-            this.startButton = new objects.Button(this.assetManager, "reStartBtn", 400, 350, true);
+            this.startButton = new objects.Button("reStartBtn", 400, 350, true);
             this.addChild(this.startButton);
             this.onClickStartBtn();
         };

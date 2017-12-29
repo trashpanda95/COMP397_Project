@@ -21,10 +21,9 @@ module objects {
             return this.playerRotation;
         }
         //CONSTRUCTORS
-        constructor(assetManager: createjs.LoadQueue) 
+        constructor() 
         {
-            super(assetManager, "player");
-            this.assetManager = assetManager;
+            super("player");
             this.Start();
         }
 

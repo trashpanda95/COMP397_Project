@@ -9,10 +9,9 @@ module scenes {
           //PUBLIC PROPETIES
   
           //CONSTRUCTORS
-          constructor(assetManager:createjs.LoadQueue, currentScene: number)
+          constructor( currentScene: number)
           {
               super();
-              this.assetManager = assetManager;
               this.currentScene = currentScene;
               this.Start(); 
           }
@@ -25,7 +24,7 @@ module scenes {
               this.gameTitle = new objects.Label("GAME OVER", "80px", "Dock51", "#ff0000", 400, 250, true);
               this.addChild(this.gameTitle);
   
-              this.startButton = new objects.Button(this.assetManager, "reStartBtn", 400, 350, true);
+              this.startButton = new objects.Button("reStartBtn", 400, 350, true);
               this.addChild(this.startButton);
               this.onClickStartBtn();
           }

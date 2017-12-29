@@ -24,8 +24,8 @@ var objects;
          * @param {number} y
          * @param {boolean} isCentered
          */
-        function Button(assetManager, imageName, x, y, isCentered) {
-            var _this = _super.call(this, assetManager.getResult(imageName)) || this;
+        function Button(imageName, x, y, isCentered) {
+            var _this = _super.call(this, objects.Game.assetManager.getResult(imageName)) || this;
             if (isCentered) {
                 _this.regX = _this.getBounds().width * 0.5;
                 _this.regY = _this.getBounds().height * 0.5;

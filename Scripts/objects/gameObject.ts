@@ -32,12 +32,11 @@ module objects {
         public position: createjs.Point;
         public isColliding: boolean;
 
-        
-
+    
         //CONSTRUCTORS
-        constructor(assetManager: createjs.LoadQueue, imageString: string) 
+        constructor(imageString: string) 
         {
-            super(assetManager.getResult(imageString));
+            super(objects.Game.assetManager.getResult(imageString));
             this.name = imageString;
             this.initialize();
             

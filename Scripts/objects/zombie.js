@@ -13,8 +13,8 @@ var objects;
     var Zombie = /** @class */ (function (_super) {
         __extends(Zombie, _super);
         // CONSTRUCTORS
-        function Zombie(assetManager, target) {
-            var _this = _super.call(this, assetManager, "zombie") || this;
+        function Zombie(target) {
+            var _this = _super.call(this, "zombie") || this;
             _this.range = 200;
             _this.spawnMax = 500;
             _this.spawnMin = 100;

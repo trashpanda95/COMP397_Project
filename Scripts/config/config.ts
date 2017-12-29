@@ -11,8 +11,8 @@ module config
   //Screen Constants
   export class Screen
   {
-    public static WIDTH: number = 800;
-    public static HEIGHT: number = 600;
+    public static WIDTH: number = 1000;
+    public static HEIGHT: number = 700;
     //public static CENTER_X: number = 320;
     //public static CENTER_Y: number = 240;
   }

@@ -17,13 +17,14 @@ module scenes {
         private bulletNum: number =10;
         private bulletCounter: number=0;
 
+        private bgMap: objects.Bgmap;
+
         // PUBLIC PROPETIES
 
         // CONSTRUCTORS
-        constructor(assetManager:createjs.LoadQueue, currentScene: number, gameCanvas:HTMLElement)
+        constructor( currentScene: number, gameCanvas:HTMLElement)
         {
             super();
-            this.assetManager = assetManager;
             this.currentScene = currentScene;
             this.mouseEnabled = true;
             this.gameCanvas = gameCanvas;
@@ -34,8 +35,12 @@ module scenes {
         // PUBLIC METHODS
         public Start():void
         {         
+            //Add Background Map
+            this.bgMap = new objects.Bgmap("level1BG");
+            this.addChild(this.bgMap);
+
             //Add Player
-            this.player = new objects.Player(this.assetManager);
+            this.player = new objects.Player();
             this.addChild(this.player); 
                    
             // Add Zombies
@@ -107,7 +112,7 @@ module scenes {
             let count;
             for (count= 0; count < this.zombieCount; count++)
             {
-                this.zombie[count] = new objects.Zombie(this.assetManager, this.player);      
+                this.zombie[count] = new objects.Zombie(this.player);      
                 this.addChild(this.zombie[count]);                          
             }
         }
@@ -117,7 +122,7 @@ module scenes {
         {
             for (let count= 0; count < this.bulletNum; count++)
             {
-                this.bullet[count] = new objects.Bullet(this.assetManager);      
+                this.bullet[count] = new objects.Bullet();      
                 this.addChild(this.bullet[count]);                          
             }
         }

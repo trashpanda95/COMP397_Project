@@ -14,9 +14,8 @@ var scenes;
         __extends(Start, _super);
         //PUBLIC PROPETIES
         //CONSTRUCTORS
-        function Start(assetManager, currentScene) {
+        function Start(currentScene) {
             var _this = _super.call(this) || this;
-            _this.assetManager = assetManager;
             _this.currentScene = currentScene;
             _this.Start();
             return _this;
@@ -26,7 +25,7 @@ var scenes;
         Start.prototype.Start = function () {
             this.gameTitle = new objects.Label("THE INVASION", "80px", "Dock51", "#00000", 400, 250, true);
             this.addChild(this.gameTitle);
-            this.startButton = new objects.Button(this.assetManager, "startBtn", 400, 350, true);
+            this.startButton = new objects.Button("startBtn", 400, 350, true);
             this.addChild(this.startButton);
             this.onClickStartBtn();
         };

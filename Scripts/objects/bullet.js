@@ -12,8 +12,8 @@ var objects;
 (function (objects) {
     var Bullet = /** @class */ (function (_super) {
         __extends(Bullet, _super);
-        function Bullet(assetManager) {
-            var _this = _super.call(this, assetManager, "bullet") || this;
+        function Bullet() {
+            var _this = _super.call(this, "bullet") || this;
             _this.Start();
             return _this;
         }

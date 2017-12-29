@@ -14,12 +14,11 @@ var scenes;
         __extends(Play, _super);
         // PUBLIC PROPETIES
         // CONSTRUCTORS
-        function Play(assetManager, currentScene, gameCanvas) {
+        function Play(currentScene, gameCanvas) {
             var _this = _super.call(this) || this;
             _this.zombieCount = 10;
             _this.bulletNum = 10;
             _this.bulletCounter = 0;
-            _this.assetManager = assetManager;
             _this.currentScene = currentScene;
             _this.mouseEnabled = true;
             _this.gameCanvas = gameCanvas;
@@ -29,8 +28,11 @@ var scenes;
         // PUBLIC METHODS
         Play.prototype.Start = function () {
             var _this = this;
+            //Add Background Map
+            this.bgMap = new objects.Bgmap("level1BG");
+            this.addChild(this.bgMap);
             //Add Player
-            this.player = new objects.Player(this.assetManager);
+            this.player = new objects.Player();
             this.addChild(this.player);
             // Add Zombies
             this.zombie = new Array();
@@ -84,14 +86,14 @@ var scenes;
         Play.prototype.zombieSpawn = function () {
             var count;
             for (count = 0; count < this.zombieCount; count++) {
-                this.zombie[count] = new objects.Zombie(this.assetManager, this.player);
+                this.zombie[count] = new objects.Zombie(this.player);
                 this.addChild(this.zombie[count]);
             }
         };
         //Bullet
         Play.prototype.bulletSpawn = function () {
             for (var count = 0; count < this.bulletNum; count++) {
-                this.bullet[count] = new objects.Bullet(this.assetManager);
+                this.bullet[count] = new objects.Bullet();
                 this.addChild(this.bullet[count]);
             }
         };

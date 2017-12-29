@@ -13,8 +13,8 @@ var objects;
     var GameObject = /** @class */ (function (_super) {
         __extends(GameObject, _super);
         //CONSTRUCTORS
-        function GameObject(assetManager, imageString) {
-            var _this = _super.call(this, assetManager.getResult(imageString)) || this;
+        function GameObject(imageString) {
+            var _this = _super.call(this, objects.Game.assetManager.getResult(imageString)) || this;
             //Player
             _this.playerSpeed = 2;
             //Bullet

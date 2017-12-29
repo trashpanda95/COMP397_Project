@@ -12,9 +12,9 @@ module objects {
        * @param {number} y
        * @param {boolean} isCentered
        */
-      constructor(assetManager:createjs.LoadQueue,imageName:string,x:number,y:number,isCentered:boolean)
+      constructor(imageName:string,x:number,y:number,isCentered:boolean)
        {
-        super(assetManager.getResult(imageName));
+        super(objects.Game.assetManager.getResult(imageName));
   
         if(isCentered) {
           this.regX = this.getBounds().width * 0.5;

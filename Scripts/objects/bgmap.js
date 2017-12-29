@@ -10,24 +10,35 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var objects;
 (function (objects) {
-    var bgmap = /** @class */ (function (_super) {
-        __extends(bgmap, _super);
-        // PRIVATE INSTANCE VARIABLES
-        // PUBLIC PROPERTIES
+    var Bgmap = /** @class */ (function (_super) {
+        __extends(Bgmap, _super);
         // CONSTRUCTORS
-        function bgmap(assetManager) {
-            var _this = _super.call(this, assetManager.getResult("bgmap")) || this;
-            _this.Start();
+        function Bgmap(imageString) {
+            var _this = this;
+            var graphics = new createjs.Graphics().beginBitmapFill(imageString).drawRect(0, 0, config.Screen.WIDTH, config.Screen.HEIGHT);
+            _this = _super.call(this, graphics) || this;
+            console.log("Map Created");
             return _this;
         }
         // PRIVATE METHODS
+        Bgmap.prototype.Reset = function () {
+            this.y = 0;
+        };
+        Bgmap.prototype._checkBounds = function () {
+            if (this.y > 0) {
+                this.Reset();
+            }
+        };
         // PUBLIC METHODS
-        bgmap.prototype.Start = function () {
+        Bgmap.prototype.Start = function () {
+            console.log("Floor start");
+            this.Reset();
         };
-        bgmap.prototype.Update = function () {
+        Bgmap.prototype.Update = function () {
+            this._checkBounds();
         };
-        return bgmap;
-    }(createjs.Bitmap));
-    objects.bgmap = bgmap;
+        return Bgmap;
+    }(createjs.Shape));
+    objects.Bgmap = Bgmap;
 })(objects || (objects = {}));
 //# sourceMappingURL=bgmap.js.map

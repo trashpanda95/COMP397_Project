@@ -1,75 +1,87 @@
 //IIFE - Immediately Invoked Function Expression
 (function()
 {
-    //Global Variables
-    let stage:createjs.Stage;
-    let canvas:any;
-    let assetManager:createjs.LoadQueue; 
+    // game variables
+    let assetManager: managers.AssetManager;
     let currentScene: objects.Scene;
-    let currentState = 0; 
-   
-    // Load Assets
-    let assetManifest =[
-        {id: "startBtn", src:"./Assets/startButton.png"},
-        {id: "reStartBtn", src:"./Assets/reStartButton.png"},
-        {id: "player", src:"./Assets/images/player_test.png"},
-        {id: "zombie", src:"./Assets/images/zombie_test.png"},
-        {id: "bg", src:"./Assets/images/background_test.png"},
-        {id: "bullet", src:"./Assets/images/bullet.png"}
-    ];   
+    let currentState: number;
+    let debugCanvas: HTMLElement;
+    let gameCanvas: HTMLElement;
+    let height: number = config.Screen.HEIGHT;
+    let stage: createjs.Stage;
+    let width: number = config.Screen.WIDTH;
+    //let stats: Stats;
 
+    //Spritesheet
 
-    function Init()
-    {
-        // Load Assets
-        assetManager = new createjs.LoadQueue();
-        assetManager.installPlugin(createjs.Sound);
-        assetManager.on("complete", Start);
-        assetManager.loadManifest (assetManifest);
+    function SetupStats(): void {
+        //stats = new Stats();
+        //stats.showPanel(0);
+        //document.body.appendChild(stats.dom);
     }
 
-    function Start()
-    {      
-        // Setup createjs
-        canvas = document.getElementById("canvas");     // reference to canvas element
-        stage = new createjs.Stage(canvas);             // passing canvas to stage
-        createjs.Ticker.setFPS(config.Game.FPS);        // set frame rate to 60 fps
-        createjs.Ticker.on("tick", Update);             // update game every frame
-  
-        stage.enableMouseOver(20);                      // Enable mouse movement within stage
+    // Initializes game variables
+    function Init(): void {
+        console.log("Initialization");
+        //SetupStats();
+        gameCanvas = document.getElementById("game");
+        //debugCanvas = document.getElementById("debug");
+        gameCanvas.setAttribute("width", width.toString());
+        gameCanvas.setAttribute("height", height.toString());
+        //debugCanvas.setAttribute("width", width.toString());
+       // debugCanvas.setAttribute("height", height.toString());
 
-        Main();  
+        objects.Game.assetManager.on("complete", Start);
+        // set global game object variables
     }
-     
-    function Update()
-    {   
+
+    // Starts game
+    function Start(): void {
+        console.log("Start");
+        stage = new createjs.Stage(gameCanvas);
+        objects.Game.stage = stage; // save the stage to the global game object
+        stage.enableMouseOver(20);
+        createjs.Ticker.framerate = 60; // 60 FPS
+        createjs.Ticker.on("tick", Update);
+
+        currentState = config.Scene.START;
+        Main();
+    }
+
+    // Main Game Loop
+    function Update(): void {
+        //stats.begin();
         let newState = currentScene.Update();
-        if(newState != currentState)
-        {
+        if (newState != currentState) {
             currentState = newState;
             Main();
         }
-        stage.update(); 
+
+        //stats.end();
+        stage.update();
     }
 
-    function Main()
-    {    
+    function Main(): void {
+        console.log("Main FSM");
         stage.removeAllChildren();
 
-        switch (currentState)
-        {
-            // Add start scene to the stage, later add more scenes
+        switch (currentState) {
             case config.Scene.START:
-            currentScene = new scenes.Start(assetManager, currentState);
-            break;   
+                currentScene = new scenes.Start(currentState);
+                break;
+
             case config.Scene.PLAY:
-            currentScene = new scenes.Play(assetManager, currentState, canvas);
-            break;
+                currentScene = new scenes.Play(currentState, gameCanvas);
+                break;
+
             case config.Scene.END:
-            currentScene = new scenes.End(assetManager, currentState);
-            break;
-        }   
+                currentScene = new scenes.End(currentState);
+                break;
+        }
+
         stage.addChild(currentScene);
+
     }
+
     window.onload = Init;
 })();
