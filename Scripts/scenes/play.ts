@@ -3,11 +3,15 @@ module scenes {
     {
         // PRIVATE INSTANCE VARIABLES 
         private assetManager: createjs.LoadQueue;
-        private player:objects.Player;
-        private zombie:objects.Zombie[];
-        private playerHealth:objects.Label;
-        private collision: core.Collision;
 
+        // PLAYER RELATED VARIABLES
+        private player:objects.Player;
+        private playerHealth:objects.Label;
+
+        // ZOMBIE RELATED VARIABLES
+        private zombie:objects.Zombie[];
+
+        private collision: core.Collision;
 
         // PUBLIC PROPETIES
 
@@ -23,12 +27,52 @@ module scenes {
         // PUBLIC METHODS
         public Start():void
         {         
-            //Add Player
-            this.player = new objects.Player(this.assetManager);
-            this.addChild(this.player); 
+            // Add Player to Scene
+            this.player = new objects.Player(this.assetManager);        // Initialize Player
                    
-            // Add Zombies
-            this.zombie = new Array<objects.Zombie>();
+            // Add Zombies to Scene
+            this.zombie = new Array<objects.Zombie>();                  // Initialize Zombie Array
+
+
+            // Add Collision
+            this.collision = new core.Collision(this.player);           // Initialize Collision
+
+            //Add Labels
+            this.playerHealth = new objects.Label("Health: " +this.player.health, "20px","Verdana", "#000000", 20, 560, false);    // Display Health Points - mod. 10/16/17
+            
+            this.Main();
+        }
+
+        public Update():number
+        {
+            this.player.Update();
+
+            // Update Zombies on Scene
+            this.zombie.forEach(zombies =>
+            {
+                zombies.Update();
+                this.zombieFollowPlayer(zombies);
+                zombies.rotation = ((Math.atan2(zombies.x- this.player.y, zombies.x- this.player.x) * (180/ Math.PI)) - 180);
+                this.collision.checkCollision(zombies);
+            });              
+
+            // Update the Labels on Scene
+            this.updateLabels();
+
+            // Check if the Player is still Alive
+            if (this.player.isAlive == false)
+            {
+                this.currentScene = config.Scene.END;
+                this.removeAllChildren();
+            }  
+
+            return this.currentScene;
+        }
+
+        public Main():void
+        {      
+            this.addChild(this.player);                                     // Add Player Model onto Scene
+            this.addChild(this.playerHealth);                               // Add Player Health onto Scene
             for (let count = 0; count < 10; count++)
             {
                 this.zombie[count] = new objects.Zombie(this.assetManager);      
@@ -37,37 +81,6 @@ module scenes {
                 console.log();
                 this.addChild(this.zombie[count]);                          
             }
-
-            //Add Collision
-            this.collision = new core.Collision(this.player);
-            //this.Main();
-
-            //Add Labels
-            this.playerHealth = new objects.Label("Health: " +this.player.health, "20px","Verdana", "#000000", 20, 560, false);    // Display Health Points - mod. 10/16/17
-            this.addChild(this.playerHealth);
-        }
-
-        public Update():number
-        {
-            this.player.Update();
-            this.zombie.forEach(zombies =>
-            {
-                zombies.Update();
-                this.zombieFollowPlayer(zombies);
-                zombies.rotation = ((Math.atan2(zombies.x- this.player.y, zombies.x- this.player.x) * (180/ Math.PI)) - 180);
-                this.collision.checkCollision(zombies);
-            });               
-            this.updateLabels();
-            if (this.player.isAlive == false)
-            {
-                this.currentScene = config.Scene.END;
-                this.removeAllChildren();
-            }  
-            return this.currentScene;
-        }
-
-        public Main():void
-        {      
         }
 
         // PRIVATE METHOD

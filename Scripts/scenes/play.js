@@ -23,35 +23,29 @@ var scenes;
         }
         // PUBLIC METHODS
         Play.prototype.Start = function () {
-            //Add Player
-            this.player = new objects.Player(this.assetManager);
-            this.addChild(this.player);
-            // Add Zombies
-            this.zombie = new Array();
-            for (var count = 0; count < 10; count++) {
-                this.zombie[count] = new objects.Zombie(this.assetManager);
-                this.zombie[count].x = Math.floor(Math.random() * 800);
-                this.zombie[count].y = Math.floor(Math.random() * 600);
-                console.log();
-                this.addChild(this.zombie[count]);
-            }
-            //Add Collision
-            this.collision = new core.Collision(this.player);
-            //this.Main();
+            // Add Player to Scene
+            this.player = new objects.Player(this.assetManager); // Initialize Player
+            // Add Zombies to Scene
+            this.zombie = new Array(); // Initialize Zombie Array
+            // Add Collision
+            this.collision = new core.Collision(this.player); // Initialize Collision
             //Add Labels
             this.playerHealth = new objects.Label("Health: " + this.player.health, "20px", "Verdana", "#000000", 20, 560, false); // Display Health Points - mod. 10/16/17
-            this.addChild(this.playerHealth);
+            this.Main();
         };
         Play.prototype.Update = function () {
             var _this = this;
             this.player.Update();
+            // Update Zombies on Scene
             this.zombie.forEach(function (zombies) {
                 zombies.Update();
                 _this.zombieFollowPlayer(zombies);
                 zombies.rotation = ((Math.atan2(zombies.x - _this.player.y, zombies.x - _this.player.x) * (180 / Math.PI)) - 180);
                 _this.collision.checkCollision(zombies);
             });
+            // Update the Labels on Scene
             this.updateLabels();
+            // Check if the Player is still Alive
             if (this.player.isAlive == false) {
                 this.currentScene = config.Scene.END;
                 this.removeAllChildren();
@@ -59,6 +53,15 @@ var scenes;
             return this.currentScene;
         };
         Play.prototype.Main = function () {
+            this.addChild(this.player); // Add Player Model onto Scene
+            this.addChild(this.playerHealth); // Add Player Health onto Scene
+            for (var count = 0; count < 10; count++) {
+                this.zombie[count] = new objects.Zombie(this.assetManager);
+                this.zombie[count].x = Math.floor(Math.random() * 800);
+                this.zombie[count].y = Math.floor(Math.random() * 600);
+                console.log();
+                this.addChild(this.zombie[count]);
+            }
         };
         // PRIVATE METHOD
         Play.prototype.updateLabels = function () {

@@ -21,23 +21,23 @@ var core;
         * onControlDown determines what action will take place when a key being pressed is detected
         */
         keyBoardInput.prototype.onControlDown = function (e) {
-            if (e.keyCode == 37) {
-                console.log("Left Arrow");
+            if (e.keyCode == config.Key.LEFT_ARROW) {
+                console.log("Left Arrow"); // Debugger
                 keyBoardInput.moveLeft = true;
                 keyBoardInput.key = e.keyCode;
             }
-            else if (e.keyCode == 38) {
-                console.log("Up Arrow");
+            else if (e.keyCode == config.Key.UP_ARROW) {
+                console.log("Up Arrow"); // Debugger
                 keyBoardInput.moveUp = true;
                 keyBoardInput.key = e.keyCode;
             }
-            else if (e.keyCode == 39) {
-                console.log("Right Arrow");
+            else if (e.keyCode == config.Key.RIGHT_ARROW) {
+                console.log("Right Arrow"); // Debugger
                 keyBoardInput.moveRight = true;
                 keyBoardInput.key = e.keyCode;
             }
-            else if (e.keyCode == 40) {
-                console.log("Down Arrow");
+            else if (e.keyCode == config.Key.DOWN_ARROW) {
+                console.log("Down Arrow"); // Debugger
                 keyBoardInput.moveDown = true;
                 keyBoardInput.key = e.keyCode;
             }
@@ -46,19 +46,19 @@ var core;
         * onControlUp determines what action will take place when a key released
         */
         keyBoardInput.prototype.onControlUp = function (e) {
-            if (e.keyCode == 37) {
+            if (e.keyCode == config.Key.LEFT_ARROW) {
                 keyBoardInput.moveLeft = false;
                 keyBoardInput.key = null;
             }
-            else if (e.keyCode == 38) {
+            else if (e.keyCode == config.Key.UP_ARROW) {
                 keyBoardInput.moveUp = false;
                 keyBoardInput.key = null;
             }
-            else if (e.keyCode == 39) {
+            else if (e.keyCode == config.Key.RIGHT_ARROW) {
                 keyBoardInput.moveRight = false;
                 keyBoardInput.key = null;
             }
-            else if (e.keyCode == 40) {
+            else if (e.keyCode == config.Key.DOWN_ARROW) {
                 keyBoardInput.moveDown = false;
                 keyBoardInput.key = null;
             }
