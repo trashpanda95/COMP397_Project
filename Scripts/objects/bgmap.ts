@@ -6,7 +6,8 @@ module objects {
     // CONSTRUCTORS
     constructor(imageString: string) 
     {
-      let graphics = new createjs.Graphics().beginBitmapFill(imageString).drawRect(0, 0, config.Screen.WIDTH, config.Screen.HEIGHT);
+      var image= objects.Game.assetManager.getResult(imageString);
+      let graphics = new createjs.Graphics().beginBitmapFill(image).drawRect(0, 0, config.Screen.WIDTH, config.Screen.HEIGHT);
       super(graphics);
 
       console.log("Map Created");

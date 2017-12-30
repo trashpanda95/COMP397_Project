@@ -31,12 +31,18 @@ var scenes;
             //Add Background Map
             this.bgMap = new objects.Bgmap("level1BG");
             this.addChild(this.bgMap);
+            //Add Left Wall
+            this.leftWall = new objects.WallLeft();
+            this.addChild(this.leftWall);
+            //Add Top Wall
+            this.topWall = new objects.WallTop();
+            this.addChild(this.topWall);
             //Add Player
             this.player = new objects.Player();
             this.addChild(this.player);
             // Add Zombies
             this.zombie = new Array();
-            this.zombieSpawn();
+            //this.zombieSpawn();
             // Add Bullets
             this.bullet = new Array();
             this.bulletSpawn();
@@ -58,7 +64,7 @@ var scenes;
             this.player.Update();
             //Update Zombie
             this.zombie.forEach(function (zombies) {
-                zombies.Update();
+                //zombies.Update();    
                 //Checks collision with the player and each zombie         
                 _this.collision.checkCollision(_this.player, zombies);
             });
@@ -68,6 +74,9 @@ var scenes;
                     _this.collision.checkCollision(zombie, bullet);
                 });
             });
+            //Check collision with wall
+            this.collision.checkCollisionWall(this.player, this.leftWall);
+            this.collision.checkCollisionWall(this.player, this.topWall);
             //Update bullet
             this.bullet.forEach(function (bullet) {
                 //Update Bullet

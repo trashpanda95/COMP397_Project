@@ -15,7 +15,8 @@ var objects;
         // CONSTRUCTORS
         function Bgmap(imageString) {
             var _this = this;
-            var graphics = new createjs.Graphics().beginBitmapFill(imageString).drawRect(0, 0, config.Screen.WIDTH, config.Screen.HEIGHT);
+            var image = objects.Game.assetManager.getResult(imageString);
+            var graphics = new createjs.Graphics().beginBitmapFill(image).drawRect(0, 0, config.Screen.WIDTH, config.Screen.HEIGHT);
             _this = _super.call(this, graphics) || this;
             console.log("Map Created");
             return _this;

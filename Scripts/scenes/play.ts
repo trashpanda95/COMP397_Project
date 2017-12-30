@@ -10,6 +10,10 @@ module scenes {
         private zombie:objects.Zombie[];
         private bullet: objects.Bullet[];
 
+        //private leftWall: objects.LeftWall;
+        private leftWall: objects.WallLeft;
+        private topWall: objects.WallTop;
+
         private playerHealth:objects.Label;
         private collision: managers.Collision;
 
@@ -39,13 +43,21 @@ module scenes {
             this.bgMap = new objects.Bgmap("level1BG");
             this.addChild(this.bgMap);
 
+            //Add Left Wall
+            this.leftWall = new objects.WallLeft();
+            this.addChild(this.leftWall);
+
+            //Add Top Wall
+            this.topWall = new objects.WallTop();
+            this.addChild(this.topWall);
+
             //Add Player
             this.player = new objects.Player();
             this.addChild(this.player); 
                    
             // Add Zombies
             this.zombie = new Array<objects.Zombie>();
-            this.zombieSpawn();
+            //this.zombieSpawn();
 
             // Add Bullets
             this.bullet = new Array<objects.Bullet>();
@@ -75,7 +87,7 @@ module scenes {
             //Update Zombie
             this.zombie.forEach(zombies =>
             {
-                zombies.Update();    
+                //zombies.Update();    
                 //Checks collision with the player and each zombie         
                 this.collision.checkCollision(this.player, zombies);         
             });  
@@ -86,6 +98,10 @@ module scenes {
                     this.collision.checkCollision(zombie, bullet);     
                  });
             });
+
+            //Check collision with wall
+            this.collision.checkCollisionWall(this.player, this.leftWall);
+            this.collision.checkCollisionWall(this.player, this.topWall);
 
             //Update bullet
             this.bullet.forEach(bullet => 

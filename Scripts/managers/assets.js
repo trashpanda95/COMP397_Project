@@ -18,7 +18,9 @@ var managers;
         { id: "zombie", src: "./Assets/images/zombie_test.png" },
         { id: "bg", src: "./Assets/images/background_test.png" },
         { id: "bullet", src: "./Assets/images/bullet.png" },
-        { id: "level1BG", src: "./Assets/images/Level1BG.jpg" }
+        { id: "level1BG", src: "./Assets/images/Level1BG.png" },
+        { id: "leftWall", src: "./Assets/images/walls/leftWall.png" },
+        { id: "topWall", src: "./Assets/images/walls/topWall.png" }
     ];
     var AssetManager = /** @class */ (function (_super) {
         __extends(AssetManager, _super);

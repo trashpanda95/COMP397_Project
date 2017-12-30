@@ -38,8 +38,7 @@ module objects {
         {
             super(objects.Game.assetManager.getResult(imageString));
             this.name = imageString;
-            this.initialize();
-            
+            this.initialize();         
         }
         
         //PUBLIC METHODS

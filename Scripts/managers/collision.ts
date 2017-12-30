@@ -1,6 +1,8 @@
 module managers {
     export class Collision
     {
+        private inRotation: boolean;
+
         //Check distance between player and zombie
         public objectToObject2Dist(startPoint: createjs.Point, endPoint: createjs.Point): number 
         {
@@ -75,6 +77,67 @@ module managers {
                         object1.isColliding = false;
                     }
                 }
+            }       
+
+            
+        }
+
+        public checkCollisionWall(object1:objects.GameObject, object2: objects.GameObject)
+        {
+            if (object2.name == "leftWall") 
+            {   
+                if (!object1.isColliding) 
+                {                  
+                    //console.log(object1.rotation);
+                    if ((object1.rotation <= -50 && object1.rotation >= -170 || object1.rotation >= 40 && object1.rotation <= 150) )             
+                    {    
+
+                        if (object1.x <= object2.x + (object1.halfHeight))
+                        {
+                            object1.x = (object2.x + (object1.halfHeight));
+                        }
+
+                        console.log(this.inRotation);  
+                    }                           
+                    else
+                    {
+                        if (object1.x <= object2.x + object1.halfWidth) 
+                        {
+                            object1.x = object2.x+ object1.halfWidth;
+                        }
+                    }
+                }
+                else
+                {
+                    object1.isColliding = true;
+                    //this.inRotation = false;
+                }                
+            }       
+
+            if (object2.name == "topWall") 
+            {   
+                if (!object1.isColliding) 
+                {
+                    //console.log(object1.rotation);
+                    if (object1.rotation <= -50 && object1.rotation >= -170 || object1.rotation >= 40 && object1.rotation <= 150 ) 
+                    {
+                        if (object1.y <= object2.y + object1.height) 
+                        {
+                            object1.y = object2.y + object1.height;
+                        }
+                    }                  
+                    else
+                    {
+                        if (object1.y <= object2.y + object1.halfWidth) 
+                        {
+                            object1.y = object2.y+ object1.halfWidth;
+                        }
+                    }
+                }
+                else
+                {
+                    object1.isColliding = true;
+                }                
             }       
         }
     }
