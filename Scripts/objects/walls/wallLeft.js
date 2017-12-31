@@ -15,8 +15,8 @@ var objects;
         // CONSTRUCTORS
         function WallLeft() {
             var _this = _super.call(this, "leftWall") || this;
-            _this.y = 342;
-            _this.x = 125;
+            _this.y = 71;
+            _this.x = 113;
             return _this;
         }
         // PRIVATE METHODS

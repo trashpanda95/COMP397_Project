@@ -15,8 +15,8 @@ var objects;
         // CONSTRUCTORS
         function WallTop() {
             var _this = _super.call(this, "topWall") || this;
-            _this.y = 78;
-            _this.x = 535;
+            _this.y = 71;
+            _this.x = 113;
             return _this;
         }
         // PRIVATE METHODS

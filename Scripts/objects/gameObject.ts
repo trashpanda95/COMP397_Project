@@ -48,8 +48,8 @@ module objects {
             this.height = this.getBounds().height;
             this.halfWidth = this.width /2;
             this.halfHeight = this.height /2;
-            this.regX = this.halfWidth;
-            this.regY = this.halfHeight;
+            //this.regX =this.width;
+            //this.regY = this.height;
             this.position = new createjs.Point(this.x, this.y);
             this.isColliding = false;
             this.bulletCollided =false;

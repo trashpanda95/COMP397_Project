@@ -16,8 +16,8 @@ module objects {
       constructor() 
       {   
         super("topWall")
-        this.y= 78;
-        this.x = 535;
+        this.y= 71;
+        this.x = 113;
       }
         // PRIVATE METHODS
         private regXY(): void                               //Method to set bitmap registry point at the center

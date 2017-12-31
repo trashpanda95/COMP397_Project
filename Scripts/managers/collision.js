@@ -64,42 +64,89 @@ var managers;
             }
         };
         Collision.prototype.checkCollisionWall = function (object1, object2) {
+            var maxWidth = object2.x + object2.width;
+            var minWidth = maxWidth - object2.x;
+            var maxHeight = object2.y + object2.height;
             if (object2.name == "leftWall") {
                 if (!object1.isColliding) {
-                    //console.log(object1.rotation);
-                    if ((object1.rotation <= -50 && object1.rotation >= -170 || object1.rotation >= 40 && object1.rotation <= 150)) {
-                        if (object1.x <= object2.x + (object1.halfHeight)) {
-                            object1.x = (object2.x + (object1.halfHeight));
-                        }
-                        console.log(this.inRotation);
-                    }
-                    else {
-                        if (object1.x <= object2.x + object1.halfWidth) {
-                            object1.x = object2.x + object1.halfWidth;
-                        }
+                    if ((object1.x + object1.halfWidth) >= (object2.x + object2.width)
+                        && (object1.x) <= (object2.x + object2.width + object1.halfWidth)
+                        && (object1.y + object1.height) >= object2.y
+                        && (object1.y) <= (object2.y + object2.height + object1.halfHeight)) {
+                        console.log("left wall collide");
+                        object1.x = object2.x + object2.width + object1.halfWidth;
                     }
                 }
                 else {
-                    object1.isColliding = true;
-                    //this.inRotation = false;
+                    object1.isColliding = false;
                 }
             }
             if (object2.name == "topWall") {
                 if (!object1.isColliding) {
-                    //console.log(object1.rotation);
-                    if (object1.rotation <= -50 && object1.rotation >= -170 || object1.rotation >= 40 && object1.rotation <= 150) {
-                        if (object1.y <= object2.y + object1.height) {
-                            object1.y = object2.y + object1.height;
-                        }
-                    }
-                    else {
-                        if (object1.y <= object2.y + object1.halfWidth) {
-                            object1.y = object2.y + object1.halfWidth;
-                        }
+                    if (object1.y <= object2.y + object2.height + object1.halfWidth) {
+                        console.log("Top wall collide");
+                        object1.y = object2.y + object2.height + object1.halfWidth;
                     }
                 }
                 else {
-                    object1.isColliding = true;
+                    object1.isColliding = false;
+                }
+            }
+            if (object2.name == "bottomWall") {
+                if (!object1.isColliding) {
+                    if ((object1.y) >= object2.y - object2.height - object1.halfHeight) {
+                        object1.y = object2.y - object2.height - object1.halfHeight;
+                    }
+                }
+                else {
+                    object1.isColliding = false;
+                }
+            }
+            if (object2.name == "rightWallBath") {
+                if (!object1.isColliding) {
+                    if ((object1.x) >= (object2.x - object1.halfWidth)
+                        && object1.y > object2.y
+                        && object1.x < maxWidth) {
+                        object1.x = object2.x - object1.halfWidth;
+                    }
+                }
+                else {
+                    object1.isColliding = false;
+                }
+            }
+            if (object2.name == "mainGateWallLeft") {
+                if (!object1.isColliding) {
+                    if ((object1.y) >= object2.y - object2.height - object1.halfHeight
+                        && object1.x > object2.x
+                        && object1.x < object2.x + object2.width) {
+                        console.log("Main gate wall");
+                        object1.y = object2.y - object2.height - object1.halfHeight;
+                    }
+                }
+                else {
+                    object1.isColliding = false;
+                }
+            }
+            if (object2.name == "mainGateWallRight") {
+                if (!object1.isColliding) {
+                    if ((object1.y) >= object2.y - object2.height - object1.halfHeight
+                        && object1.x > object2.x
+                        && object1.x < object2.x + object2.width) {
+                        object1.y = object2.y - object2.height - object1.halfHeight;
+                    }
+                }
+                else {
+                    object1.isColliding = false;
+                }
+            }
+            if (object2.name == "rightWall") {
+                if (!object1.isColliding) {
+                    if (object1.x >= object2.x - object1.halfWidth) {
+                        object1.x = object2.x - object1.halfWidth;
+                    }
+                }
+                else {
+                    object1.isColliding = false;
                 }
             }
         };

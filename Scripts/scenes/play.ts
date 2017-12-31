@@ -13,6 +13,12 @@ module scenes {
         //private leftWall: objects.LeftWall;
         private leftWall: objects.WallLeft;
         private topWall: objects.WallTop;
+        private bottomWall: objects.WallBottom;
+        private rightWallBath: objects.WallRightBath;
+        private mainGateWallLeft: objects.MainGateWallLeft;
+        private mainGateWallRight: objects.MainGateWallRight;
+        private rightWall: objects.RightWall;
+
 
         private playerHealth:objects.Label;
         private collision: managers.Collision;
@@ -50,6 +56,27 @@ module scenes {
             //Add Top Wall
             this.topWall = new objects.WallTop();
             this.addChild(this.topWall);
+            
+            //Add Bottom Wall
+            this.bottomWall = new objects.WallBottom();
+            this.addChild(this.bottomWall);
+
+            //Add Right Bath Wall
+            this.rightWallBath = new objects.WallRightBath();
+            this.addChild(this.rightWallBath);
+            
+            //Add Main Gate Wall Left
+            this.mainGateWallLeft = new objects.MainGateWallLeft();
+            this.addChild(this.mainGateWallLeft);
+
+            //Add Main Gate Wall Right
+            this.mainGateWallRight = new objects.MainGateWallRight();
+            this.addChild(this.mainGateWallRight);
+
+            //Add Main Gate Wall Right
+            this.rightWall = new objects.RightWall();
+            this.addChild(this.rightWall);
+
 
             //Add Player
             this.player = new objects.Player();
@@ -102,6 +129,12 @@ module scenes {
             //Check collision with wall
             this.collision.checkCollisionWall(this.player, this.leftWall);
             this.collision.checkCollisionWall(this.player, this.topWall);
+            this.collision.checkCollisionWall(this.player, this.bottomWall);
+            this.collision.checkCollisionWall(this.player, this.rightWallBath);
+            this.collision.checkCollisionWall(this.player, this.mainGateWallLeft);
+            this.collision.checkCollisionWall(this.player, this.mainGateWallRight);
+            this.collision.checkCollisionWall(this.player, this.rightWall);
+
 
             //Update bullet
             this.bullet.forEach(bullet => 

@@ -20,7 +20,12 @@ var managers;
         { id: "bullet", src: "./Assets/images/bullet.png" },
         { id: "level1BG", src: "./Assets/images/Level1BG.png" },
         { id: "leftWall", src: "./Assets/images/walls/leftWall.png" },
-        { id: "topWall", src: "./Assets/images/walls/topWall.png" }
+        { id: "topWall", src: "./Assets/images/walls/topWall.png" },
+        { id: "bottomWall", src: "./Assets/images/walls/bottomWall.png" },
+        { id: "rightWallBath", src: "./Assets/images/walls/rightWallBath.png" },
+        { id: "mainGateWallLeft", src: "./Assets/images/walls/mainGateWallLeft.png" },
+        { id: "mainGateWallRight", src: "./Assets/images/walls/mainGateWallRight.png" },
+        { id: "rightWall", src: "./Assets/images/walls/rightWall.png" }
     ];
     var AssetManager = /** @class */ (function (_super) {
         __extends(AssetManager, _super);

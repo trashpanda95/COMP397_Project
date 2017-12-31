@@ -32,7 +32,7 @@ module objects {
         {
             this.regXY();
             this.y = 400;
-            this.x = 100;
+            this.x = 400;
             this.playerHealth = 50;
             this.keyBoardKey = new managers.keyBoardInput();
             this.bulletSpawn = new createjs.Point(this.y -35, this.x);
