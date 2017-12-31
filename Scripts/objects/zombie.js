@@ -30,14 +30,14 @@ var objects;
         };
         // PRIVATE METHODS
         Zombie.prototype.checkBounds = function () {
-            if (this.x >= 850 - this.halfWidth) {
-                this.x = 850 - this.halfWidth;
+            if (this.x >= config.Screen.WIDTH - this.halfWidth) {
+                this.x = config.Screen.WIDTH - this.halfWidth;
             }
             if (this.x <= this.halfWidth) {
                 this.x = this.halfWidth;
             }
-            if (this.y >= 600 - this.halfWidth) {
-                this.y = 600 - this.halfWidth;
+            if (this.y >= config.Screen.HEIGHT - this.halfWidth) {
+                this.y = config.Screen.HEIGHT - this.halfWidth;
             }
             if (this.y <= this.halfWidth) {
                 this.y = this.halfWidth;
