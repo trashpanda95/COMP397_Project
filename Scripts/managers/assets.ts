@@ -20,6 +20,7 @@ module managers {
         { id: "mainGateWallLeft", src: "./Assets/images/walls/mainGateWallLeft.png"},
         { id: "mainGateWallRight", src: "./Assets/images/walls/mainGateWallRight.png"},
         { id: "insideHorizontalWall", src: "./Assets/images/walls/insideHorizontalWall.png"},
+        { id: "insideVerticalWall", src: "./Assets/images/walls/insideVerticalWall.png"},
         { id: "rightWall", src: "./Assets/images/walls/rightWall.png"},
         { id: "windowLeft", src: "./Assets/images/window/windowLeft.png"},
         { id: "windowRight", src: "./Assets/images/window/windowRight.png"}

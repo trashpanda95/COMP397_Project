@@ -210,13 +210,39 @@ module managers
             {
                 if (!object1.isColliding)
                 {     
-                    if (object1.x >= object2.x && object1.x <= object2.x+ object2.width && object1.y <= object2.y-object2.height )
+                    if (object1.x >= object2.x 
+                        && object1.x <= object2.x+ object2.width
+                        && object1.y >= object2.y+ object2.height-object1.halfWidth
+                        && object1.y <= object2.y+ object2.height)
                     {
-                        object1.y = object2.y- object1.halfWidth;
+                        object1.y = object2.y+ object2.height- object1.halfWidth;
+                        console.log("Top");
                     }
-                    if (object1.x >= object2.x && object1.x <= object2.x+ object2.width && object1.y >= object2.y+object2.height)
+                    if (object1.x >= object2.x 
+                        && object1.x <= object2.x+ object2.width
+                        && object1.y >= object2.y+ object2.height
+                        && object1.y <= object2.y+ object2.height+ object1.halfWidth)
                     {
                         object1.y = object2.y+ object2.height+ object1.halfWidth;
+                        console.log("Bottom");
+                    }
+                }
+                else 
+                {
+                    object1.isColliding = false;
+                }
+            }
+
+            if (object2.name == "insideVerticalWall") 
+            {
+                if (!object1.isColliding)
+                {     
+                    if (object1.y <= object2.y+ object2.height
+                    && object1.y >= object2.y
+                    && object1.x >= object2.x+ object1.halfWidth
+                    && object1.x <= object2.x+ object2.width)
+                    {
+                        object1.x = object2.x- object1.halfWidth;
                     }
                 }
                 else 

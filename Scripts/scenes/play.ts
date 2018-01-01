@@ -19,6 +19,7 @@ module scenes {
         private mainGateWallRight: objects.MainGateWallRight;
         private rightWall: objects.RightWall;
         private insideHorizontalWall: objects.InsideHorizontalWall;
+        private insideVerticalWall: objects.InsideVerticalWall;
 
         //Window
         private leftWindow: objects.WindowLeft;
@@ -85,6 +86,10 @@ module scenes {
             this.insideHorizontalWall = new objects.InsideHorizontalWall();
             this.addChild(this.insideHorizontalWall);
 
+            //Add Inside Vertical Wall
+            this.insideVerticalWall = new objects.InsideVerticalWall();
+            this.addChild(this.insideVerticalWall);
+
             //Add Left Window
             this.leftWindow = new objects.WindowLeft();
             this.addChild(this.leftWindow);
@@ -92,7 +97,6 @@ module scenes {
             //Add Right Window
             this.rightWindow = new objects.WindowRight();
             this.addChild(this.rightWindow);
-
 
             //Add Player
             this.player = new objects.Player();
@@ -151,8 +155,7 @@ module scenes {
             this.collision.checkCollisionWall(this.player, this.mainGateWallRight);
             this.collision.checkCollisionWall(this.player, this.rightWall);
             this.collision.checkCollisionWall(this.player, this.insideHorizontalWall);
-
-
+            this.collision.checkCollisionWall(this.player, this.insideVerticalWall);
 
 
             //Update bullet

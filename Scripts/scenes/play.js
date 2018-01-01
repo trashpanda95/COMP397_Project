@@ -55,6 +55,9 @@ var scenes;
             //Add Inside Horizontal Wall
             this.insideHorizontalWall = new objects.InsideHorizontalWall();
             this.addChild(this.insideHorizontalWall);
+            //Add Inside Vertical Wall
+            this.insideVerticalWall = new objects.InsideVerticalWall();
+            this.addChild(this.insideVerticalWall);
             //Add Left Window
             this.leftWindow = new objects.WindowLeft();
             this.addChild(this.leftWindow);
@@ -107,6 +110,7 @@ var scenes;
             this.collision.checkCollisionWall(this.player, this.mainGateWallRight);
             this.collision.checkCollisionWall(this.player, this.rightWall);
             this.collision.checkCollisionWall(this.player, this.insideHorizontalWall);
+            this.collision.checkCollisionWall(this.player, this.insideVerticalWall);
             //Update bullet
             this.bullet.forEach(function (bullet) {
                 //Update Bullet
