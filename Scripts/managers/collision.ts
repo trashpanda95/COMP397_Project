@@ -2,11 +2,14 @@ module managers
 {
     export class Collision 
     {
+        private object1: objects.GameObject;
+        private object2: objects.GameObject;
+
+        //PUBLIC METHODS
         //Check distance between player and zombie
         public objectToObject2Dist(startPoint: createjs.Point, endPoint: createjs.Point): number {
             return Math.sqrt(Math.pow((endPoint.x - startPoint.x), 2) + Math.pow(endPoint.y - startPoint.y, 2))
         }
-
         //Check if thrs collision
         public checkCollision(object1: objects.GameObject, object2: objects.GameObject) {
             var startPoint: createjs.Point = new createjs.Point();
@@ -70,186 +73,168 @@ module managers
 
         }
 
+        //PRIVATE METHODS
+        private verticalWallCollision()
+        {
+            //Left
+            if (this.object1.y <= this.object2.y + this.object2.height
+                && this.object1.y >= this.object2.y
+                && this.object1.x >= this.object2.x - this.object1.halfWidth
+                && this.object1.x <= this.object2.x - this.object2.width) {
+                this.object1.x = this.object2.x - this.object1.halfWidth;
+            }
+            //Right
+            if (this.object1.y <= this.object2.y + this.object2.height
+                && this.object1.y >= this.object2.y
+                && this.object1.x <= this.object2.x + this.object2.width + this.object1.halfWidth
+                && this.object1.x >= this.object2.x + this.object2.width) {
+                this.object1.x = this.object2.x + this.object2.width + this.object1.halfWidth;
+            }
+            //Top
+            if (this.object1.y >= this.object2.y - this.object1.halfWidth
+                && this.object1.y <= this.object2.y
+                && this.object1.x <= this.object2.x + this.object2.width
+                && this.object1.x >= this.object2.x) {
+                this.object1.y = this.object2.y - this.object1.halfWidth;
+                console.log("Top wall");
+            }
+            //Bottom
+            if (this.object1.y >= this.object2.y
+                && this.object1.y <= this.object2.y + this.object2.height + this.object1.halfWidth
+                && this.object1.x <= this.object2.x + this.object2.width
+                && this.object1.x >= this.object2.x) {
+                this.object1.y = this.object2.y + this.object2.height + this.object1.halfWidth;
+                console.log("Bottom wall")
+            }
+        }
+
+        private horizontalWallCollision()
+        {
+            if (this.object1.x >= this.object2.x 
+                && this.object1.x <= this.object2.x+ this.object2.width
+                && this.object1.y >= this.object2.y+ this.object2.height-this.object1.halfWidth
+                && this.object1.y <= this.object2.y+ this.object2.height)
+            {
+                this.object1.y = this.object2.y+ this.object2.height- this.object1.halfWidth;
+                console.log("Top");
+            }
+            if (this.object1.x >= this.object2.x 
+                && this.object1.x <= this.object2.x+ this.object2.width
+                && this.object1.y >= this.object2.y+ this.object2.height
+                && this.object1.y <= this.object2.y+ this.object2.height+ this.object1.halfWidth)
+            {
+                this.object1.y = this.object2.y+ this.object2.height+ this.object1.halfWidth;
+                console.log("Bottom");
+            }     
+        }
+
         public checkCollisionWall(object1: objects.GameObject, object2: objects.GameObject) 
         { 
-            var maxWidth= object2.x+object2.width;
-            var minWidth= maxWidth-object2.x;
-            var maxHeight= object2.y+object2.height;
+            this.object1 = object1;
+            this.object2 = object2;
 
+            //Vertical Walls
             if (object2.name == "leftWall") 
             {
                 if (!object1.isColliding)
                 {    
-                    if ((object1.x + object1.halfWidth) >= (object2.x + object2.width) 
-                    && (object1.x) <= (object2.x + object2.width + object1.halfWidth) 
-                    && (object1.y + object1.height) >= object2.y 
-                    && (object1.y) <= (object2.y + object2.height+ object1.halfHeight))
-                    {
-                        object1.x = object2.x+ object2.width + object1.halfWidth;
-                    }
+                    this.verticalWallCollision();
                 }
                 else 
                 {
                     object1.isColliding = false;
                 }
             }
-
-            if (object2.name == "topWall") 
-            {
-                if (!object1.isColliding) 
-                {                                        
-                    if (object1.y <= object2.y+ object2.height+ object1.halfWidth)
-                    {
-                        object1.y = object2.y + object2.height+ object1.halfWidth;
-                    }                       
-                }
-                else 
-                {
-                    object1.isColliding = false;
-                }
-            }
-
-            if (object2.name == "bottomWall") 
-            {
-                if (!object1.isColliding)
-                {      
-                    if ((object1.y) >= object2.y- object2.height- object1.halfHeight) 
-                    {
-                        object1.y = object2.y - object2.height- object1.halfHeight;
-                    }
-                }
-                else 
-                {
-                    object1.isColliding = false;
-                }
-            }
-
             if (object2.name == "rightWallBath") 
             {
                 if (!object1.isColliding)
                 {      
-                    if ((object1.x) >= (object2.x - object1.halfWidth) 
-                    && object1.y > object2.y
-                    && object1.x < maxWidth)
-                    {
-                        object1.x = object2.x - object1.halfWidth;
-                    }
+                    this.verticalWallCollision();
                 }
                 else 
                 {
                     object1.isColliding = false;
                 }
             }
-  
-            if (object2.name == "mainGateWallLeft") 
-            {
-                if (!object1.isColliding)
-                {      
-                    if (object1.y >= object2.y- object2.height- object1.halfHeight 
-                    && object1.x >= object2.x 
-                    && object1.x <= object2.x+object2.width
-                    && object1.y <= object2.y+object2.height)
-                    {
-                        object1.y = object2.y - object2.height-  object1.halfHeight;
-                    }
-                    if (object1.y <= object2.y+ object2.height+ object1.halfHeight 
-                    && object1.x >= object2.x 
-                    && object1.x <= object2.x+object2.width
-                    && object1.y >= object2.y+object2.height)
-                    {
-                        object1.y = object2.y + object2.height+ object1.halfHeight;
-                    }
-                }
-                else 
-                {
-                    object1.isColliding = false;
-                }
-            }
-
-            if (object2.name == "mainGateWallRight") 
-            {
-                if (!object1.isColliding)
-                {      
-                    if ((object1.y) >= object2.y- object2.height- object1.halfHeight 
-                    && object1.x >= object2.x 
-                    && object1.x <= object2.x+object2.width
-                    && object1.y <= object2.y+ object2.height)
-                    {
-                        object1.y = object2.y - object2.height-  object1.halfHeight;
-                    }
-                    if (object1.y <= object2.y+ object2.height+ object1.halfHeight 
-                    && object1.x >= object2.x 
-                    && object1.x <= object2.x+object2.width
-                    && object1.y >= object2.y+object2.height)
-                    {
-                        object1.y = object2.y + object2.height+ object1.halfHeight;
-                    }
-                }
-                else 
-                {
-                    object1.isColliding = false;
-                }
-            }
-
             if (object2.name == "rightWall") 
             {
                 if (!object1.isColliding)
                 {     
-                    if (object1.x >= object2.x - object1.halfWidth)
-                    {
-                        object1.x = object2.x -object1.halfWidth;
-                    }
+                    this.verticalWallCollision();
                 }
                 else 
                 {
                     object1.isColliding = false;
                 }
             }
-
-            if (object2.name == "insideHorizontalWall") 
-            {
-                if (!object1.isColliding)
-                {     
-                    if (object1.x >= object2.x 
-                        && object1.x <= object2.x+ object2.width
-                        && object1.y >= object2.y+ object2.height-object1.halfWidth
-                        && object1.y <= object2.y+ object2.height)
-                    {
-                        object1.y = object2.y+ object2.height- object1.halfWidth;
-                        console.log("Top");
-                    }
-                    if (object1.x >= object2.x 
-                        && object1.x <= object2.x+ object2.width
-                        && object1.y >= object2.y+ object2.height
-                        && object1.y <= object2.y+ object2.height+ object1.halfWidth)
-                    {
-                        object1.y = object2.y+ object2.height+ object1.halfWidth;
-                        console.log("Bottom");
-                    }
-                }
-                else 
-                {
-                    object1.isColliding = false;
-                }
-            }
-
             if (object2.name == "insideVerticalWall") 
             {
                 if (!object1.isColliding)
                 {     
-                    if (object1.y <= object2.y+ object2.height
-                    && object1.y >= object2.y
-                    && object1.x >= object2.x+ object1.halfWidth
-                    && object1.x <= object2.x+ object2.width)
-                    {
-                        object1.x = object2.x- object1.halfWidth;
-                    }
+                    this.verticalWallCollision();
                 }
                 else 
                 {
                     object1.isColliding = false;
                 }
             }
+            
+            //Horizontal Walls
+            if (object2.name == "topWall") 
+            {
+                if (!object1.isColliding) 
+                {                                        
+                    this.horizontalWallCollision()
+                }
+                else 
+                {
+                    object1.isColliding = false;
+                }
+            }
+            if (object2.name == "bottomWall") 
+            {
+                if (!object1.isColliding)
+                {      
+                    this.horizontalWallCollision()
+                }
+                else 
+                {
+                    object1.isColliding = false;
+                }
+            }
+            if (object2.name == "mainGateWallLeft") 
+            {
+                if (!object1.isColliding)
+                {      
+                    this.horizontalWallCollision()
+                }
+                else 
+                {
+                    object1.isColliding = false;
+                }
+            }
+            if (object2.name == "mainGateWallRight") 
+            {
+                if (!object1.isColliding)
+                {      
+                    this.horizontalWallCollision()
+                }
+                else 
+                {
+                    object1.isColliding = false;
+                }
+            }
+            if (object2.name == "insideHorizontalWall") 
+            {
+                if (!object1.isColliding)
+                {     
+                    this.horizontalWallCollision()
+                }
+                else 
+                {
+                    object1.isColliding = false;
+                }
+            }         
         }
     }
 }
