@@ -15,7 +15,7 @@ var objects;
         // CONSTRUCTORS
         function WallBottom() {
             var _this = _super.call(this, "bottomWall") || this;
-            _this.y = 598;
+            _this.y = 600;
             _this.x = 113;
             return _this;
         }

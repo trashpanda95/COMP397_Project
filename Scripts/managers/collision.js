@@ -24,10 +24,7 @@ var managers;
             //Check if object is bullet and if gun fire is true
             if (object2.name == "bullet" && object2.bulletCollided) {
                 //Check if distance between zombie and bullet is less than the height of bullet + half height of zombie
-                if (this.objectToObject2Dist(startPoint, endPoint) <= minimumDistance2) 
-                //if (object1.x < object2.x + object2.width && object1.x + object1.width > object2.x 
-                // && object1.y < object2.y + object2.height && object1.y + object1.height > object2.y)
-                {
+                if (this.objectToObject2Dist(startPoint, endPoint) <= minimumDistance2) {
                     //Decrease zombie health
                     object1.zombieHealth--;
                     object2.Reset();
@@ -73,7 +70,6 @@ var managers;
                         && (object1.x) <= (object2.x + object2.width + object1.halfWidth)
                         && (object1.y + object1.height) >= object2.y
                         && (object1.y) <= (object2.y + object2.height + object1.halfHeight)) {
-                        console.log("left wall collide");
                         object1.x = object2.x + object2.width + object1.halfWidth;
                     }
                 }
@@ -84,7 +80,6 @@ var managers;
             if (object2.name == "topWall") {
                 if (!object1.isColliding) {
                     if (object1.y <= object2.y + object2.height + object1.halfWidth) {
-                        console.log("Top wall collide");
                         object1.y = object2.y + object2.height + object1.halfWidth;
                     }
                 }
@@ -116,11 +111,17 @@ var managers;
             }
             if (object2.name == "mainGateWallLeft") {
                 if (!object1.isColliding) {
-                    if ((object1.y) >= object2.y - object2.height - object1.halfHeight
-                        && object1.x > object2.x
-                        && object1.x < object2.x + object2.width) {
-                        console.log("Main gate wall");
+                    if (object1.y >= object2.y - object2.height - object1.halfHeight
+                        && object1.x >= object2.x
+                        && object1.x <= object2.x + object2.width
+                        && object1.y <= object2.y + object2.height) {
                         object1.y = object2.y - object2.height - object1.halfHeight;
+                    }
+                    if (object1.y <= object2.y + object2.height + object1.halfHeight
+                        && object1.x >= object2.x
+                        && object1.x <= object2.x + object2.width
+                        && object1.y >= object2.y + object2.height) {
+                        object1.y = object2.y + object2.height + object1.halfHeight;
                     }
                 }
                 else {
@@ -130,9 +131,16 @@ var managers;
             if (object2.name == "mainGateWallRight") {
                 if (!object1.isColliding) {
                     if ((object1.y) >= object2.y - object2.height - object1.halfHeight
-                        && object1.x > object2.x
-                        && object1.x < object2.x + object2.width) {
+                        && object1.x >= object2.x
+                        && object1.x <= object2.x + object2.width
+                        && object1.y <= object2.y + object2.height) {
                         object1.y = object2.y - object2.height - object1.halfHeight;
+                    }
+                    if (object1.y <= object2.y + object2.height + object1.halfHeight
+                        && object1.x >= object2.x
+                        && object1.x <= object2.x + object2.width
+                        && object1.y >= object2.y + object2.height) {
+                        object1.y = object2.y + object2.height + object1.halfHeight;
                     }
                 }
                 else {
@@ -143,6 +151,19 @@ var managers;
                 if (!object1.isColliding) {
                     if (object1.x >= object2.x - object1.halfWidth) {
                         object1.x = object2.x - object1.halfWidth;
+                    }
+                }
+                else {
+                    object1.isColliding = false;
+                }
+            }
+            if (object2.name == "insideHorizontalWall") {
+                if (!object1.isColliding) {
+                    if (object1.x >= object2.x && object1.x <= object2.x + object2.width && object1.y <= object2.y - object2.height) {
+                        object1.y = object2.y - object1.halfWidth;
+                    }
+                    if (object1.x >= object2.x && object1.x <= object2.x + object2.width && object1.y >= object2.y + object2.height) {
+                        object1.y = object2.y + object2.height + object1.halfWidth;
                     }
                 }
                 else {

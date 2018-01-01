@@ -16,7 +16,7 @@ module objects {
       constructor() 
       {   
         super("bottomWall")
-        this.y=598;
+        this.y=600;
         this.x = 113;
       }
         // PRIVATE METHODS

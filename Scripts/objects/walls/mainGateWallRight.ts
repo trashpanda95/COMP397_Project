@@ -15,7 +15,7 @@ module objects {
       constructor() 
       {   
         super("mainGateWallRight")
-        this.y= 368;
+        this.y= 370;
         this.x = 870;
       }
         // PRIVATE METHODS

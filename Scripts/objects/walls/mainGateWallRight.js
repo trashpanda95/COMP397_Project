@@ -15,7 +15,7 @@ var objects;
         // CONSTRUCTORS
         function MainGateWallRight() {
             var _this = _super.call(this, "mainGateWallRight") || this;
-            _this.y = 368;
+            _this.y = 370;
             _this.x = 870;
             return _this;
         }

@@ -16,7 +16,7 @@ var objects;
         function RightWall() {
             var _this = _super.call(this, "rightWall") || this;
             _this.y = 71;
-            _this.x = 941;
+            _this.x = 945;
             return _this;
         }
         // PRIVATE METHODS

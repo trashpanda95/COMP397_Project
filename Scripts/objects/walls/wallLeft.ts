@@ -16,7 +16,7 @@ module objects {
       {   
         super("leftWall")
         this.y= 71;
-        this.x = 113;
+        this.x = 110;
       }
         // PRIVATE METHODS
         private regXY(): void                               //Method to set bitmap registry point at the center

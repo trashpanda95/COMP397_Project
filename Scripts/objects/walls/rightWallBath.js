@@ -17,7 +17,7 @@ var objects;
         function WallRightBath() {
             var _this = _super.call(this, "rightWallBath") || this;
             _this.y = 368;
-            _this.x = 613;
+            _this.x = 615;
             return _this;
         }
         // PRIVATE METHODS

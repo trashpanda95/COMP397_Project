@@ -19,7 +19,10 @@ module managers {
         { id: "rightWallBath", src: "./Assets/images/walls/rightWallBath.png"},
         { id: "mainGateWallLeft", src: "./Assets/images/walls/mainGateWallLeft.png"},
         { id: "mainGateWallRight", src: "./Assets/images/walls/mainGateWallRight.png"},
-        { id: "rightWall", src: "./Assets/images/walls/rightWall.png"}
+        { id: "insideHorizontalWall", src: "./Assets/images/walls/insideHorizontalWall.png"},
+        { id: "rightWall", src: "./Assets/images/walls/rightWall.png"},
+        { id: "windowLeft", src: "./Assets/images/window/windowLeft.png"},
+        { id: "windowRight", src: "./Assets/images/window/windowRight.png"}
     ];
 
     export class AssetManager extends createjs.LoadQueue {
