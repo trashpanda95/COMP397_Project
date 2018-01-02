@@ -6,6 +6,7 @@ module scenes {
         private mouse: managers.Mouse;
         public gameCanvas:HTMLElement;
 
+        // Main Actors
         private player:objects.Player;
         private zombie:objects.Zombie[];
         private bullet: objects.Bullet[];
@@ -22,16 +23,36 @@ module scenes {
         private insideHorizontalWall: objects.InsideHorizontalWall;
         private insideVerticalWall: objects.InsideVerticalWall;
 
-        //Windows
+        // Left Window
         private leftWindow: objects.WindowLeft;
+
+        // Left Window Health Labels
+        private leftWindowHealth:objects.Label;
+        private leftWindowHealthOutline:objects.Label;
+
+        // Right Window
         private rightWindow: objects.WindowRight;
 
+        // Right Window Health Labels
+        private rightWindowHealth:objects.Label;
+        private rightWindowHealthOutline:objects.Label;
+
+        // Player's Labels
         private playerHealth:objects.Label;
+        private playerHealthOutline:objects.Label;
+
+        // Collision
         private collision: managers.Collision;
 
-        private zombieCount: number =10;
-        private bulletNum: number =10;
+        // Zombie Counter
+        private zombieCount: number = 40;
+
+        // Bullet Variables
+        private bulletNum: number =40;
         private bulletCounter: number=0;
+        private bulletLabel:objects.Label;
+        private bulletLabelOutline:objects.Label;
+
 
         private bgMap: objects.Bgmap;
 
@@ -99,9 +120,17 @@ module scenes {
             this.leftWindow = new objects.WindowLeft();
             this.addChild(this.leftWindow);
 
+            // Set Left Window's Health Label
+            this.leftWindowHealth = new objects.Label(""+this.leftWindow.windowLeftHealth+"/100", "10px","Verdana", "#FFFFFF", this.leftWindow.x-18, this.leftWindow.y-5, false);
+            this.addChild (this.leftWindowHealth);
+
             //Add Right Window
             this.rightWindow = new objects.WindowRight();
             this.addChild(this.rightWindow);
+
+            // Set Right Window's Health Label
+            this.rightWindowHealth = new objects.Label(""+this.rightWindow.windowRightHealth+"/100", "10px","Verdana", "#FFFFFF", this.rightWindow.x-18, this.rightWindow.y-5, false);
+            this.addChild (this.rightWindowHealth);
 
             //Add Player
             this.player = new objects.Player();
@@ -118,25 +147,41 @@ module scenes {
             //Add Collision
             this.collision = new managers.Collision();
 
-            //Add Labels
-            this.playerHealth = new objects.Label("Health: " +this.player.playerHealth, "20px","Verdana", "#000000", 20, 560, false);    
+            // Player's Health Label
+            this.playerHealth = new objects.Label("Health: " +this.player.playerHealth, "20px","Verdana", "#000000", 20, 640, false);    
+            this.playerHealthOutline = new objects.Label("Health: " +this.player.playerHealth, "20px","Verdana", "#FFFFFF", 20, 640, false);
+            
+            // Bullet Label
+            this.bulletLabel = new objects.Label("Bullets: " +(this.bulletNum - this.bulletCounter), "20px","Verdana", "#000000", 20, 660, false);   
+            this.bulletLabelOutline = new objects.Label("Bullets: " +(this.bulletNum - this.bulletCounter), "20px","Verdana", "#FFFFFF", 20, 660, false);  
+
+
+            // Set Label outlines to True
+            this.playerHealthOutline.outline = 1;
+            this.bulletLabelOutline.outline = 1; 
+
+            // Add Labels onto Scene
+            this.addChild(this.bulletLabel);
+            this.addChild(this.bulletLabelOutline);
             this.addChild(this.playerHealth);
+            this.addChild(this.playerHealthOutline);
+
 
             //Add Mouse Listener
             this.mouse = new managers.Mouse(this.player, this.gameCanvas);
             this.mouse.AddClickListener((event)=> 
             {
-                //Add Bullets
+                // Bullet is Fired, Activate Method BulletFire()
                 this.bulletFire();
             });
         }
 
         public Update():number
         {
-            //Update Player
+            // Update Player
             this.player.Update();
 
-            //Check collision with wall+ player
+            // Check collision with wall+ player
             this.collision.checkCollisionWall(this.player, this.leftWallTop);
             this.collision.checkCollisionWall(this.player, this.leftWallBottom);
             this.collision.checkCollisionWall(this.player, this.topWall);
@@ -148,15 +193,15 @@ module scenes {
             this.collision.checkCollisionWall(this.player, this.insideHorizontalWall);
             this.collision.checkCollisionWall(this.player, this.insideVerticalWall);
             
-            //Update Zombie
+            // Update Zombie
             this.zombie.forEach(zombies =>
             {
                 zombies.Update();    
-                //Checks collision with the player and each zombie         
+                // Checks collision with the player and each zombie         
                 this.collision.checkCollision(this.player, zombies);   
-                //Checks collision with other zombies
+                // Checks collision with other zombies
                 this.collision.collisionPushBack(zombies, zombies);   
-                //Check collision with wall+ zombie
+                // Check collision with wall+ zombie
                 this.collision.checkCollisionWall(zombies, this.leftWallTop);
                 this.collision.checkCollisionWall(zombies, this.leftWallBottom);
                 this.collision.checkCollisionWall(zombies, this.topWall);
@@ -171,24 +216,24 @@ module scenes {
                 this.collision.checkCollision(zombies, this.rightWindow);  
             });  
 
-            //Checks collisions between each zombie and each bullet
+            // Checks collisions between each zombie and each bullet
             this.zombie.forEach(zombie=> {
                  this.bullet.forEach(bullet => {
-                    this.collision.checkCollision(zombie, bullet);     
+                    this.collision.checkCollision(zombie, bullet);   
                  });
             });
 
-            //Update bullet
+            // Update bullet
             this.bullet.forEach(bullet => 
             {
                 //Update Bullet
                 bullet.Update(); 
             });
                     
-            //Update Labels           
+            // Update Labels           
             this.updateLabels();
             
-            //Change Scene Condition
+            // Change Scene Condition
             if (this.player.isAlive == false)
             {
                 this.currentScene = config.Scene.END;
@@ -198,6 +243,8 @@ module scenes {
         }
 
         // PRIVATE METHODS
+
+        // Spawn Zombies onto the Scene
         private zombieSpawn()
         {  
             let count;
@@ -207,10 +254,10 @@ module scenes {
                 this.addChild(this.zombie[count]);                          
             }
         }
-        //Bullet
+        // Spawn Bullets onto the Scene
         private bulletSpawn():void
         {
-            for (let count= 0; count < this.bulletNum; count++)
+            for (let count= 0; count <= this.bulletNum; count++)
             {
                 this.bullet[count] = new objects.Bullet();      
                 this.addChild(this.bullet[count]);                          
@@ -218,6 +265,7 @@ module scenes {
         }
         private bulletFire():void
         {
+            // Sets Bullet Spawn to Player's Location
             this.bullet[this.bulletCounter].x = this.player.bulletSpawn.x;
             this.bullet[this.bulletCounter].y = this.player.bulletSpawn.y;
             this.bullet[this.bulletCounter].gunFired = true;
@@ -225,7 +273,9 @@ module scenes {
             this.bullet[this.bulletCounter].bulletRotation = this.player.playerRotation;
     
             this.bulletCounter++;
-            if(this.bulletCounter >= this.bulletNum -1) 
+
+            // Resets Bullet Counter
+            if(this.bulletCounter >= this.bulletNum) 
             {
               this.bulletCounter = 0;
             }
@@ -234,6 +284,11 @@ module scenes {
         private updateLabels()
         {
             this.playerHealth.text = "Health: "+ this.player.playerHealth;
+            this.playerHealthOutline.text = "Health: "+ this.player.playerHealth;
+            this.bulletLabel.text = "Bullets: "+ (this.bulletNum - this.bulletCounter);
+            this.bulletLabelOutline.text = "Bullets: "+ (this.bulletNum - this.bulletCounter);
+            this.leftWindowHealth.text = "" +(this.leftWindow.windowLeftHealth) + "/100";
+            this.rightWindowHealth.text = "" +(this.rightWindow.windowRightHealth)+"/100";
         }
         
     }
