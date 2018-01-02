@@ -45,7 +45,7 @@ module scenes {
         private collision: managers.Collision;
 
         // Zombie Counter
-        private zombieCount: number = 40;
+        private zombieCount: number = 20;
 
         // Bullet Variables
         private bulletNum: number =40;
