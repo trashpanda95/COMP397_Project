@@ -78,7 +78,6 @@ module managers
             endPoint.x = object2.regX + object2.x;
             endPoint.y = object2.regY + object2.y;
 
-
             //Check if object is bullet and if gun fire is true
             if (object2.name == "bullet" && object2.bulletCollided) {
                 //Check if distance between zombie and bullet is less than the height of bullet + half height of zombie
