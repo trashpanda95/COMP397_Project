@@ -10,26 +10,18 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var objects;
 (function (objects) {
-    var WindowRight = /** @class */ (function (_super) {
-        __extends(WindowRight, _super);
+    var LeftWallBottom = /** @class */ (function (_super) {
+        __extends(LeftWallBottom, _super);
         // PRIVATE INSTANCE VARIABLES
         // CONSTRUCTORS
-        function WindowRight() {
-            var _this = _super.call(this, "windowRight") || this;
-            _this.Start();
+        function LeftWallBottom() {
+            var _this = _super.call(this, "leftWallBottom") || this;
+            _this.y = 382;
+            _this.x = 110;
             return _this;
         }
-        WindowRight.prototype.Start = function () {
-            this.y = 374;
-            this.x = 830;
-            this.windowRightHealth = 100;
-            this.isBroken = false;
-            this.regXY();
-        };
-        WindowRight.prototype.Update = function () { };
-        WindowRight.prototype.Reset = function () { };
-        // PRIVATE METHODS   
-        WindowRight.prototype.regXY = function () {
+        // PRIVATE METHODS
+        LeftWallBottom.prototype.regXY = function () {
             this.width = this.getBounds().width;
             this.height = this.getBounds().height;
             this.halfWidth = this.width / 2;
@@ -37,8 +29,11 @@ var objects;
             this.regX = this.halfWidth;
             this.regY = this.halfHeight;
         };
-        return WindowRight;
+        LeftWallBottom.prototype.Start = function () { };
+        LeftWallBottom.prototype.Update = function () { };
+        LeftWallBottom.prototype.Reset = function () { };
+        return LeftWallBottom;
     }(objects.GameObject));
-    objects.WindowRight = WindowRight;
+    objects.LeftWallBottom = LeftWallBottom;
 })(objects || (objects = {}));
-//# sourceMappingURL=windowRight.js.map
+//# sourceMappingURL=leftWallBottom.js.map

@@ -1,41 +1,37 @@
 module objects {
-    export class WindowLeft extends objects.GameObject {
-      // PRIVATE INSTANCE VARIABLES
-      private assetManager: createjs.LoadQueue;
-      public width:number;
-      public height:number;
-      public halfWidth:number;
-      public halfHeight:number;
-      public verticalSpeed:number;
-      public horizontalSpeed:number;
-      public regX :number;
-      public regY : number;
-  
-      // CONSTRUCTORS
-      constructor() 
-      {   
-        super("windowLeft")
-        this.y= 293;
-        this.x = 109;
-      }
-        // PRIVATE METHODS
-        private regXY(): void                               //Method to set bitmap registry point at the center
-        {
-            this.width = this.getBounds().width;
-            this.height = this.getBounds().height;
-            this.halfWidth = this.width / 2;
-            this.halfHeight = this.height / 2;
-            this.regX = this.halfWidth;
-            this.regY = this.halfHeight;
-        }
+  export class WindowLeft extends objects.GameObject {
+    // PRIVATE INSTANCE VARIABLES
 
-        public Start(): void //Start method runs when object is instantiated
-        { }
+    // CONSTRUCTORS
+    constructor() {
+      super("windowLeft");
+      this.Start();
+    }
+    public Start(): void //Start method runs when object is instantiated
+    {
+      this.y = 338;
+      this.x = 115;
+      this.windowLeftHealth = 100;
+      this.isBroken = false;
+      this.regXY();
+    }
 
-        public Update(): void //Update method runs 60fps
-        { }
 
-        public Reset(): void { }
+    public Update(): void //Update method runs 60fps
+    { }
+
+    public Reset(): void { }
+
+    // PRIVATE METHODS   
+    private regXY(): void                               //Method to set bitmap registry point at the center
+    {
+      this.width = this.getBounds().width;
+      this.height = this.getBounds().height;
+      this.halfWidth = this.width / 2;
+      this.halfHeight = this.height / 2;
+      this.regX = this.halfWidth;
+      this.regY = this.halfHeight;
     }
   }
+}
   

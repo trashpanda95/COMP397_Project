@@ -1,23 +1,13 @@
 module objects {
-    export class WallLeft extends objects.GameObject {
-      // PRIVATE INSTANCE VARIABLES
-      private assetManager: createjs.LoadQueue;
-      public width:number;
-      public height:number;
-      public halfWidth:number;
-      public halfHeight:number;
-      public verticalSpeed:number;
-      public horizontalSpeed:number;
-      public regX :number;
-      public regY : number;
-  
-      // CONSTRUCTORS
-      constructor() 
-      {   
-        super("leftWall")
-        this.y= 71;
-        this.x = 110;
-      }
+    export class LeftWallTop extends objects.GameObject {
+        // PRIVATE INSTANCE VARIABLES
+
+        // CONSTRUCTORS
+        constructor() {
+            super("leftWallTop")
+            this.y = 71;
+            this.x = 110;
+        }
         // PRIVATE METHODS
         private regXY(): void                               //Method to set bitmap registry point at the center
         {
@@ -37,5 +27,4 @@ module objects {
 
         public Reset(): void { }
     }
-  }
-  
+}

@@ -27,6 +27,12 @@ module objects {
         //Zombie
         public zombieSpeed: number;
         public zombieHealth: number;
+        public windowReached: boolean;
+
+        //Window
+        public windowRightHealth: number;
+        public windowLeftHealth: number;
+        public isBroken: boolean;
 
         //Game
         public position: createjs.Point;

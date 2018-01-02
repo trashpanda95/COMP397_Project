@@ -13,29 +13,46 @@ var objects;
     var Zombie = /** @class */ (function (_super) {
         __extends(Zombie, _super);
         // CONSTRUCTORS
-        function Zombie(target) {
+        function Zombie(targetPlayer, targetWindowLeft, targetWindowRight) {
             var _this = _super.call(this, "zombie") || this;
             _this.range = 200;
-            _this.spawnMax = 500;
-            _this.spawnMin = 100;
-            _this.target = target;
+            _this.spawnMax = 400;
+            _this.spawnMin = 50;
+            _this.targetPlayer = targetPlayer;
+            _this.targetWindowLeft = targetWindowLeft;
+            _this.targetWindowRight = targetWindowRight;
             _this.Start();
             return _this;
         }
         //PUBLIC METHODS
         Zombie.prototype.Start = function () {
+            this.regXY();
             this.generateHealth();
             this.Reset();
         };
         Zombie.prototype.Update = function () {
-            // this.CheckBounds()
-            this.ChasePlayer();
+            if (this.windowReached) {
+                this.enterHouseLeft();
+                this.enterHouseRight();
+            }
+            else {
+                this.setDestination();
+            }
         };
         Zombie.prototype.Reset = function () {
             this.generateHealth();
             this.zombieSpawnPoint();
+            this.windowReached = false;
         };
         // PRIVATE METHODS  
+        Zombie.prototype.regXY = function () {
+            this.width = this.getBounds().width;
+            this.height = this.getBounds().height;
+            this.halfWidth = this.width / 2;
+            this.halfHeight = this.height / 2;
+            this.regX = this.halfWidth;
+            this.regY = this.halfHeight;
+        };
         Zombie.prototype.generateHealth = function () {
             this.zombieHealth = Math.random() * (8 - 5) + 5;
         };
@@ -61,9 +78,9 @@ var objects;
         };
         Zombie.prototype.ChasePlayer = function () {
             //Zombie rotation
-            this.rotation = managers.Vector.RotateTowardPosition(new managers.Vector(this.x, this.y), new managers.Vector(this.target.x, this.target.y));
+            this.rotation = managers.Vector.RotateTowardPosition(new managers.Vector(this.x, this.y), new managers.Vector(this.targetPlayer.x, this.targetPlayer.y));
             //If player is not in range, move slowly
-            if (new managers.Vector(this.target.x, this.target.y).Add(new managers.Vector(-this.x, -this.y)).Magnitude() > this.range) {
+            if (new managers.Vector(this.targetPlayer.x, this.targetPlayer.y).Add(new managers.Vector(-this.x, -this.y)).Magnitude() > this.range) {
                 this.x += managers.Vector.DegreeToVector(this.rotation).x * this.generateNormalSpeed();
                 this.y += managers.Vector.DegreeToVector(this.rotation).y * this.generateNormalSpeed();
             }
@@ -72,35 +89,87 @@ var objects;
                 this.y += managers.Vector.DegreeToVector(this.rotation).y * this.generateCloseSpeed();
             }
         };
+        Zombie.prototype.headTowardsLeftWindow = function () {
+            //Zombie rotation
+            this.rotation = managers.Vector.RotateTowardPosition(new managers.Vector(this.x, this.y), new managers.Vector(this.targetWindowLeft.x, this.targetWindowLeft.y));
+            this.x += managers.Vector.DegreeToVector(this.rotation).x * this.generateNormalSpeed();
+            this.y += managers.Vector.DegreeToVector(this.rotation).y * this.generateNormalSpeed();
+        };
+        Zombie.prototype.headTowardsRightWindow = function () {
+            //Zombie rotation
+            this.rotation = managers.Vector.RotateTowardPosition(new managers.Vector(this.x, this.y), new managers.Vector(this.targetWindowRight.x, this.targetWindowRight.y));
+            this.x += managers.Vector.DegreeToVector(this.rotation).x * this.generateNormalSpeed();
+            this.y += managers.Vector.DegreeToVector(this.rotation).y * this.generateNormalSpeed();
+        };
         Zombie.prototype.zombieSpawnPoint = function () {
             var borderRandNum = Math.random();
-            var spawnPoint = new managers.Vector(0, 0);
-            if (borderRandNum > 0.75) {
+            this.spawnPoint = new managers.Vector(0, 0);
+            /* if (borderRandNum >0.75)
+            {
                 //Spawn Top
-                spawnPoint.x = (Math.random() * config.Screen.WIDTH) + (this.spawnMax - this.spawnMin) + this.spawnMin;
-                spawnPoint.y = ((config.Screen.HEIGHT * -0.1) - (Math.random() * (this.spawnMax - this.spawnMin) + this.spawnMin));
-                console.log("Spawned Top " + spawnPoint.y);
+                this.spawnPoint.x = (Math.random() * config.Screen.WIDTH)+(this.spawnMax- this.spawnMin)+this.spawnMin ;
+                this.spawnPoint.y = ((config.Screen.HEIGHT*-0.1) - (Math.random()* (this.spawnMax- this.spawnMin)+ this.spawnMin));
+                console.log("Spawned Top "+ this.spawnPoint.y);
             }
-            else if (borderRandNum > 0.5) {
-                //Spawn Left
-                spawnPoint.x = ((config.Screen.WIDTH * -0.1) - (Math.random() * (this.spawnMax - this.spawnMin) + this.spawnMin));
-                spawnPoint.y = (Math.random() * config.Screen.HEIGHT) + (this.spawnMax - this.spawnMin) + this.spawnMin;
-                console.log("Spawned Left " + spawnPoint.x);
-            }
-            else if (borderRandNum > 0.25) {
+            else if (borderRandNum > 0.25)
+            {
                 //Spawn Right
-                spawnPoint.x = ((config.Screen.WIDTH) + (Math.random() * (this.spawnMax - this.spawnMin) + this.spawnMin));
-                spawnPoint.y = (Math.random() * config.Screen.HEIGHT) + (this.spawnMax - this.spawnMin) + this.spawnMin;
-                console.log("Spawned Right " + spawnPoint.x);
+                this.spawnPoint.x = ((config.Screen.WIDTH) + (Math.random()* (this.spawnMax- this.spawnMin)+ this.spawnMin));
+                this.spawnPoint.y = (Math.random() * config.Screen.HEIGHT) + (this.spawnMax- this.spawnMin)+this.spawnMin;
+                console.log("Spawned Right "+ this.spawnPoint.x);
+            }*/
+            if (borderRandNum > 0.5) {
+                //Spawn Left
+                this.spawnPoint.x = ((config.Screen.WIDTH * -0.1) - (Math.random() * (this.spawnMax - this.spawnMin) + this.spawnMin));
+                this.spawnPoint.y = (Math.random() * config.Screen.HEIGHT) + (this.spawnMax - this.spawnMin) + this.spawnMin;
+                console.log("Spawned Left " + " X: " + this.spawnPoint.x + " Y: " + this.spawnPoint.y);
             }
             else {
-                //Spwan Bottom
-                spawnPoint.x = (Math.random() * config.Screen.WIDTH) + (this.spawnMax - this.spawnMin) + this.spawnMin;
-                spawnPoint.y = (config.Screen.HEIGHT + (Math.random() * (this.spawnMax - this.spawnMin) + this.spawnMin));
-                console.log("Spawned Bottom " + spawnPoint.y);
+                //Spwan Bottom Right 
+                this.spawnPoint.x = (config.Screen.WIDTH / 2) + (Math.random() * (this.spawnMax - this.spawnMin) + this.spawnMin);
+                this.spawnPoint.y = (config.Screen.HEIGHT) + (Math.random() * (this.spawnMax - this.spawnMin) + this.spawnMin);
+                console.log("Spawned Bottom " + " X: " + this.spawnPoint.x + " Y: " + this.spawnPoint.y);
             }
-            this.x = spawnPoint.x;
-            this.y = spawnPoint.y;
+            this.x = this.spawnPoint.x;
+            this.y = this.spawnPoint.y;
+        };
+        Zombie.prototype.setDestination = function () {
+            /* //BOTTOM LEFT
+            if(this.spawnPoint.x < (config.Screen.WIDTH/2) && this.spawnPoint.y > (config.Screen.HEIGHT/2))
+            {
+                this.headTowardsWindow();
+            }
+            //TOP RIGHT
+            if(this.spawnPoint.x > (config.Screen.WIDTH/2) && this.spawnPoint.y < (config.Screen.HEIGHT/2))
+            {
+                this.headTowardsRightWindow();
+            } */
+            //LEFT
+            if (this.spawnPoint.x < (config.Screen.WIDTH / 2)) {
+                this.headTowardsLeftWindow();
+            }
+            //RIGHT
+            if (this.spawnPoint.x > (config.Screen.WIDTH / 2)
+                && this.spawnPoint.y > (config.Screen.HEIGHT / 2)
+                && !this.targetWindowRight.isBroken) {
+                this.headTowardsRightWindow();
+            }
+        };
+        Zombie.prototype.enterHouseRight = function () {
+            if (this.y <= this.targetWindowRight.y - this.halfHeight) {
+                this.ChasePlayer();
+            }
+            else {
+                this.y -= this.generateNormalSpeed();
+            }
+        };
+        Zombie.prototype.enterHouseLeft = function () {
+            if (this.x >= this.targetWindowLeft.x + this.halfWidth) {
+                this.ChasePlayer();
+            }
+            else {
+                this.x += this.generateNormalSpeed();
+            }
         };
         return Zombie;
     }(objects.GameObject));

@@ -10,8 +10,9 @@ module scenes {
         private zombie:objects.Zombie[];
         private bullet: objects.Bullet[];
 
-        //private leftWall: objects.LeftWall;
-        private leftWall: objects.WallLeft;
+        //Walls
+        private leftWallTop: objects.LeftWallTop;
+        private leftWallBottom: objects.LeftWallBottom;
         private topWall: objects.WallTop;
         private bottomWall: objects.WallBottom;
         private rightWallBath: objects.WallRightBath;
@@ -21,7 +22,7 @@ module scenes {
         private insideHorizontalWall: objects.InsideHorizontalWall;
         private insideVerticalWall: objects.InsideVerticalWall;
 
-        //Window
+        //Windows
         private leftWindow: objects.WindowLeft;
         private rightWindow: objects.WindowRight;
 
@@ -54,9 +55,13 @@ module scenes {
             this.bgMap = new objects.Bgmap("level1BG");
             this.addChild(this.bgMap);
 
-            //Add Left Wall
-            this.leftWall = new objects.WallLeft();
-            this.addChild(this.leftWall);
+            //Add Left Wall Top
+            this.leftWallTop = new objects.LeftWallTop();
+            this.addChild(this.leftWallTop);
+
+            //Add Left Wall Bottom
+            this.leftWallBottom = new objects.LeftWallBottom();
+            this.addChild(this.leftWallBottom);
 
             //Add Top Wall
             this.topWall = new objects.WallTop();
@@ -104,7 +109,7 @@ module scenes {
                    
             // Add Zombies
             this.zombie = new Array<objects.Zombie>();
-            //this.zombieSpawn();
+            this.zombieSpawn();
 
             // Add Bullets
             this.bullet = new Array<objects.Bullet>();
@@ -130,24 +135,10 @@ module scenes {
         {
             //Update Player
             this.player.Update();
-            
-            //Update Zombie
-            this.zombie.forEach(zombies =>
-            {
-                //zombies.Update();    
-                //Checks collision with the player and each zombie         
-                this.collision.checkCollision(this.player, zombies);         
-            });  
 
-            //Checks collisions between each zombie and each bullet
-            this.zombie.forEach(zombie=> {
-                 this.bullet.forEach(bullet => {
-                    this.collision.checkCollision(zombie, bullet);     
-                 });
-            });
-
-            //Check collision with wall
-            this.collision.checkCollisionWall(this.player, this.leftWall);
+            //Check collision with wall+ player
+            this.collision.checkCollisionWall(this.player, this.leftWallTop);
+            this.collision.checkCollisionWall(this.player, this.leftWallBottom);
             this.collision.checkCollisionWall(this.player, this.topWall);
             this.collision.checkCollisionWall(this.player, this.bottomWall);
             this.collision.checkCollisionWall(this.player, this.rightWallBath);
@@ -156,7 +147,34 @@ module scenes {
             this.collision.checkCollisionWall(this.player, this.rightWall);
             this.collision.checkCollisionWall(this.player, this.insideHorizontalWall);
             this.collision.checkCollisionWall(this.player, this.insideVerticalWall);
+            
+            //Update Zombie
+            this.zombie.forEach(zombies =>
+            {
+                zombies.Update();    
+                //Checks collision with the player and each zombie         
+                this.collision.checkCollision(this.player, zombies);   
+                 //Check collision with wall+ zombie
+                this.collision.checkCollisionWall(zombies, this.leftWallTop);
+                this.collision.checkCollisionWall(zombies, this.leftWallBottom);
+                this.collision.checkCollisionWall(zombies, this.topWall);
+                this.collision.checkCollisionWall(zombies, this.bottomWall);
+                this.collision.checkCollisionWall(zombies, this.rightWallBath);
+                this.collision.checkCollisionWall(zombies, this.mainGateWallLeft);
+                this.collision.checkCollisionWall(zombies, this.mainGateWallRight);
+                this.collision.checkCollisionWall(zombies, this.rightWall);
+                this.collision.checkCollisionWall(zombies, this.insideHorizontalWall);
+                this.collision.checkCollisionWall(zombies, this.insideVerticalWall);      
+                this.collision.checkCollision(zombies, this.leftWindow);   
+                this.collision.checkCollision(zombies, this.rightWindow);   
+            });  
 
+            //Checks collisions between each zombie and each bullet
+            this.zombie.forEach(zombie=> {
+                 this.bullet.forEach(bullet => {
+                    this.collision.checkCollision(zombie, bullet);     
+                 });
+            });
 
             //Update bullet
             this.bullet.forEach(bullet => 
@@ -183,11 +201,10 @@ module scenes {
             let count;
             for (count= 0; count < this.zombieCount; count++)
             {
-                this.zombie[count] = new objects.Zombie(this.player);      
+                this.zombie[count] = new objects.Zombie(this.player, this.leftWindow, this.rightWindow);      
                 this.addChild(this.zombie[count]);                          
             }
         }
-
         //Bullet
         private bulletSpawn():void
         {

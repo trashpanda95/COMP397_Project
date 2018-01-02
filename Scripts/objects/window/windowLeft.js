@@ -12,14 +12,23 @@ var objects;
 (function (objects) {
     var WindowLeft = /** @class */ (function (_super) {
         __extends(WindowLeft, _super);
+        // PRIVATE INSTANCE VARIABLES
         // CONSTRUCTORS
         function WindowLeft() {
             var _this = _super.call(this, "windowLeft") || this;
-            _this.y = 293;
-            _this.x = 109;
+            _this.Start();
             return _this;
         }
-        // PRIVATE METHODS
+        WindowLeft.prototype.Start = function () {
+            this.y = 338;
+            this.x = 115;
+            this.windowLeftHealth = 100;
+            this.isBroken = false;
+            this.regXY();
+        };
+        WindowLeft.prototype.Update = function () { };
+        WindowLeft.prototype.Reset = function () { };
+        // PRIVATE METHODS   
         WindowLeft.prototype.regXY = function () {
             this.width = this.getBounds().width;
             this.height = this.getBounds().height;
@@ -28,9 +37,6 @@ var objects;
             this.regX = this.halfWidth;
             this.regY = this.halfHeight;
         };
-        WindowLeft.prototype.Start = function () { };
-        WindowLeft.prototype.Update = function () { };
-        WindowLeft.prototype.Reset = function () { };
         return WindowLeft;
     }(objects.GameObject));
     objects.WindowLeft = WindowLeft;

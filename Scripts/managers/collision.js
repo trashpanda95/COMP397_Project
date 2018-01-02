@@ -52,7 +52,51 @@ var managers;
                             object1.isAlive = false;
                             object1.parent.removeChild(object1);
                         }
-                        object2.isColliding = true;
+                        object1.isColliding = true;
+                    }
+                    else {
+                        //console.log("Not Colliding");
+                        object1.isColliding = false;
+                    }
+                }
+            }
+            //Check if object is right window
+            if (object2.name == "windowRight") {
+                //Check if the distance between object 1 and object 2 is less than the minimum distance  
+                if (this.objectToObject2Dist(startPoint, endPoint) < minimumDistance) {
+                    object1.windowReached = true;
+                    //Check if objects are currently colliding, default = false
+                    if (!object1.isColliding && !object2.isBroken) {
+                        object2.windowRightHealth -= 0.01;
+                        console.log(object2.windowRightHealth);
+                        //Check if window health is 0, then remove child
+                        if (object2.windowRightHealth <= 0) {
+                            object2.parent.removeChild(object2);
+                            object2.isBroken = true;
+                        }
+                        object1.isColliding = true;
+                    }
+                    else {
+                        //console.log("Not Colliding");
+                        object1.isColliding = false;
+                    }
+                }
+            }
+            //Check if object is right window
+            if (object2.name == "windowLeft") {
+                //Check if the distance between object 1 and object 2 is less than the minimum distance  
+                if (this.objectToObject2Dist(startPoint, endPoint) < object1.halfWidth + object2.halfWidth) {
+                    object1.windowReached = true;
+                    //Check if objects are currently colliding, default = false
+                    if (!object1.isColliding && !object2.isBroken) {
+                        object2.windowLeftHealth -= 0.01;
+                        console.log(object2.windowLeftHealth);
+                        //Check if window health is 0, then remove child
+                        if (object2.windowLeftHealth <= 0) {
+                            object2.parent.removeChild(object2);
+                            object2.isBroken = true;
+                        }
+                        object1.isColliding = true;
                     }
                     else {
                         //console.log("Not Colliding");
@@ -78,12 +122,11 @@ var managers;
                 this.object1.x = this.object2.x + this.object2.width + this.object1.halfWidth;
             }
             //Top
-            if (this.object1.y >= this.object2.y - this.object1.halfWidth
+            if (this.object1.y >= this.object2.y + this.object1.halfWidth
                 && this.object1.y <= this.object2.y
                 && this.object1.x <= this.object2.x + this.object2.width
                 && this.object1.x >= this.object2.x) {
                 this.object1.y = this.object2.y - this.object1.halfWidth;
-                console.log("Top wall");
             }
             //Bottom
             if (this.object1.y >= this.object2.y
@@ -91,7 +134,6 @@ var managers;
                 && this.object1.x <= this.object2.x + this.object2.width
                 && this.object1.x >= this.object2.x) {
                 this.object1.y = this.object2.y + this.object2.height + this.object1.halfWidth;
-                console.log("Bottom wall");
             }
         };
         Collision.prototype.horizontalWallCollision = function () {
@@ -100,21 +142,27 @@ var managers;
                 && this.object1.y >= this.object2.y + this.object2.height - this.object1.halfWidth
                 && this.object1.y <= this.object2.y + this.object2.height) {
                 this.object1.y = this.object2.y + this.object2.height - this.object1.halfWidth;
-                console.log("Top");
             }
             if (this.object1.x >= this.object2.x
                 && this.object1.x <= this.object2.x + this.object2.width
                 && this.object1.y >= this.object2.y + this.object2.height
                 && this.object1.y <= this.object2.y + this.object2.height + this.object1.halfWidth) {
                 this.object1.y = this.object2.y + this.object2.height + this.object1.halfWidth;
-                console.log("Bottom");
             }
         };
         Collision.prototype.checkCollisionWall = function (object1, object2) {
             this.object1 = object1;
             this.object2 = object2;
             //Vertical Walls
-            if (object2.name == "leftWall") {
+            if (object2.name == "leftWallTop") {
+                if (!object1.isColliding) {
+                    this.verticalWallCollision();
+                }
+                else {
+                    object1.isColliding = false;
+                }
+            }
+            if (object2.name == "leftWallBottom") {
                 if (!object1.isColliding) {
                     this.verticalWallCollision();
                 }

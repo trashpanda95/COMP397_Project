@@ -31,9 +31,12 @@ var scenes;
             //Add Background Map
             this.bgMap = new objects.Bgmap("level1BG");
             this.addChild(this.bgMap);
-            //Add Left Wall
-            this.leftWall = new objects.WallLeft();
-            this.addChild(this.leftWall);
+            //Add Left Wall Top
+            this.leftWallTop = new objects.LeftWallTop();
+            this.addChild(this.leftWallTop);
+            //Add Left Wall Bottom
+            this.leftWallBottom = new objects.LeftWallBottom();
+            this.addChild(this.leftWallBottom);
             //Add Top Wall
             this.topWall = new objects.WallTop();
             this.addChild(this.topWall);
@@ -69,7 +72,7 @@ var scenes;
             this.addChild(this.player);
             // Add Zombies
             this.zombie = new Array();
-            //this.zombieSpawn();
+            this.zombieSpawn();
             // Add Bullets
             this.bullet = new Array();
             this.bulletSpawn();
@@ -89,20 +92,9 @@ var scenes;
             var _this = this;
             //Update Player
             this.player.Update();
-            //Update Zombie
-            this.zombie.forEach(function (zombies) {
-                //zombies.Update();    
-                //Checks collision with the player and each zombie         
-                _this.collision.checkCollision(_this.player, zombies);
-            });
-            //Checks collisions between each zombie and each bullet
-            this.zombie.forEach(function (zombie) {
-                _this.bullet.forEach(function (bullet) {
-                    _this.collision.checkCollision(zombie, bullet);
-                });
-            });
-            //Check collision with wall
-            this.collision.checkCollisionWall(this.player, this.leftWall);
+            //Check collision with wall+ player
+            this.collision.checkCollisionWall(this.player, this.leftWallTop);
+            this.collision.checkCollisionWall(this.player, this.leftWallBottom);
             this.collision.checkCollisionWall(this.player, this.topWall);
             this.collision.checkCollisionWall(this.player, this.bottomWall);
             this.collision.checkCollisionWall(this.player, this.rightWallBath);
@@ -111,6 +103,31 @@ var scenes;
             this.collision.checkCollisionWall(this.player, this.rightWall);
             this.collision.checkCollisionWall(this.player, this.insideHorizontalWall);
             this.collision.checkCollisionWall(this.player, this.insideVerticalWall);
+            //Update Zombie
+            this.zombie.forEach(function (zombies) {
+                zombies.Update();
+                //Checks collision with the player and each zombie         
+                _this.collision.checkCollision(_this.player, zombies);
+                //Check collision with wall+ zombie
+                _this.collision.checkCollisionWall(zombies, _this.leftWallTop);
+                _this.collision.checkCollisionWall(zombies, _this.leftWallBottom);
+                _this.collision.checkCollisionWall(zombies, _this.topWall);
+                _this.collision.checkCollisionWall(zombies, _this.bottomWall);
+                _this.collision.checkCollisionWall(zombies, _this.rightWallBath);
+                _this.collision.checkCollisionWall(zombies, _this.mainGateWallLeft);
+                _this.collision.checkCollisionWall(zombies, _this.mainGateWallRight);
+                _this.collision.checkCollisionWall(zombies, _this.rightWall);
+                _this.collision.checkCollisionWall(zombies, _this.insideHorizontalWall);
+                _this.collision.checkCollisionWall(zombies, _this.insideVerticalWall);
+                _this.collision.checkCollision(zombies, _this.leftWindow);
+                _this.collision.checkCollision(zombies, _this.rightWindow);
+            });
+            //Checks collisions between each zombie and each bullet
+            this.zombie.forEach(function (zombie) {
+                _this.bullet.forEach(function (bullet) {
+                    _this.collision.checkCollision(zombie, bullet);
+                });
+            });
             //Update bullet
             this.bullet.forEach(function (bullet) {
                 //Update Bullet
@@ -129,7 +146,7 @@ var scenes;
         Play.prototype.zombieSpawn = function () {
             var count;
             for (count = 0; count < this.zombieCount; count++) {
-                this.zombie[count] = new objects.Zombie(this.player);
+                this.zombie[count] = new objects.Zombie(this.player, this.leftWindow, this.rightWindow);
                 this.addChild(this.zombie[count]);
             }
         };
