@@ -108,6 +108,8 @@ var scenes;
                 zombies.Update();
                 //Checks collision with the player and each zombie         
                 _this.collision.checkCollision(_this.player, zombies);
+                //Checks collision with other zombies
+                _this.collision.collisionPushBack(zombies, zombies);
                 //Check collision with wall+ zombie
                 _this.collision.checkCollisionWall(zombies, _this.leftWallTop);
                 _this.collision.checkCollisionWall(zombies, _this.leftWallBottom);

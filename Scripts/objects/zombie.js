@@ -62,20 +62,6 @@ var objects;
         Zombie.prototype.generateCloseSpeed = function () {
             return Math.random() * (0.5 - 0.2) + 0.2;
         };
-        Zombie.prototype.CheckBounds = function () {
-            if (this.x >= config.Screen.WIDTH - this.halfWidth) {
-                this.x = config.Screen.WIDTH - this.halfWidth;
-            }
-            if (this.x <= this.halfWidth) {
-                this.x = this.halfWidth;
-            }
-            if (this.y >= config.Screen.HEIGHT - this.halfHeight) {
-                this.y = config.Screen.HEIGHT - this.halfHeight;
-            }
-            if (this.y <= this.halfHeight) {
-                this.y = this.halfHeight;
-            }
-        };
         Zombie.prototype.ChasePlayer = function () {
             //Zombie rotation
             this.rotation = managers.Vector.RotateTowardPosition(new managers.Vector(this.x, this.y), new managers.Vector(this.targetPlayer.x, this.targetPlayer.y));
@@ -150,13 +136,12 @@ var objects;
             }
             //RIGHT
             if (this.spawnPoint.x > (config.Screen.WIDTH / 2)
-                && this.spawnPoint.y > (config.Screen.HEIGHT / 2)
-                && !this.targetWindowRight.isBroken) {
+                && this.spawnPoint.y > (config.Screen.HEIGHT / 2)) {
                 this.headTowardsRightWindow();
             }
         };
         Zombie.prototype.enterHouseRight = function () {
-            if (this.y <= this.targetWindowRight.y - this.halfHeight) {
+            if (this.y <= this.targetWindowRight.y + this.halfHeight) {
                 this.ChasePlayer();
             }
             else {

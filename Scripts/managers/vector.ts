@@ -117,7 +117,6 @@ module managers{
             }
             /**
              * calculates and returns the next postion according to the provided vectors and speed
-             * Ed: may not need, use Forward() instead
              * @static
              * @param {Vector} currentVector current position, @param {Vector} targetVector  degrees @param {number} speed 
              * @returns {Vector} rotation

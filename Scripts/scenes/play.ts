@@ -154,7 +154,9 @@ module scenes {
                 zombies.Update();    
                 //Checks collision with the player and each zombie         
                 this.collision.checkCollision(this.player, zombies);   
-                 //Check collision with wall+ zombie
+                //Checks collision with other zombies
+                this.collision.collisionPushBack(zombies, zombies);   
+                //Check collision with wall+ zombie
                 this.collision.checkCollisionWall(zombies, this.leftWallTop);
                 this.collision.checkCollisionWall(zombies, this.leftWallBottom);
                 this.collision.checkCollisionWall(zombies, this.topWall);
@@ -166,7 +168,7 @@ module scenes {
                 this.collision.checkCollisionWall(zombies, this.insideHorizontalWall);
                 this.collision.checkCollisionWall(zombies, this.insideVerticalWall);      
                 this.collision.checkCollision(zombies, this.leftWindow);   
-                this.collision.checkCollision(zombies, this.rightWindow);   
+                this.collision.checkCollision(zombies, this.rightWindow);  
             });  
 
             //Checks collisions between each zombie and each bullet
