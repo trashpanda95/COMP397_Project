@@ -136,7 +136,7 @@ var managers;
                     //Check if objects are currently colliding, default = false
                     if (!object1.isColliding && !object2.isBroken) {
                         //object1.y = object2.y+ object2.height + object1.halfHeight;
-                        object2.windowRightHealth -= 0.1;
+                        object2.windowRightHealth -= 1;
                         console.log(object2.windowRightHealth);
                         //Check if window health is 0, then remove child
                         if (object2.windowRightHealth <= 0) {
@@ -147,8 +147,13 @@ var managers;
                         object1.isColliding = true;
                     }
                     else {
-                        //console.log("Not Colliding");
+                        console.log("Right: Not Colliding");
                         object1.isColliding = false;
+                        // If the Window is already broken, then the Zombies can just go through
+                        if (this.object2.isBroken) {
+                            console.log("Right Window is Gone"); // Debugger
+                            this.object1.windowReached = true;
+                        }
                     }
                 }
             }
@@ -162,7 +167,7 @@ var managers;
                     //Check if objects are currently colliding, default = false
                     if (!object1.isColliding && !object2.isBroken) {
                         object1.x = object2.x + object2.width - object1.halfWidth;
-                        object2.windowLeftHealth -= 0.2;
+                        object2.windowLeftHealth -= 1;
                         console.log(object2.windowLeftHealth);
                         //Check if window health is 0, then remove child
                         if (object2.windowLeftHealth <= 0) {
@@ -173,8 +178,13 @@ var managers;
                         object1.isColliding = true;
                     }
                     else {
-                        //console.log("Not Colliding");
+                        //console.log("Left: Not Colliding");
                         object1.isColliding = false;
+                        // If the Window is already broken, then the Zombies can just go through
+                        if (this.object2.isBroken) {
+                            console.log("Right Window is Gone"); // Debugger
+                            this.object1.windowReached = true;
+                        }
                     }
                 }
             }

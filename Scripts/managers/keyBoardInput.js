@@ -21,28 +21,37 @@ var managers;
         * onControlDown determines what action will take place when a key being pressed is detected
         */
         keyBoardInput.prototype.onControlDown = function (e) {
-            if (e.keyCode == 37) {
+            console.log("Key is: " + e.keyCode);
+            if (e.keyCode == config.Key.LEFT_ARROW) {
                 //console.log("Left Arrow");
                 keyBoardInput.moveLeft = true;
                 keyBoardInput.key = e.keyCode;
             }
-            else if (e.keyCode == 38) {
+            else if (e.keyCode == config.Key.UP_ARROW) {
                 //console.log("Up Arrow");
                 keyBoardInput.moveUp = true;
                 keyBoardInput.key = e.keyCode;
             }
-            else if (e.keyCode == 39) {
+            else if (e.keyCode == config.Key.RIGHT_ARROW) {
                 //console.log("Right Arrow");
                 keyBoardInput.moveRight = true;
                 keyBoardInput.key = e.keyCode;
             }
-            else if (e.keyCode == 40) {
+            else if (e.keyCode == config.Key.DOWN_ARROW) {
                 //console.log("Down Arrow");
                 keyBoardInput.moveDown = true;
                 keyBoardInput.key = e.keyCode;
             }
-            else if (e.keyCode == 32) {
+            else if (e.keyCode == config.Key.SPACEBAR) {
                 keyBoardInput.spaceBar = true;
+                keyBoardInput.key = e.keyCode;
+            }
+            else if (e.keyCode == config.Key.CTRL) {
+                keyBoardInput.leftCrtl = true;
+                keyBoardInput.key = e.keyCode;
+            }
+            else if (e.keyCode == config.Key.NUM_PAD_0) {
+                keyBoardInput.numPadZero = true;
                 keyBoardInput.key = e.keyCode;
             }
         };
@@ -50,24 +59,32 @@ var managers;
         * onControlUp determines what action will take place when a key released
         */
         keyBoardInput.prototype.onControlUp = function (e) {
-            if (e.keyCode == 37) {
+            if (e.keyCode == config.Key.LEFT_ARROW) {
                 keyBoardInput.moveLeft = false;
                 keyBoardInput.key = null;
             }
-            else if (e.keyCode == 38) {
+            else if (e.keyCode == config.Key.UP_ARROW) {
                 keyBoardInput.moveUp = false;
                 keyBoardInput.key = null;
             }
-            else if (e.keyCode == 39) {
+            else if (e.keyCode == config.Key.RIGHT_ARROW) {
                 keyBoardInput.moveRight = false;
                 keyBoardInput.key = null;
             }
-            else if (e.keyCode == 40) {
+            else if (e.keyCode == config.Key.DOWN_ARROW) {
                 keyBoardInput.moveDown = false;
                 keyBoardInput.key = null;
             }
-            else if (e.keyCode == 32) {
+            else if (e.keyCode == config.Key.SPACEBAR) {
                 keyBoardInput.spaceBar = false;
+                keyBoardInput.key = null;
+            }
+            else if (e.keyCode == config.Key.CTRL) {
+                keyBoardInput.leftCrtl = false;
+                keyBoardInput.key = null;
+            }
+            else if (e.keyCode == config.Key.NUM_PAD_0) {
+                keyBoardInput.numPadZero = false;
                 keyBoardInput.key = null;
             }
         };
