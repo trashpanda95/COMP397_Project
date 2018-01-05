@@ -113,6 +113,14 @@ var scenes;
                 // Bullet is Fired, Activate Method BulletFire()
                 _this.bulletFire();
             });
+            this.healthbar = new createjs.Shape();
+            this.maxHealthbar = new createjs.Shape();
+            this.healthbarOutline = new createjs.Shape();
+            this.healthbarOutline.graphics.clear().beginFill("#FFFFFF").drawRect(19, 639, 101.5 * 1.5, 22);
+            this.maxHealthbar.graphics.clear().beginFill("#000000").drawRect(20, 640, 100 * 1.5, 20);
+            this.addChild(this.healthbarOutline);
+            this.addChild(this.healthbar);
+            this.addChild(this.maxHealthbar);
         };
         Play.prototype.Update = function () {
             var _this = this;
@@ -176,6 +184,7 @@ var scenes;
                 // Reload Method
                 this.reloadBullet();
             }
+            this.updateHealthBar();
             return this.currentScene;
         };
         // PRIVATE METHODS
@@ -238,6 +247,10 @@ var scenes;
             this.bulletLabelOutline.text = "Bullets: " + (this.bulletNum - this.bulletCounter);
             this.leftWindowHealth.text = "" + (this.leftWindow.windowLeftHealth) + "/100";
             this.rightWindowHealth.text = "" + (this.rightWindow.windowRightHealth) + "/100";
+        };
+        Play.prototype.updateHealthBar = function () {
+            this.healthbar.graphics.clear().beginFill("DarkRed").drawRect(20, 640, (this.player.playerHealth / 10) * 15, 20);
+            this.addChild(this.healthbar);
         };
         return Play;
     }(objects.Scene));

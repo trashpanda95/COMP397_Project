@@ -64,6 +64,9 @@ module scenes {
 
         private bgMap: objects.Bgmap;
 
+        private healthbarOutline:createjs.Shape;
+        private healthbar:createjs.Shape;
+        private maxHealthbar:createjs.Shape;
         // PUBLIC PROPETIES
 
         // CONSTRUCTORS
@@ -189,6 +192,16 @@ module scenes {
                 // Bullet is Fired, Activate Method BulletFire()
                 this.bulletFire();
             });
+
+
+            this.healthbar = new createjs.Shape();
+            this.maxHealthbar = new createjs.Shape();
+            this.healthbarOutline = new createjs.Shape();
+            this.healthbarOutline.graphics.clear().beginFill("#FFFFFF").drawRect(19,639,101.5*1.5,22);
+            this.maxHealthbar.graphics.clear().beginFill("#000000").drawRect(20,640,100*1.5,20);
+            this.addChild(this.healthbarOutline);
+            this.addChild(this.healthbar);
+            this.addChild(this.maxHealthbar);                        
         }
 
         public Update():number
@@ -265,6 +278,7 @@ module scenes {
                 // Reload Method
                 this.reloadBullet();
             }
+            this.updateHealthBar();
             return this.currentScene;
         }
 
@@ -345,5 +359,10 @@ module scenes {
             this.rightWindowHealth.text = "" +(this.rightWindow.windowRightHealth)+"/100";
         }
         
+        private updateHealthBar()
+        {
+            this.healthbar.graphics.clear().beginFill("DarkRed").drawRect(20,640,(this.player.playerHealth/10)*15,20);
+            this.addChild(this.healthbar);
+        }
     }
 }
