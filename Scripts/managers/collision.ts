@@ -105,9 +105,10 @@ module managers
                     //Check if objects are currently colliding, default = false
                     if (!object1.isColliding) {
                         //Decrease player health
-                        object1.playerHealth -= 0.01;
+                        object1.playerHealth -= 0.2;
                         //Check if player health is 0, then remove child and change scene
                         if (object1.playerHealth <= 0) {
+                            object1.playerHealth = 0;           // Reset back to 0 to remove possible errors
                             object1.isAlive = false;
                             object1.parent.removeChild(object1);
                         }
