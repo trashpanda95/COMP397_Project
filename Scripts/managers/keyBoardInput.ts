@@ -8,6 +8,8 @@ module managers {
         private static moveRight: boolean;
         private static moveDown: boolean;
         private static spaceBar : boolean;
+        private static ctrl:boolean;
+        private static numPadZero:boolean;
         private static key: number;
 
 
@@ -66,6 +68,14 @@ module managers {
                 keyBoardInput.spaceBar = true;
                 keyBoardInput.key = e.keyCode;
             }     
+            else if (e.keyCode == config.Key.CTRL) {
+                keyBoardInput.ctrl = true;
+                keyBoardInput.key = e.keyCode;
+            }
+            else if (e.keyCode == config.Key.NUM_PAD_0) {
+                keyBoardInput.numPadZero = true;
+                keyBoardInput.key = e.keyCode;
+            }
         }
         /*
         * onControlUp determines what action will take place when a key released
@@ -94,6 +104,14 @@ module managers {
                 keyBoardInput.spaceBar = false;
                 keyBoardInput.key = null;
             }          
+            else if (e.keyCode == config.Key.CTRL) {
+                keyBoardInput.ctrl = false;
+                keyBoardInput.key = null;
+            }
+            else if (e.keyCode == config.Key.NUM_PAD_0) {
+                keyBoardInput.numPadZero = false;
+                keyBoardInput.key = null;
+            }
         }           
     }
 }
