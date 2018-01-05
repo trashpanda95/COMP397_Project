@@ -23,9 +23,9 @@ var scenes;
         //PRIVATE METHOS
         //PUBLIC METHODS
         Start.prototype.Start = function () {
-            this.gameTitle = new objects.Label("THE INVASION", "80px", "Dock51", "#00000", 400, 250, true);
+            this.gameTitle = new objects.Label("THE INVASION", "80px", "Dock51", "#00000", config.Screen.WIDTH / 2, config.Screen.HEIGHT / 3, true);
             this.addChild(this.gameTitle);
-            this.startButton = new objects.Button("startBtn", 400, 350, true);
+            this.startButton = new objects.Button("startBtn", config.Screen.WIDTH / 2, config.Screen.HEIGHT / 2, true);
             this.addChild(this.startButton);
             this.onClickStartBtn();
         };
