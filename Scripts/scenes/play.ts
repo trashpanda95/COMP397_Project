@@ -1,11 +1,11 @@
 module scenes {
     export class Play extends objects.Scene
     {
-        public gameCanvas:HTMLElement;
         // PRIVATE INSTANCE VARIABLES 
         private assetManager: createjs.LoadQueue;
         private mouse: managers.Mouse;
-        
+        public gameCanvas:HTMLElement;
+
         // Main Actors
         private player:objects.Player;
         private zombie:objects.Zombie[];
@@ -48,17 +48,12 @@ module scenes {
         private zombieCount: number = 20;
 
         // Bullet Variables
-        private bulletNum: number =20;
+        private bulletNum: number =40;
         private bulletCounter: number=0;
         private bulletLabel:objects.Label;
         private bulletLabelOutline:objects.Label;
-        private allowBulletFire:boolean = true;
 
-        // Reload Label
-        private reloadBulletLabel:objects.Label;
-        private reloadBulletLabelOutline:objects.Label;
-        // Keyboard Manager
-        private keyboardInput:managers.keyBoardInput;
+
         private bgMap: objects.Bgmap;
 
         // PUBLIC PROPETIES
@@ -77,7 +72,6 @@ module scenes {
         // PUBLIC METHODS
         public Start():void
         {         
-            this.keyboardInput = new managers.keyBoardInput();
             //Add Background Map
             this.bgMap = new objects.Bgmap("level1BG");
             this.addChild(this.bgMap);
@@ -160,15 +154,11 @@ module scenes {
             // Bullet Label
             this.bulletLabel = new objects.Label("Bullets: " +(this.bulletNum - this.bulletCounter), "20px","Verdana", "#000000", 20, 660, false);   
             this.bulletLabelOutline = new objects.Label("Bullets: " +(this.bulletNum - this.bulletCounter), "20px","Verdana", "#FFFFFF", 20, 660, false);  
-            //this.reloadTextLabel = new objects.Label("Please press : " +(this.bulletNum - this.bulletCounter), "20px","Verdana", "#000000", 20, 660, false);   
+
 
             // Set Label outlines to True
             this.playerHealthOutline.outline = 1;
             this.bulletLabelOutline.outline = 1; 
-
-            this.reloadBulletLabel = new objects.Label("Press CTRL to Reload", "20px","Verdana", "#000000", (config.Screen.WIDTH/5)*2.2, (config.Screen.HEIGHT/4)*3, false);
-            this.reloadBulletLabelOutline = new objects.Label("Press CTRL to Reload", "20px","Verdana", "#FFFFFF", (config.Screen.WIDTH/5)*2.2, (config.Screen.HEIGHT/4)*3, false);
-            this.reloadBulletLabelOutline.outline = 1;
 
             // Add Labels onto Scene
             this.addChild(this.bulletLabel);
@@ -249,16 +239,6 @@ module scenes {
                 this.currentScene = config.Scene.END;
                 this.removeAllChildren();
             }  
-            if (!this.allowBulletFire){
-
-                // Reload Prompt for the User
-                this.addChild(this.reloadBulletLabel);
-                this.addChild(this.reloadBulletLabelOutline);
-                console.log("added reload text")                // Debugger
-
-                // Reload Method
-                this.reloadBullet();
-            }
             return this.currentScene;
         }
 
@@ -285,7 +265,6 @@ module scenes {
         }
         private bulletFire():void
         {
-            if (this.allowBulletFire){
             // Sets Bullet Spawn to Player's Location
             this.bullet[this.bulletCounter].x = this.player.bulletSpawn.x;
             this.bullet[this.bulletCounter].y = this.player.bulletSpawn.y;
@@ -294,41 +273,14 @@ module scenes {
             this.bullet[this.bulletCounter].bulletRotation = this.player.playerRotation;
     
             this.bulletCounter++;
-            }
+
             // Resets Bullet Counter
-            if(this.bulletCounter >= this.bulletNum-1) 
+            if(this.bulletCounter >= this.bulletNum) 
             {
-                //console.log ("allBulletFire set to False;");                          // Debugger
-                this.allowBulletFire = false;           // Stops Player from continued shooting after 0 bullets
-                this.bulletCounter = this.bulletNum;    // Reset bullet to the max amount to stop counter from going over array index
-                //console.log ("bulletCounter set to: "+this.bulletCounter);            // Debugger
-
-            }
-        }
-        private reloadBullet ():void
-        {
-            var getKey = this.keyboardInput.getkeyInput();          // Get Keyboard Input from Player
-            //console.log("Display Key: "+getKey);                  // Debugger
-            if (getKey != null && getKey == config.Key.CTRL)        // If the key pressed is LEFT_CTRL
-            {
-                //console.log ("Reloading Bullets");                // Debugger
-                this.resetBulletCounter();
-                
-                // Remove Reload Prompt
-                this.removeChild(this.reloadBulletLabel);
-                this.removeChild(this.reloadBulletLabelOutline);
+              this.bulletCounter = 0;
             }
         }
 
-        // Resets the Bullet Counter to Zero
-        private resetBulletCounter ():void
-        {
-            this.bulletCounter = 0;
-            //console.log ("bulletCounter has been reset to: "+this.bulletCounter)        // debugger - Checking to see if bulletCounter was reset
-            // Re-Enable the Player to Shoot again
-            this.allowBulletFire = true;
-            //console.log ("allowBulletFire is re-Enabled");                              // debugger - checking to see if allowBulletFire was re-enabled
-        }
         private updateLabels()
         {
             this.playerHealth.text = "Health: "+ this.player.playerHealth;

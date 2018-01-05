@@ -44,6 +44,5 @@ module config
     public static SPACEBAR: number = 32;
     public static UP_ARROW: number = 38;
     public static W: number = 87;
-    public static NUM_PAD_0:number = 96;
 }
 }

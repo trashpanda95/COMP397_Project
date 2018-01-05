@@ -9,8 +9,7 @@ module managers {
         private static moveDown: boolean;
         private static spaceBar : boolean;
         private static key: number;
-        private static leftCrtl:boolean;
-        private static numPadZero:boolean;
+
 
         // PUBLIC PROPERTIES
         public getkeyInput() : number
@@ -39,7 +38,7 @@ module managers {
         */
         private onControlDown(e: KeyboardEvent)         // Get value of key and set global variable
         {
-            console.log ("Key is: "+e.keyCode);
+            
             if (e.keyCode == config.Key.LEFT_ARROW) {                      // LEFT ARROW
                 //console.log("Left Arrow");
                 keyBoardInput.moveLeft = true;
@@ -67,14 +66,6 @@ module managers {
                 keyBoardInput.spaceBar = true;
                 keyBoardInput.key = e.keyCode;
             }     
-            else if (e.keyCode == config.Key.CTRL){                // Left Control
-                keyBoardInput.leftCrtl = true;
-                keyBoardInput.key = e.keyCode;
-            }
-            else if (e.keyCode == config.Key.NUM_PAD_0){                // Num Pad Zero
-                keyBoardInput.numPadZero = true;
-                keyBoardInput.key = e.keyCode;
-            }
         }
         /*
         * onControlUp determines what action will take place when a key released
@@ -103,14 +94,6 @@ module managers {
                 keyBoardInput.spaceBar = false;
                 keyBoardInput.key = null;
             }          
-            else if (e.keyCode == config.Key.CTRL){
-                keyBoardInput.leftCrtl = false;
-                keyBoardInput.key = null;
-            }
-            else if (e.keyCode == config.Key.NUM_PAD_0){
-                keyBoardInput.numPadZero = false;
-                keyBoardInput.key = null;
-            }
         }           
     }
 }
