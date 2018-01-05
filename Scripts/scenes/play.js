@@ -90,8 +90,8 @@ var scenes;
             // Keyboard Input
             this.keyboardInput = new managers.keyBoardInput();
             // Player's Health Label
-            this.playerHealth = new objects.Label("Health: " + this.player.playerHealth, "20px", "Verdana", "#000000", 20, 640, false);
-            this.playerHealthOutline = new objects.Label("Health: " + this.player.playerHealth, "20px", "Verdana", "#FFFFFF", 20, 640, false);
+            //this.playerHealth = new objects.Label("Health: " +this.player.playerHealth, "20px","Verdana", "#000000", 20, 640, false);    
+            //this.playerHealthOutline = new objects.Label("Health: " +this.player.playerHealth, "20px","Verdana", "#FFFFFF", 20, 640, false);
             // Bullet Label
             this.bulletLabel = new objects.Label("Bullets: " + (this.bulletNum - this.bulletCounter), "20px", "Verdana", "#000000", 20, 660, false);
             this.bulletLabelOutline = new objects.Label("Bullets: " + (this.bulletNum - this.bulletCounter), "20px", "Verdana", "#FFFFFF", 20, 660, false);
@@ -100,13 +100,13 @@ var scenes;
             this.reloadBulletLabelOutline = new objects.Label("Press CTRL to Reload", "20px", "Verdana", "#FFFFFF", (config.Screen.WIDTH / 5) * 2.2, (config.Screen.HEIGHT / 4) * 3, false);
             this.reloadBulletLabelOutline.outline = 1;
             // Set Label outlines to True
-            this.playerHealthOutline.outline = 1;
+            //this.playerHealthOutline.outline = 1;
             this.bulletLabelOutline.outline = 1;
             // Add Labels onto Scene
             this.addChild(this.bulletLabel);
             this.addChild(this.bulletLabelOutline);
-            this.addChild(this.playerHealth);
-            this.addChild(this.playerHealthOutline);
+            //this.addChild(this.playerHealth);
+            //this.addChild(this.playerHealthOutline);
             //Add Mouse Listener
             this.mouse = new managers.Mouse(this.player, this.gameCanvas);
             this.mouse.AddClickListener(function (event) {
@@ -241,8 +241,8 @@ var scenes;
             //console.log ("allowBulletFire is re-Enabled");                              // debugger - checking to see if allowBulletFire was re-enabled
         };
         Play.prototype.updateLabels = function () {
-            this.playerHealth.text = "Health: " + this.player.playerHealth;
-            this.playerHealthOutline.text = "Health: " + this.player.playerHealth;
+            //this.playerHealth.text = "Health: "+ this.player.playerHealth;
+            //this.playerHealthOutline.text = "Health: "+ this.player.playerHealth;
             this.bulletLabel.text = "Bullets: " + (this.bulletNum - this.bulletCounter);
             this.bulletLabelOutline.text = "Bullets: " + (this.bulletNum - this.bulletCounter);
             this.leftWindowHealth.text = "" + (this.leftWindow.windowLeftHealth) + "/100";
