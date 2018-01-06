@@ -22,6 +22,8 @@ var scenes;
             _this.bulletNum = 20;
             _this.bulletCounter = 0;
             _this.allowBulletFire = true;
+            _this.fixWindowTextDisplay = false;
+            _this.enableFixWindow = 0; // 0 for no window, 1 for left, 2 for right
             _this.currentScene = currentScene;
             _this.mouseEnabled = true;
             _this.gameCanvas = gameCanvas;
@@ -98,26 +100,30 @@ var scenes;
             // Reload Labels
             this.reloadBulletLabel = new objects.Label("Press CTRL to Reload", "20px", "Verdana", "#000000", (config.Screen.WIDTH / 5) * 2.2, (config.Screen.HEIGHT / 4) * 3, false);
             this.reloadBulletLabelOutline = new objects.Label("Press CTRL to Reload", "20px", "Verdana", "#FFFFFF", (config.Screen.WIDTH / 5) * 2.2, (config.Screen.HEIGHT / 4) * 3, false);
-            this.reloadBulletLabelOutline.outline = 1;
+            // Fixing Window Labels
+            this.fixWindowLabel = new objects.Label("Press NUM PAD ZERO to Fix Windows", "20px", "Verdana", "#000000", (config.Screen.WIDTH / 5) * 1.8, (config.Screen.HEIGHT / 4) * 3, false);
+            this.fixWindowLabelOutline = new objects.Label("Press NUM PAD ZERO to Fix Windows", "20px", "Verdana", "#FFFFFF", (config.Screen.WIDTH / 5) * 1.8, (config.Screen.HEIGHT / 4) * 3, false);
             // Set Label outlines to True
             //this.playerHealthOutline.outline = 1;
             this.bulletLabelOutline.outline = 1;
+            this.fixWindowLabelOutline.outline = 1;
+            this.reloadBulletLabelOutline.outline = 1;
             // Add Labels onto Scene
             this.addChild(this.bulletLabel);
             this.addChild(this.bulletLabelOutline);
-            //this.addChild(this.playerHealth);
-            //this.addChild(this.playerHealthOutline);
             //Add Mouse Listener
             this.mouse = new managers.Mouse(this.player, this.gameCanvas);
             this.mouse.AddClickListener(function (event) {
                 // Bullet is Fired, Activate Method BulletFire()
                 _this.bulletFire();
             });
+            // Health Bar Related Initiations
             this.healthbar = new createjs.Shape();
             this.maxHealthbar = new createjs.Shape();
             this.healthbarOutline = new createjs.Shape();
             this.healthbarOutline.graphics.clear().beginFill("#FFFFFF").drawRect(19, 639, 101.5 * 1.5, 22);
             this.maxHealthbar.graphics.clear().beginFill("#000000").drawRect(20, 640, 100 * 1.5, 20);
+            // Adding Health Bar into Scene
             this.addChild(this.healthbarOutline);
             this.addChild(this.healthbar);
             this.addChild(this.maxHealthbar);
@@ -184,7 +190,17 @@ var scenes;
                 // Reload Method
                 this.reloadBullet();
             }
+            if (this.leftWindow.isBroken) {
+                this.removeChild(this.leftWindowHealth);
+                this.removeChild(this.leftWindowHealthOutline);
+            }
+            if (this.rightWindow.isBroken) {
+                this.removeChild(this.rightWindowHealth);
+                this.removeChild(this.rightWindowHealthOutline);
+            }
             this.updateHealthBar();
+            this.fixWindow();
+            this.updateFix();
             return this.currentScene;
         };
         // PRIVATE METHODS
@@ -260,6 +276,98 @@ var scenes;
                 this.healthbar.graphics.clear().beginFill("DarkRed").drawRect(20, 640, (this.player.playerHealth / 10) * 15, 20);
             }
             this.addChild(this.healthbar);
+        };
+        // Methods to Fix Window
+        Play.prototype.fixWindow = function () {
+            // Checking to see if the player is colliding with the window from the inside
+            if ((this.player.y <= this.leftWindow.y + this.leftWindow.height
+                && this.player.y >= this.leftWindow.y
+                && this.player.x >= (this.leftWindow.x - this.player.halfWidth + 30)
+                && this.player.x <= this.leftWindow.x - this.leftWindow.halfWidth + 50)) {
+                // Allow the Player to fix the window
+                this.enableFixWindow = 1;
+                // Display User Prompt for Player to Fix Window
+                if (!this.fixWindowTextDisplay && this.leftWindow.isBroken) {
+                    this.addChild(this.fixWindowLabel);
+                    this.addChild(this.fixWindowLabelOutline);
+                }
+                else if (this.leftWindow.windowLeftHealth == 100 && this.fixWindowTextDisplay) {
+                    this.removeChild(this.fixWindowLabel);
+                    this.removeChild(this.fixWindowLabelOutline);
+                    this.fixWindowTextDisplay = false;
+                }
+                // Text is now being Displayed
+                this.fixWindowTextDisplay = true;
+                //console.log ("Set to Left Window: "+ this.enableFixWindow); // Debugger
+            }
+            else if (this.player.x >= this.rightWindow.x
+                && this.player.x <= this.rightWindow.x + this.rightWindow.width
+                && this.player.y >= this.rightWindow.y + this.rightWindow.height - 50
+                && this.player.y <= this.rightWindow.y + this.rightWindow.height + this.player.halfWidth - 50) {
+                // Allows the Player to fix the window
+                this.enableFixWindow = 2;
+                // Display User Prompt for Player to Fix Window
+                if (!this.fixWindowTextDisplay && this.rightWindow.isBroken) {
+                    this.addChild(this.fixWindowLabel);
+                    this.addChild(this.fixWindowLabelOutline);
+                }
+                else if (this.rightWindow.windowRightHealth == 100 && this.fixWindowTextDisplay) {
+                    this.removeChild(this.fixWindowLabel);
+                    this.removeChild(this.fixWindowLabelOutline);
+                    this.fixWindowTextDisplay = false;
+                }
+                // Text is now being displayed
+                this.fixWindowTextDisplay = true;
+                //console.log ("Set to Right Window: "+ this.enableFixWindow);      // Debugger
+            }
+            else {
+                // Disable Window Fix
+                this.enableFixWindow = 0;
+                // Remove Label is the Window is fixed
+                if (this.fixWindowTextDisplay && !this.leftWindow.isBroken) {
+                    this.removeChild(this.fixWindowLabel);
+                    this.removeChild(this.fixWindowLabelOutline);
+                }
+                this.fixWindowTextDisplay = false;
+                //console.log ("Set to None Window: "+ this.enableFixWindow);       // Debugger
+            }
+        };
+        Play.prototype.updateFix = function () {
+            var getKey = this.keyboardInput.getkeyInput(); // Get Keyboard Input from Player
+            console.log("Key: " + getKey);
+            // Check to see if the window is broken/if the player is nearby window
+            if ((this.enableFixWindow == 1) && (getKey != null && getKey == config.Key.NUM_PAD_0)) {
+                if (this.leftWindow.windowLeftHealth <= 0) {
+                    this.addChild(this.leftWindow); // Re-add the window back into Scene
+                }
+                if (this.leftWindow.windowLeftHealth == 100) {
+                    this.enableFixWindow = 0;
+                }
+                else {
+                    this.leftWindow.windowLeftHealth += 5; // Increase left window health by 5
+                    this.leftWindow.isBroken = false; // Left Window is no longer Broken
+                    this.addChild(this.leftWindowHealth);
+                    this.addChild(this.leftWindowHealthOutline);
+                }
+                //console.log("State of Left Window: isBroken: "+this.leftWindow.isBroken);       // Debugger
+                // Check to see if the window being fixed is the right window and if num pad zero is pressed
+            }
+            else if ((this.enableFixWindow == 2) && (getKey != null && getKey == config.Key.NUM_PAD_0)) {
+                if (this.rightWindow.windowRightHealth <= 0) {
+                    this.addChild(this.rightWindow); // Re-add the window back into Scene
+                }
+                // Checks to see if the window is at full health, thus disabling window fix
+                if (this.rightWindow.windowRightHealth == 100) {
+                    this.enableFixWindow = 0;
+                }
+                else {
+                    this.rightWindow.windowRightHealth += 5; // Increase right window health by 5
+                    this.rightWindow.isBroken = false; // Right Window is no longer Broken
+                    this.addChild(this.rightWindowHealth);
+                    this.addChild(this.rightWindowHealthOutline);
+                }
+                //console.log("State of Right Window: isBroken: "+this.leftWindow.isBroken);      // Debugger
+            }
         };
         return Play;
     }(objects.Scene));
