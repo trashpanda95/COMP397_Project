@@ -130,13 +130,14 @@ module managers
                 //Check if the distance between object 1 and object 2 is less than the minimum distance  
                 if (this.objectToObject2Dist(startPoint, endPoint) < minimumDistance) 
                 {
+                    object2.buildWindow =true;
                     //Check if objects are currently colliding, default = false
                     if (!object1.isColliding && object2.isBroken) 
                     {                       
-                        if  ( getKey == config.Key.R && object2.windowLeftHealth <100 )
+                        if  ( getKey == config.Key.R && object2.windowLeftHealth <1000 )
                         {
-                            object2.windowLeftHealth ++;
-                            if (object2.windowLeftHealth >= 100)
+                            object2.windowLeftHealth +=100;
+                            if (object2.windowLeftHealth >= 1000)
                             {
                                 object2.visible= true;
                                 object2.isBroken = false;
@@ -147,8 +148,10 @@ module managers
                     else {
                         //console.log("Not Colliding");
                         object1.isColliding = false;
+                       
                     }
                 }
+                else{ object2.buildWindow =false;}
             }
 
              //Check if object is window and player
@@ -158,13 +161,14 @@ module managers
                  //Check if the distance between object 1 and object 2 is less than the minimum distance  
                  if (this.objectToObject2Dist(startPoint, endPoint) < minimumDistance) 
                  {
+                     object2.buildWindow =true;
                      //Check if objects are currently colliding, default = false
                      if (!object1.isColliding && object2.isBroken) 
                      {                       
-                         if  ( getKey == config.Key.R && object2.windowRightHealth <100 )
+                         if  ( getKey == config.Key.R && object2.windowRightHealth <1000 )
                          {
-                             object2.windowRightHealth ++;
-                             if (object2.windowRightHealth >= 100)
+                             object2.windowRightHealth +=100;
+                             if (object2.windowRightHealth >= 1000)
                              {
                                  object2.visible= true;
                                  object2.isBroken = false;
@@ -177,6 +181,7 @@ module managers
                          object1.isColliding = false;
                      }
                  }
+                 else{ object2.buildWindow =false;}
              }
  
 

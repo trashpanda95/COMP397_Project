@@ -33,6 +33,7 @@ module objects {
         public windowRightHealth: number;
         public windowLeftHealth: number;
         public isBroken: boolean;
+        public buildWindow: boolean;
 
         //Game
         public position: createjs.Point;

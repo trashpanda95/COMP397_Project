@@ -57,12 +57,13 @@ module scenes {
         private allowBulletFire:boolean = true;
 
         // Reload Label
-        private reloadBulletLabel:objects.Label;
+        private reloadBulletLabel:objects.Label;       
         private reloadBulletLabelOutline:objects.Label;
         // Keyboard Manager
         private keyboardInput:managers.keyBoardInput;
 
         private bgMap: objects.Bgmap;
+        private buildLabel:objects.Label;
 
         private healthbar:createjs.Shape;
         private healthbarLeftWindow:createjs.Shape;
@@ -166,23 +167,25 @@ module scenes {
             //this.playerHealthOutline = new objects.Label("Health: " +this.player.playerHealth, "20px","Verdana", "#FFFFFF", 20, 640, false);
             
             // Bullet Label
-            this.bulletLabel = new objects.Label("Bullets: " +(this.bulletNum - this.bulletCounter), "20px","Verdana", "#000000", 20, 660, false);   
-            this.bulletLabelOutline = new objects.Label("Bullets: " +(this.bulletNum - this.bulletCounter), "20px","Verdana", "#FFFFFF", 20, 660, false);  
+            this.bulletLabel = new objects.Label("Bullets: " +(this.bulletNum - this.bulletCounter), "20px","Verdana", "#ffffff", 20, 660, false); 
 
             // Reload Labels
-            this.reloadBulletLabel = new objects.Label("Press CTRL to Reload", "20px","Verdana", "#000000", (config.Screen.WIDTH/5)*2.2, (config.Screen.HEIGHT/4)*3, false);
-            this.reloadBulletLabelOutline = new objects.Label("Press CTRL to Reload", "20px","Verdana", "#FFFFFF", (config.Screen.WIDTH/5)*2.2, (config.Screen.HEIGHT/4)*3, false);
-            //this.reloadBulletLabelOutline.outline = 1;
+            this.reloadBulletLabel = new objects.Label("Press CTRL to Reload", "20px","Verdana", "#ffffff", (config.Screen.WIDTH/5)*2.2, (config.Screen.HEIGHT/4)*3, false);
+
+            // Fixing Window Labels
+            this.buildLabel= new objects.Label("Press R or 0 to Fix Window", "20px","Verdana", "#ffffff", (config.Screen.WIDTH/5)*1.8, (config.Screen.HEIGHT/4)*3, false);
+            //this.fixWindowLabelOutline = new objects.Label("Press NUM PAD ZERO to Fix Windows", "20px","Verdana", "#FFFFFF", (config.Screen.WIDTH/5)*1.8, (config.Screen.HEIGHT/4)*3, false);
+
 
             // Set Label outlines to True
             //this.playerHealthOutline.outline = 1;
             //this.bulletLabelOutline.outline = 1; 
+            //this.fixWindowLabelOutline.outline = 1;
+            //this.reloadBulletLabelOutline.outline = 1;
 
             // Add Labels onto Scene
             this.addChild(this.bulletLabel);
             this.addChild(this.bulletLabelOutline);
-            //this.addChild(this.playerHealth);
-            //this.addChild(this.playerHealthOutline);
 
 
             //Add Mouse Listener
@@ -193,7 +196,7 @@ module scenes {
                 this.bulletFire();
             });
 
-
+            // Health Bar Related Initiations
             this.healthbar = new createjs.Shape();
             this.addChild(this.healthbar);    
             
@@ -206,6 +209,9 @@ module scenes {
 
         public Update():number
         {
+            // Bullet Label
+            this.bulletLabel = new objects.Label("Bullets: " +(this.bulletNum - this.bulletCounter), "20px","Verdana", "#ffffff", 20, 660, false);   
+
             // Update Player
             this.player.Update();
 
@@ -272,12 +278,16 @@ module scenes {
 
                 // Reload Prompt for the User
                 this.addChild(this.reloadBulletLabel);
-                this.addChild(this.reloadBulletLabelOutline);
-                console.log("added reload text")                // Debugger
 
                 // Reload Method
                 this.reloadBullet();
             }
+
+            if (this.leftWindow.buildWindow || this.rightWindow.buildWindow)
+            {
+                this.addChild(this.buildLabel);
+            }
+            else (this.removeChild(this.buildLabel))
             this.updateHealthBar();
             this.updateHealthBarLeftWindow();
             this.updateHealthBarRightWindow();
@@ -325,6 +335,7 @@ module scenes {
                 this.allowBulletFire = false;           // Stops Player from continued shooting after 0 bullets
                 this.bulletCounter = this.bulletNum;    // Reset bullet to the max amount to stop counter from going over array index
                 //console.log ("bulletCounter set to: "+this.bulletCounter);            // Debugger
+
             }
         }
         private reloadBullet ():void
@@ -350,7 +361,7 @@ module scenes {
             this.allowBulletFire = true;
             //console.log ("allowBulletFire is re-Enabled");                              // debugger - checking to see if allowBulletFire was re-enabled
         }
-        private updateLabels()
+        private updateLabels():void
         {
             //this.playerHealth.text = "Health: "+ this.player.playerHealth;
             //this.playerHealthOutline.text = "Health: "+ this.player.playerHealth;
@@ -361,9 +372,8 @@ module scenes {
         }
         
         // Updates the Health Bar
-        private updateHealthBar()
+        private updateHealthBar():void
         {   
-            console.log(this.player.playerHealth*100)
             if (this.player.playerHealth >= 50) // Display Green Bar indicating over 75% Health
             {
                 this.healthbar.graphics.clear().beginFill("#06d600").drawRect(0,0,(this.player.playerHealth)*10,5);

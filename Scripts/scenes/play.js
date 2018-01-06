@@ -93,26 +93,27 @@ var scenes;
             //this.playerHealth = new objects.Label("Health: " +this.player.playerHealth, "20px","Verdana", "#000000", 20, 640, false);    
             //this.playerHealthOutline = new objects.Label("Health: " +this.player.playerHealth, "20px","Verdana", "#FFFFFF", 20, 640, false);
             // Bullet Label
-            this.bulletLabel = new objects.Label("Bullets: " + (this.bulletNum - this.bulletCounter), "20px", "Verdana", "#000000", 20, 660, false);
-            this.bulletLabelOutline = new objects.Label("Bullets: " + (this.bulletNum - this.bulletCounter), "20px", "Verdana", "#FFFFFF", 20, 660, false);
+            this.bulletLabel = new objects.Label("Bullets: " + (this.bulletNum - this.bulletCounter), "20px", "Verdana", "#ffffff", 20, 660, false);
             // Reload Labels
-            this.reloadBulletLabel = new objects.Label("Press CTRL to Reload", "20px", "Verdana", "#000000", (config.Screen.WIDTH / 5) * 2.2, (config.Screen.HEIGHT / 4) * 3, false);
-            this.reloadBulletLabelOutline = new objects.Label("Press CTRL to Reload", "20px", "Verdana", "#FFFFFF", (config.Screen.WIDTH / 5) * 2.2, (config.Screen.HEIGHT / 4) * 3, false);
-            //this.reloadBulletLabelOutline.outline = 1;
+            this.reloadBulletLabel = new objects.Label("Press CTRL to Reload", "20px", "Verdana", "#ffffff", (config.Screen.WIDTH / 5) * 2.2, (config.Screen.HEIGHT / 4) * 3, false);
+            // Fixing Window Labels
+            this.buildLabel = new objects.Label("Press R or 0 to Fix Window", "20px", "Verdana", "#ffffff", (config.Screen.WIDTH / 5) * 1.8, (config.Screen.HEIGHT / 4) * 3, false);
+            //this.fixWindowLabelOutline = new objects.Label("Press NUM PAD ZERO to Fix Windows", "20px","Verdana", "#FFFFFF", (config.Screen.WIDTH/5)*1.8, (config.Screen.HEIGHT/4)*3, false);
             // Set Label outlines to True
             //this.playerHealthOutline.outline = 1;
             //this.bulletLabelOutline.outline = 1; 
+            //this.fixWindowLabelOutline.outline = 1;
+            //this.reloadBulletLabelOutline.outline = 1;
             // Add Labels onto Scene
             this.addChild(this.bulletLabel);
             this.addChild(this.bulletLabelOutline);
-            //this.addChild(this.playerHealth);
-            //this.addChild(this.playerHealthOutline);
             //Add Mouse Listener
             this.mouse = new managers.Mouse(this.player, this.gameCanvas);
             this.mouse.AddClickListener(function (event) {
                 // Bullet is Fired, Activate Method BulletFire()
                 _this.bulletFire();
             });
+            // Health Bar Related Initiations
             this.healthbar = new createjs.Shape();
             this.addChild(this.healthbar);
             this.healthbarLeftWindow = new createjs.Shape();
@@ -122,6 +123,8 @@ var scenes;
         };
         Play.prototype.Update = function () {
             var _this = this;
+            // Bullet Label
+            this.bulletLabel = new objects.Label("Bullets: " + (this.bulletNum - this.bulletCounter), "20px", "Verdana", "#ffffff", 20, 660, false);
             // Update Player
             this.player.Update();
             // Check collision with wall+ player
@@ -177,11 +180,14 @@ var scenes;
             if (!this.allowBulletFire) {
                 // Reload Prompt for the User
                 this.addChild(this.reloadBulletLabel);
-                this.addChild(this.reloadBulletLabelOutline);
-                console.log("added reload text"); // Debugger
                 // Reload Method
                 this.reloadBullet();
             }
+            if (this.leftWindow.buildWindow || this.rightWindow.buildWindow) {
+                this.addChild(this.buildLabel);
+            }
+            else
+                (this.removeChild(this.buildLabel));
             this.updateHealthBar();
             this.updateHealthBarLeftWindow();
             this.updateHealthBarRightWindow();
@@ -250,7 +256,6 @@ var scenes;
         };
         // Updates the Health Bar
         Play.prototype.updateHealthBar = function () {
-            console.log(this.player.playerHealth * 100);
             if (this.player.playerHealth >= 50) {
                 this.healthbar.graphics.clear().beginFill("#06d600").drawRect(0, 0, (this.player.playerHealth) * 10, 5);
             }
