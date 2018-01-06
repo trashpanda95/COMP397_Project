@@ -14,5 +14,7 @@
     border: 1px Black solid;
   border-radius: 6px;
   display: block;
-  background-color: #1A1A1A;
+}
+body {
+  background: rgb(53, 53, 53);
 }
