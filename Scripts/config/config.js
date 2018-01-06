@@ -39,6 +39,7 @@ var config;
         }
         // Keyboard values
         Key.A = 65;
+        Key.R = 82;
         Key.CTRL = 17;
         Key.D = 68;
         Key.DOWN_ARROW = 40;

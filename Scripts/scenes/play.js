@@ -17,7 +17,7 @@ var scenes;
         function Play(currentScene, gameCanvas) {
             var _this = _super.call(this) || this;
             // Zombie Counter
-            _this.zombieCount = 20;
+            _this.zombieCount = 10;
             // Bullet Variables
             _this.bulletNum = 20;
             _this.bulletCounter = 0;
@@ -68,14 +68,14 @@ var scenes;
             this.leftWindow = new objects.WindowLeft();
             this.addChild(this.leftWindow);
             // Set Left Window's Health Label
-            this.leftWindowHealth = new objects.Label("" + this.leftWindow.windowLeftHealth + "/100", "10px", "Verdana", "#FFFFFF", this.leftWindow.x - 18, this.leftWindow.y - 5, false);
-            this.addChild(this.leftWindowHealth);
+            //this.leftWindowHealth = new objects.Label(""+this.leftWindow.windowLeftHealth+"/100", "12px","Verdana", "#FFFFFF", this.leftWindow.x-25, this.leftWindow.y-6, false);
+            //this.addChild (this.leftWindowHealth);
             //Add Right Window
             this.rightWindow = new objects.WindowRight();
             this.addChild(this.rightWindow);
             // Set Right Window's Health Label
-            this.rightWindowHealth = new objects.Label("" + this.rightWindow.windowRightHealth + "/100", "10px", "Verdana", "#FFFFFF", this.rightWindow.x - 18, this.rightWindow.y - 5, false);
-            this.addChild(this.rightWindowHealth);
+            //this.rightWindowHealth = new objects.Label(""+this.rightWindow.windowRightHealth+"/100", "12px","Verdana", "#FFFFFF", this.rightWindow.x-25, this.rightWindow.y-6, false);
+            //this.addChild (this.rightWindowHealth);
             //Add Player
             this.player = new objects.Player();
             this.addChild(this.player);
@@ -114,13 +114,11 @@ var scenes;
                 _this.bulletFire();
             });
             this.healthbar = new createjs.Shape();
-            this.maxHealthbar = new createjs.Shape();
-            this.healthbarOutline = new createjs.Shape();
-            this.healthbarOutline.graphics.clear().beginFill("#FFFFFF").drawRect(19, 639, 101.5 * 1.5, 22);
-            this.maxHealthbar.graphics.clear().beginFill("#000000").drawRect(20, 640, 100 * 1.5, 20);
-            this.addChild(this.healthbarOutline);
             this.addChild(this.healthbar);
-            this.addChild(this.maxHealthbar);
+            this.healthbarLeftWindow = new createjs.Shape();
+            this.addChild(this.healthbarLeftWindow);
+            this.healthbarRightWindow = new createjs.Shape();
+            this.addChild(this.healthbarRightWindow);
         };
         Play.prototype.Update = function () {
             var _this = this;
@@ -137,13 +135,13 @@ var scenes;
             this.collision.checkCollisionWall(this.player, this.rightWall);
             this.collision.checkCollisionWall(this.player, this.insideHorizontalWall);
             this.collision.checkCollisionWall(this.player, this.insideVerticalWall);
+            this.collision.checkCollision(this.player, this.leftWindow);
+            this.collision.checkCollision(this.player, this.rightWindow);
             // Update Zombie
             this.zombie.forEach(function (zombies) {
                 zombies.Update();
                 // Checks collision with the player and each zombie         
                 _this.collision.checkCollision(_this.player, zombies);
-                // Checks collision with other zombies
-                _this.collision.collisionPushBack(zombies, zombies);
                 // Check collision with wall+ zombie
                 _this.collision.checkCollisionWall(zombies, _this.leftWallTop);
                 _this.collision.checkCollisionWall(zombies, _this.leftWallBottom);
@@ -170,7 +168,7 @@ var scenes;
                 bullet.Update();
             });
             // Update Labels           
-            this.updateLabels();
+            //this.updateLabels();
             // Change Scene Condition
             if (this.player.isAlive == false) {
                 this.currentScene = config.Scene.END;
@@ -185,6 +183,8 @@ var scenes;
                 this.reloadBullet();
             }
             this.updateHealthBar();
+            this.updateHealthBarLeftWindow();
+            this.updateHealthBarRightWindow();
             return this.currentScene;
         };
         // PRIVATE METHODS
@@ -250,16 +250,43 @@ var scenes;
         };
         // Updates the Health Bar
         Play.prototype.updateHealthBar = function () {
-            if (this.player.playerHealth >= 75) {
-                this.healthbar.graphics.clear().beginFill("DarkGreen").drawRect(20, 640, (this.player.playerHealth / 10) * 15, 20);
+            console.log(this.player.playerHealth * 100);
+            if (this.player.playerHealth >= 50) {
+                this.healthbar.graphics.clear().beginFill("#06d600").drawRect(0, 0, (this.player.playerHealth) * 10, 5);
             }
-            else if (this.player.playerHealth >= 45) {
-                this.healthbar.graphics.clear().beginFill("DarkOrange").drawRect(20, 640, (this.player.playerHealth / 10) * 15, 20);
+            else if (this.player.playerHealth >= 30) {
+                this.healthbar.graphics.clear().beginFill("#ea7100").drawRect(0, 0, (this.player.playerHealth) * 10, 5);
             }
-            else if (this.player.playerHealth <= 45) {
-                this.healthbar.graphics.clear().beginFill("DarkRed").drawRect(20, 640, (this.player.playerHealth / 10) * 15, 20);
+            else if (this.player.playerHealth <= 30) {
+                this.healthbar.graphics.clear().beginFill("#ea0000").drawRect(0, 0, (this.player.playerHealth) * 10, 5);
             }
             this.addChild(this.healthbar);
+        };
+        // Updates left window health bar
+        Play.prototype.updateHealthBarLeftWindow = function () {
+            if (this.leftWindow.windowLeftHealth >= 650) {
+                this.healthbarLeftWindow.graphics.clear().beginFill("#06d600").drawRect(this.leftWindow.x - 22, this.leftWindow.y - 55, (this.leftWindow.windowLeftHealth / 200) * 10, 5);
+            }
+            else if (this.leftWindow.windowLeftHealth >= 450) {
+                this.healthbarLeftWindow.graphics.clear().beginFill("#ea7100").drawRect(this.leftWindow.x - 22, this.leftWindow.y - 55, (this.leftWindow.windowLeftHealth / 200) * 10, 5);
+            }
+            else if (this.leftWindow.windowLeftHealth <= 450) {
+                this.healthbarLeftWindow.graphics.clear().beginFill("#ea0000").drawRect(this.leftWindow.x - 22, this.leftWindow.y - 55, (this.leftWindow.windowLeftHealth / 200) * 10, 5);
+            }
+            this.addChild(this.healthbarLeftWindow);
+        };
+        // Updates left window health bar
+        Play.prototype.updateHealthBarRightWindow = function () {
+            if (this.rightWindow.windowRightHealth >= 650) {
+                this.healthbarRightWindow.graphics.clear().beginFill("#06d600").drawRect(this.rightWindow.x - 22, this.rightWindow.y - 10, (this.rightWindow.windowRightHealth / 200) * 10, 5);
+            }
+            else if (this.rightWindow.windowRightHealth >= 450) {
+                this.healthbarRightWindow.graphics.clear().beginFill("#ea7100").drawRect(this.rightWindow.x - 22, this.rightWindow.y - 10, (this.rightWindow.windowRightHealth / 200) * 10, 5);
+            }
+            else if (this.rightWindow.windowRightHealth <= 450) {
+                this.healthbarRightWindow.graphics.clear().beginFill("#ea0000").drawRect(this.rightWindow.x - 22, this.rightWindow.y - 10, (this.rightWindow.windowRightHealth / 200) * 10, 5);
+            }
+            this.addChild(this.healthbarRightWindow);
         };
         return Play;
     }(objects.Scene));

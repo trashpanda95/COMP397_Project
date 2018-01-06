@@ -33,6 +33,7 @@ module config
   export class Key {
     // Keyboard values
     public static A: number = 65;
+    public static R: number = 82;
     public static CTRL: number = 17;
     public static D: number = 68;
     public static DOWN_ARROW: number = 40;

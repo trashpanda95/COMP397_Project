@@ -2,6 +2,7 @@ var managers;
 (function (managers) {
     var Collision = /** @class */ (function () {
         function Collision() {
+            this.keyBoardKey = new managers.keyBoardInput();
         }
         //PRIVATE METHODS
         Collision.prototype.verticalWallCollision = function () {
@@ -108,18 +109,63 @@ var managers;
                     }
                 }
             }
+            //Check if object is window and player
+            if (object1.name == "player" && object2.name == "windowLeft") {
+                var getKey = this.keyBoardKey.getkeyInput();
+                //Check if the distance between object 1 and object 2 is less than the minimum distance  
+                if (this.objectToObject2Dist(startPoint, endPoint) < minimumDistance) {
+                    //Check if objects are currently colliding, default = false
+                    if (!object1.isColliding && object2.isBroken) {
+                        if (getKey == config.Key.R && object2.windowLeftHealth < 100) {
+                            object2.windowLeftHealth++;
+                            if (object2.windowLeftHealth >= 100) {
+                                object2.visible = true;
+                                object2.isBroken = false;
+                            }
+                        }
+                        object1.isColliding = true;
+                    }
+                    else {
+                        //console.log("Not Colliding");
+                        object1.isColliding = false;
+                    }
+                }
+            }
+            //Check if object is window and player
+            if (object1.name == "player" && object2.name == "windowRight") {
+                var getKey = this.keyBoardKey.getkeyInput();
+                //Check if the distance between object 1 and object 2 is less than the minimum distance  
+                if (this.objectToObject2Dist(startPoint, endPoint) < minimumDistance) {
+                    //Check if objects are currently colliding, default = false
+                    if (!object1.isColliding && object2.isBroken) {
+                        if (getKey == config.Key.R && object2.windowRightHealth < 100) {
+                            object2.windowRightHealth++;
+                            if (object2.windowRightHealth >= 100) {
+                                object2.visible = true;
+                                object2.isBroken = false;
+                            }
+                        }
+                        object1.isColliding = true;
+                    }
+                    else {
+                        //console.log("Not Colliding");
+                        object1.isColliding = false;
+                    }
+                }
+            }
             //Check if object is right window
-            if (object2.name == "windowRight") {
+            if (object1.name == "zombie" && object2.name == "windowRight") {
                 //Check if the distance between object 1 and object 2 is less than the minimum distance  
                 if (this.objectToObject2Dist(startPoint, endPoint) < object1.height) {
                     //Check if objects are currently colliding, default = false
                     if (!object1.isColliding && !object2.isBroken) {
                         object1.y = object2.y + object1.halfHeight;
-                        object2.windowRightHealth -= 0.1;
+                        object2.windowRightHealth -= 1;
                         console.log(object2.windowRightHealth);
                         //Check if window health is 0, then remove child
                         if (object2.windowRightHealth <= 0) {
-                            object2.parent.removeChild(object2);
+                            //object2.parent.removeChild(object2);
+                            object2.visible = false;
                             object2.isBroken = true;
                             object1.windowReached = true;
                         }
@@ -136,7 +182,8 @@ var managers;
                     }
                 }
             }
-            if (object2.name == "windowLeft") {
+            //Check if object is left window
+            if (object1.name == "zombie" && object2.name == "windowLeft") {
                 //Check if the distance between object 1 and object 2 is less than the minimum distance  
                 if (object1.y <= object2.y + object2.height
                     && object1.y >= object2.y
@@ -149,7 +196,8 @@ var managers;
                         console.log(object2.windowLeftHealth);
                         //Check if window health is 0, then remove child
                         if (object2.windowLeftHealth <= 0) {
-                            object2.parent.removeChild(object2);
+                            //object2.parent.removeChild(object2);
+                            object2.visible = false;
                             object2.isBroken = true;
                             object1.windowReached = true;
                         }
@@ -166,23 +214,6 @@ var managers;
                     }
                 }
             }
-        };
-        Collision.prototype.collisionPushBack = function (object1, object2) {
-            // How much overlap exists between the 2 objects?
-            var overlapDistance = (managers.Vector.Distance(managers.Vector.ToPoint(object1.position), managers.Vector.ToPoint(object2.position))
-                - object1.halfWidth - object2.halfWidth) * 0.25;
-            // What's the orientation vector from object 1 to object 2?
-            var overlapVector = managers.Vector.DegreeToVector(managers.Vector.RotateTowardPosition(managers.Vector.ToPoint(object1.position), managers.Vector.ToPoint(object2.position)));
-            // apply the orietation vector to object 1
-            var obj1pos = new managers.Vector();
-            obj1pos = managers.Vector.ToPoint(object1.position).Add(overlapVector.Multiply(overlapDistance / 2));
-            object1.position.x = obj1pos.x;
-            object1.position.y = obj1pos.y;
-            // apply the orientation vector to object 2, but in the opposite direction
-            var obj2pos = new managers.Vector();
-            obj2pos = managers.Vector.ToPoint(object2.position).Add(overlapVector.Multiply(-overlapDistance / 2));
-            object2.position.x = obj2pos.x;
-            object2.position.y = obj2pos.y;
         };
         Collision.prototype.checkCollisionWall = function (object1, object2) {
             this.object1 = object1;

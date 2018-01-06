@@ -35,7 +35,7 @@ module objects {
             this.x = 400;
             this.playerHealth = 100;
             this.keyBoardKey = new managers.keyBoardInput();
-            this.bulletSpawn = new createjs.Point(this.y -35, this.x);
+            this.bulletSpawn = new createjs.Point(this.y+50, this.x);
         }
         public Update()                                     // Update method runs 60fps
         {

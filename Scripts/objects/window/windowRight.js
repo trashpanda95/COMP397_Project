@@ -20,9 +20,9 @@ var objects;
             return _this;
         }
         WindowRight.prototype.Start = function () {
-            this.y = 370;
+            this.y = 375;
             this.x = 830;
-            this.windowRightHealth = 100;
+            this.windowRightHealth = 1000;
             this.isBroken = false;
             this.regXY();
         };

@@ -11,7 +11,7 @@ module objects {
     {
       this.y = 338;
       this.x = 115;
-      this.windowLeftHealth = 100;
+      this.windowLeftHealth = 1000;
       this.isBroken = false;
       this.regXY();
     }
