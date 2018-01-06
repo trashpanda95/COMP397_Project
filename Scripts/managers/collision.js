@@ -3,6 +3,7 @@ var managers;
     var Collision = /** @class */ (function () {
         function Collision() {
             this.keyBoardKey = new managers.keyBoardInput();
+            this.killCount = 0;
         }
         //PRIVATE METHODS
         Collision.prototype.verticalWallCollision = function () {
@@ -95,7 +96,7 @@ var managers;
                     //Check if objects are currently colliding, default = false
                     if (!object1.isColliding) {
                         //Decrease player health
-                        object1.playerHealth -= 0.2;
+                        object1.playerHealth -= 0.5;
                         //Check if player health is 0, then remove child and change scene
                         if (object1.playerHealth <= 0) {
                             object1.playerHealth = 0; // Reset back to 0 to remove possible errors
@@ -128,7 +129,7 @@ var managers;
                         object1.isColliding = true;
                     }
                     else {
-                        //console.log("Not Colliding");
+                        //console.log("Not Colliding");0
                         object1.isColliding = false;
                     }
                 }

@@ -5,7 +5,7 @@ module managers
         private object1: objects.GameObject;
         private object2: objects.GameObject;
         private keyBoardKey = new managers.keyBoardInput();
-        public killCount:number
+        public killCount:number=0;
          
 
         //PRIVATE METHODS
@@ -109,7 +109,7 @@ module managers
                     //Check if objects are currently colliding, default = false
                     if (!object1.isColliding) {
                         //Decrease player health
-                        object1.playerHealth -= 0.2;
+                        object1.playerHealth -= 0.5;
                         //Check if player health is 0, then remove child and change scene
                         if (object1.playerHealth <= 0) {
                             object1.playerHealth = 0;           // Reset back to 0 to remove possible errors
@@ -136,7 +136,11 @@ module managers
                     //Check if objects are currently colliding, default = false
                     if (!object1.isColliding && object2.isBroken) 
                     {                       
+<<<<<<< HEAD
                         if  ( getKey == config.Key.R || getKey == config.Key.NUM_PAD_0 && object2.windowLeftHealth <1000 )
+=======
+                        if  (( getKey == config.Key.R || getKey == config.Key.NUM_PAD_0) && object2.windowLeftHealth <1000)
+>>>>>>> 1fb7edc1adcebe3020438802338078c585098339
                         {
                             object2.windowLeftHealth +=50;
                             if (object2.windowLeftHealth >= 1000)
@@ -148,7 +152,7 @@ module managers
                         object1.isColliding = true;
                     }
                     else {
-                        //console.log("Not Colliding");
+                        //console.log("Not Colliding");0
                         object1.isColliding = false;
                        
                     }
@@ -167,7 +171,11 @@ module managers
                      //Check if objects are currently colliding, default = false
                      if (!object1.isColliding && object2.isBroken) 
                      {                       
+<<<<<<< HEAD
                          if  ( getKey == config.Key.R || getKey == config.Key.NUM_PAD_0 && object2.windowRightHealth <1000 )
+=======
+                         if  (( getKey == config.Key.R || getKey == config.Key.NUM_PAD_0) && object2.windowRightHealth <1000 )
+>>>>>>> 1fb7edc1adcebe3020438802338078c585098339
                          {
                              object2.windowRightHealth +=50;
                              if (object2.windowRightHealth >= 1000)
