@@ -94,7 +94,7 @@ var managers;
                     //Check if objects are currently colliding, default = false
                     if (!object1.isColliding) {
                         //Decrease player health
-                        object1.playerHealth -= 0.2;
+                        object1.playerHealth -= 0.5;
                         //Check if player health is 0, then remove child and change scene
                         if (object1.playerHealth <= 0) {
                             object1.playerHealth = 0; // Reset back to 0 to remove possible errors
@@ -117,7 +117,7 @@ var managers;
                     object2.buildWindow = true;
                     //Check if objects are currently colliding, default = false
                     if (!object1.isColliding && object2.isBroken) {
-                        if (getKey == config.Key.R && object2.windowLeftHealth < 1000) {
+                        if ((getKey == config.Key.R || getKey == config.Key.NUM_PAD_0) && object2.windowLeftHealth < 1000) {
                             object2.windowLeftHealth += 100;
                             if (object2.windowLeftHealth >= 1000) {
                                 object2.visible = true;
@@ -127,7 +127,7 @@ var managers;
                         object1.isColliding = true;
                     }
                     else {
-                        //console.log("Not Colliding");
+                        //console.log("Not Colliding");0
                         object1.isColliding = false;
                     }
                 }
@@ -143,7 +143,7 @@ var managers;
                     object2.buildWindow = true;
                     //Check if objects are currently colliding, default = false
                     if (!object1.isColliding && object2.isBroken) {
-                        if (getKey == config.Key.R && object2.windowRightHealth < 1000) {
+                        if ((getKey == config.Key.R || getKey == config.Key.NUM_PAD_0) && object2.windowRightHealth < 1000) {
                             object2.windowRightHealth += 100;
                             if (object2.windowRightHealth >= 1000) {
                                 object2.visible = true;

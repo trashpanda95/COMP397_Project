@@ -167,8 +167,8 @@ module scenes {
             //this.playerHealthOutline = new objects.Label("Health: " +this.player.playerHealth, "20px","Verdana", "#FFFFFF", 20, 640, false);
             
             // Bullet Label
-            this.bulletLabel = new objects.Label("Bullets: " +(this.bulletNum - this.bulletCounter), "20px","Verdana", "#ffffff", 20, 660, false); 
-
+            this.bulletLabel = new objects.Label("Bullets: " +(this.bulletNum - this.bulletCounter), "20px","Verdana", "#000000", 20, 660, false); 
+            this.bulletLabelOutline = new objects.Label("Bullets: " +(this.bulletNum - this.bulletCounter), "20px","Verdana", "#FFFFFF", 20, 660, false);
             // Reload Labels
             this.reloadBulletLabel = new objects.Label("Press CTRL to Reload", "20px","Verdana", "#ffffff", (config.Screen.WIDTH/5)*2.2, (config.Screen.HEIGHT/4)*3, false);
 
@@ -179,7 +179,7 @@ module scenes {
 
             // Set Label outlines to True
             //this.playerHealthOutline.outline = 1;
-            //this.bulletLabelOutline.outline = 1; 
+            this.bulletLabelOutline.outline = 1; 
             //this.fixWindowLabelOutline.outline = 1;
             //this.reloadBulletLabelOutline.outline = 1;
 
@@ -209,8 +209,6 @@ module scenes {
 
         public Update():number
         {
-            // Bullet Label
-            this.bulletLabel = new objects.Label("Bullets: " +(this.bulletNum - this.bulletCounter), "20px","Verdana", "#ffffff", 20, 660, false);   
 
             // Update Player
             this.player.Update();
@@ -289,6 +287,7 @@ module scenes {
             }
             else (this.removeChild(this.buildLabel))
             this.updateHealthBar();
+            this.updateLabels();
             this.updateHealthBarLeftWindow();
             this.updateHealthBarRightWindow();
             return this.currentScene;
@@ -361,28 +360,30 @@ module scenes {
             this.allowBulletFire = true;
             //console.log ("allowBulletFire is re-Enabled");                              // debugger - checking to see if allowBulletFire was re-enabled
         }
+
+        // Update Current Labels on Screen
         private updateLabels():void
         {
+            this.bulletLabel.text = "Bullets: "+ (this.bulletNum - this.bulletCounter)+"/20";
+            this.bulletLabelOutline.text = "Bullets: "+ (this.bulletNum - this.bulletCounter)+"/20";        // Add Outline
             //this.playerHealth.text = "Health: "+ this.player.playerHealth;
             //this.playerHealthOutline.text = "Health: "+ this.player.playerHealth;
-            this.bulletLabel.text = "Bullets: "+ (this.bulletNum - this.bulletCounter)+"/20";
-            this.bulletLabelOutline.text = "Bullets: "+ (this.bulletNum - this.bulletCounter)+"/20";
-            this.leftWindowHealth.text = "" +(this.leftWindow.windowLeftHealth) + "/100";
-            this.rightWindowHealth.text = "" +(this.rightWindow.windowRightHealth)+"/100";
+            //this.leftWindowHealth.text = "" +(this.leftWindow.windowLeftHealth) + "/1000";
+            //this.rightWindowHealth.text = "" +(this.rightWindow.windowRightHealth)+"/1000";
         }
         
         // Updates the Health Bar
         private updateHealthBar():void
         {   
-            if (this.player.playerHealth >= 50) // Display Green Bar indicating over 75% Health
+            if (this.player.playerHealth >= 75) // Display Green Bar indicating over 75% Health
             {
-                this.healthbar.graphics.clear().beginFill("#06d600").drawRect(0,0,(this.player.playerHealth)*10,5);
-            } else if (this.player.playerHealth >=30)   // Display Orange Bar indicating over 45% Health
+                this.healthbar.graphics.clear().beginFill("#06d600").drawRect(0,0,(this.player.playerHealth)*10,20);
+            } else if (this.player.playerHealth >=45)   // Display Orange Bar indicating over 45% Health
             {
-                this.healthbar.graphics.clear().beginFill("#ea7100").drawRect(0,0,(this.player.playerHealth)*10,5);
-            } else if (this.player.playerHealth <=30)   // Display Red Bar indicating less than 45% Health
+                this.healthbar.graphics.clear().beginFill("#ea7100").drawRect(0,0,(this.player.playerHealth)*10,20);
+            } else if (this.player.playerHealth <=45)   // Display Red Bar indicating less than 45% Health
             {
-                this.healthbar.graphics.clear().beginFill("#ea0000").drawRect(0,0,(this.player.playerHealth)*10,5);
+                this.healthbar.graphics.clear().beginFill("#ea0000").drawRect(0,0,(this.player.playerHealth)*10,20);
             }
             this.addChild(this.healthbar);
         }
