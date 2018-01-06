@@ -243,13 +243,22 @@ var scenes;
         Play.prototype.updateLabels = function () {
             //this.playerHealth.text = "Health: "+ this.player.playerHealth;
             //this.playerHealthOutline.text = "Health: "+ this.player.playerHealth;
-            this.bulletLabel.text = "Bullets: " + (this.bulletNum - this.bulletCounter);
-            this.bulletLabelOutline.text = "Bullets: " + (this.bulletNum - this.bulletCounter);
+            this.bulletLabel.text = "Bullets: " + (this.bulletNum - this.bulletCounter) + "/20";
+            this.bulletLabelOutline.text = "Bullets: " + (this.bulletNum - this.bulletCounter) + "/20";
             this.leftWindowHealth.text = "" + (this.leftWindow.windowLeftHealth) + "/100";
             this.rightWindowHealth.text = "" + (this.rightWindow.windowRightHealth) + "/100";
         };
+        // Updates the Health Bar
         Play.prototype.updateHealthBar = function () {
-            this.healthbar.graphics.clear().beginFill("DarkRed").drawRect(20, 640, (this.player.playerHealth / 10) * 15, 20);
+            if (this.player.playerHealth >= 75) {
+                this.healthbar.graphics.clear().beginFill("DarkGreen").drawRect(20, 640, (this.player.playerHealth / 10) * 15, 20);
+            }
+            else if (this.player.playerHealth >= 45) {
+                this.healthbar.graphics.clear().beginFill("DarkOrange").drawRect(20, 640, (this.player.playerHealth / 10) * 15, 20);
+            }
+            else if (this.player.playerHealth <= 45) {
+                this.healthbar.graphics.clear().beginFill("DarkRed").drawRect(20, 640, (this.player.playerHealth / 10) * 15, 20);
+            }
             this.addChild(this.healthbar);
         };
         return Play;
