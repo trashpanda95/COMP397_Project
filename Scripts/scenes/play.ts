@@ -65,9 +65,12 @@ module scenes {
         private bgMap: objects.Bgmap;
         private buildLabel:objects.Label;
 
+        private killCountLabel:objects.Label;
+
         private healthbar:createjs.Shape;
         private healthbarLeftWindow:createjs.Shape;
         private healthbarRightWindow:createjs.Shape;
+        
         // PUBLIC PROPETIES
 
         // CONSTRUCTORS
@@ -169,11 +172,13 @@ module scenes {
             // Bullet Label
             this.bulletLabel = new objects.Label("Bullets: " +(this.bulletNum - this.bulletCounter), "20px","Verdana", "#ffffff", 20, 660, false); 
 
+            this.killCountLabel = new objects.Label("Kills: " +this.collision.killCount, "20px","Verdana", "#ffffff", 800, 660, false); 
+
             // Reload Labels
             this.reloadBulletLabel = new objects.Label("Press CTRL to Reload", "20px","Verdana", "#ffffff", (config.Screen.WIDTH/5)*2.2, (config.Screen.HEIGHT/4)*3, false);
 
             // Fixing Window Labels
-            this.buildLabel= new objects.Label("Press R or 0 to Fix Window", "20px","Verdana", "#ffffff", (config.Screen.WIDTH/5)*1.8, (config.Screen.HEIGHT/4)*3, false);
+            this.buildLabel= new objects.Label("Press R or 0 to Fsix Window", "20px","Verdana", "#ffffff", (config.Screen.WIDTH/5)*1.8, (config.Screen.HEIGHT/4)*3, false);
             //this.fixWindowLabelOutline = new objects.Label("Press NUM PAD ZERO to Fix Windows", "20px","Verdana", "#FFFFFF", (config.Screen.WIDTH/5)*1.8, (config.Screen.HEIGHT/4)*3, false);
 
 
@@ -366,6 +371,7 @@ module scenes {
             //this.playerHealth.text = "Health: "+ this.player.playerHealth;
             //this.playerHealthOutline.text = "Health: "+ this.player.playerHealth;
             this.bulletLabel.text = "Bullets: "+ (this.bulletNum - this.bulletCounter)+"/20";
+            this.killCountLabel.text = "Bullets: "+ this.collision.killCount+"/20";
             this.bulletLabelOutline.text = "Bullets: "+ (this.bulletNum - this.bulletCounter)+"/20";
             this.leftWindowHealth.text = "" +(this.leftWindow.windowLeftHealth) + "/100";
             this.rightWindowHealth.text = "" +(this.rightWindow.windowRightHealth)+"/100";
