@@ -11,4 +11,8 @@
   -webkit-transform: translateX(-50%) translateY(-50%);
   -moz-transform: translateX(-50%) translateY(-50%);
   transform: translateX(-50%) translateY(-50%);
+    border: 1px Black solid;
+  border-radius: 6px;
+  display: block;
+  background: #fff;
 }
