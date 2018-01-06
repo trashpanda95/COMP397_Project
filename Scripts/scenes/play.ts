@@ -172,11 +172,11 @@ module scenes {
             // Reload Labels
             this.reloadBulletLabel = new objects.Label("Press CTRL to Reload", "20px","Verdana", "#000000", (config.Screen.WIDTH/5)*2.2, (config.Screen.HEIGHT/4)*3, false);
             this.reloadBulletLabelOutline = new objects.Label("Press CTRL to Reload", "20px","Verdana", "#FFFFFF", (config.Screen.WIDTH/5)*2.2, (config.Screen.HEIGHT/4)*3, false);
-            this.reloadBulletLabelOutline.outline = 1;
+            //this.reloadBulletLabelOutline.outline = 1;
 
             // Set Label outlines to True
             //this.playerHealthOutline.outline = 1;
-            this.bulletLabelOutline.outline = 1; 
+            //this.bulletLabelOutline.outline = 1; 
 
             // Add Labels onto Scene
             this.addChild(this.bulletLabel);
@@ -323,7 +323,6 @@ module scenes {
                 this.allowBulletFire = false;           // Stops Player from continued shooting after 0 bullets
                 this.bulletCounter = this.bulletNum;    // Reset bullet to the max amount to stop counter from going over array index
                 //console.log ("bulletCounter set to: "+this.bulletCounter);            // Debugger
-
             }
         }
         private reloadBullet ():void

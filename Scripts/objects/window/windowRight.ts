@@ -11,7 +11,7 @@ module objects {
      
       public Start(): void //Start method runs when object is instantiated
       { 
-        this.y= 374;
+        this.y= 370;
         this.x =830;
         this.windowRightHealth = 100;
         this.isBroken = false;

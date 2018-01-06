@@ -98,10 +98,10 @@ var scenes;
             // Reload Labels
             this.reloadBulletLabel = new objects.Label("Press CTRL to Reload", "20px", "Verdana", "#000000", (config.Screen.WIDTH / 5) * 2.2, (config.Screen.HEIGHT / 4) * 3, false);
             this.reloadBulletLabelOutline = new objects.Label("Press CTRL to Reload", "20px", "Verdana", "#FFFFFF", (config.Screen.WIDTH / 5) * 2.2, (config.Screen.HEIGHT / 4) * 3, false);
-            this.reloadBulletLabelOutline.outline = 1;
+            //this.reloadBulletLabelOutline.outline = 1;
             // Set Label outlines to True
             //this.playerHealthOutline.outline = 1;
-            this.bulletLabelOutline.outline = 1;
+            //this.bulletLabelOutline.outline = 1; 
             // Add Labels onto Scene
             this.addChild(this.bulletLabel);
             this.addChild(this.bulletLabelOutline);

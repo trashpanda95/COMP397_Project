@@ -70,16 +70,16 @@ var objects;
         };
         Player.prototype.playerMovement = function () {
             var getKey = this.keyBoardKey.getkeyInput();
-            if (getKey != null && getKey == 37) {
+            if (getKey != null && getKey == config.Key.LEFT_ARROW || getKey == config.Key.A) {
                 this.x -= this.playerSpeed;
             }
-            else if (getKey != null && getKey == 38) {
+            else if (getKey != null && getKey == config.Key.UP_ARROW || getKey == config.Key.W) {
                 this.y -= this.playerSpeed;
             }
-            else if (getKey != null && getKey == 39) {
+            else if (getKey != null && getKey == config.Key.RIGHT_ARROW || getKey == config.Key.D) {
                 this.x += this.playerSpeed;
             }
-            else if (getKey != null && getKey == 40) {
+            else if (getKey != null && getKey == config.Key.DOWN_ARROW || getKey == config.Key.S) {
                 this.y += this.playerSpeed;
             }
             this.setPlayerRotation();

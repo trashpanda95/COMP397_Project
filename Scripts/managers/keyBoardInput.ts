@@ -40,7 +40,7 @@ module managers {
         */
         private onControlUp(e: KeyboardEvent)           // Get value of key and set global variable
         {
-                keyBoardInput.key = null;
+            keyBoardInput.key = null;
         }           
     }
 }

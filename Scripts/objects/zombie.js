@@ -31,9 +31,17 @@ var objects;
             this.Reset();
         };
         Zombie.prototype.Update = function () {
-            if (this.windowReached) {
-                this.enterHouseLeft();
-                this.enterHouseRight();
+            if (this.y < this.targetWindowRight.y - this.height && this.windowReached) {
+                this.ChasePlayer();
+            }
+            else if (this.y > this.targetWindowRight.y - this.height && this.windowReached) {
+                this.y -= this.generateNormalSpeed();
+            }
+            if (this.x > this.targetWindowLeft.x + this.halfWidth && this.windowReached) {
+                this.ChasePlayer();
+            }
+            else if (this.x < this.targetWindowLeft.x + this.halfWidth && this.windowReached) {
+                this.x += this.generateNormalSpeed();
             }
             else {
                 this.setDestination();
@@ -57,7 +65,7 @@ var objects;
             this.zombieHealth = Math.random() * (8 - 5) + 5;
         };
         Zombie.prototype.generateNormalSpeed = function () {
-            return Math.random() * (0.2 - 0.03) + 0.03;
+            return Math.random() * (0.3 - 0.01) + 0.01;
         };
         Zombie.prototype.generateCloseSpeed = function () {
             return Math.random() * (0.5 - 0.2) + 0.2;
@@ -138,22 +146,6 @@ var objects;
             if (this.spawnPoint.x > (config.Screen.WIDTH / 2)
                 && this.spawnPoint.y > (config.Screen.HEIGHT / 2)) {
                 this.headTowardsRightWindow();
-            }
-        };
-        Zombie.prototype.enterHouseRight = function () {
-            if (this.y <= this.targetWindowRight.y + this.halfHeight) {
-                this.ChasePlayer();
-            }
-            else {
-                this.y -= this.generateNormalSpeed();
-            }
-        };
-        Zombie.prototype.enterHouseLeft = function () {
-            if (this.x >= this.targetWindowLeft.x + this.halfWidth) {
-                this.ChasePlayer();
-            }
-            else {
-                this.x += this.generateNormalSpeed();
             }
         };
         return Zombie;

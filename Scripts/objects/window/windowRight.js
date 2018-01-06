@@ -20,7 +20,7 @@ var objects;
             return _this;
         }
         WindowRight.prototype.Start = function () {
-            this.y = 374;
+            this.y = 370;
             this.x = 830;
             this.windowRightHealth = 100;
             this.isBroken = false;
