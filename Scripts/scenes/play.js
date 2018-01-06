@@ -100,7 +100,6 @@ var scenes;
             // Reload Labels
             this.reloadBulletLabel = new objects.Label("Press CTRL to Reload", "20px", "Verdana", "#000000", (config.Screen.WIDTH / 5) * 2.2, (config.Screen.HEIGHT / 4) * 3, false);
             this.reloadBulletLabelOutline = new objects.Label("Press CTRL to Reload", "20px", "Verdana", "#FFFFFF", (config.Screen.WIDTH / 5) * 2.2, (config.Screen.HEIGHT / 4) * 3, false);
-            // Fixing Window Labels
             this.fixWindowLabel = new objects.Label("Press NUM PAD ZERO to Fix Windows", "20px", "Verdana", "#000000", (config.Screen.WIDTH / 5) * 1.8, (config.Screen.HEIGHT / 4) * 3, false);
             this.fixWindowLabelOutline = new objects.Label("Press NUM PAD ZERO to Fix Windows", "20px", "Verdana", "#FFFFFF", (config.Screen.WIDTH / 5) * 1.8, (config.Screen.HEIGHT / 4) * 3, false);
             // Set Label outlines to True
@@ -108,7 +107,6 @@ var scenes;
             this.bulletLabelOutline.outline = 1;
             this.fixWindowLabelOutline.outline = 1;
             this.reloadBulletLabelOutline.outline = 1;
-            // Add Labels onto Scene
             this.addChild(this.bulletLabel);
             this.addChild(this.bulletLabelOutline);
             //Add Mouse Listener

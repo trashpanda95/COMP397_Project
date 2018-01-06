@@ -108,36 +108,14 @@ var managers;
                     }
                 }
             }
-            /*             //Check if object is another zombie
-                        if (object1.name=="zombie" && object2.name == "zombie") {
-                            //Check if the distance between object 1 and object 2 is less than the minimum distance
-                            if (this.objectToObject2Dist(startPoint, endPoint) < minimumDistance) {
-                                //Check if objects are currently colliding, default = false
-                                if (!object1.isColliding) {
-                                    //Decrease player health
-                                     object1.x = object2.x+object2.halfWidth- object1.x+object1.halfWidth;
-                                    //object1.x = object2.x+object2.halfWidth;
-                                    object1.isColliding = true;
-                                }
-                                else {
-                                    //console.log("Not Colliding");
-                                    object1.isColliding = false;
-                                }
-                            }
-                        }
-             */
             //Check if object is right window
             if (object2.name == "windowRight") {
                 //Check if the distance between object 1 and object 2 is less than the minimum distance  
-                if (object1.x >= object2.x
-                    && object1.x <= object2.x + object2.width
-                    && object1.y >= object2.y + object2.height
-                    && object1.y <= object2.y + object2.height + object1.halfWidth) {
-                    console.log("colliding with right window");
+                if (this.objectToObject2Dist(startPoint, endPoint) < object1.height) {
                     //Check if objects are currently colliding, default = false
                     if (!object1.isColliding && !object2.isBroken) {
-                        //object1.y = object2.y+ object2.height + object1.halfHeight;
-                        object2.windowRightHealth -= 1;
+                        object1.y = object2.y + object1.halfHeight;
+                        object2.windowRightHealth -= 0.1;
                         console.log(object2.windowRightHealth);
                         //Check if window health is 0, then remove child
                         if (object2.windowRightHealth <= 0) {
@@ -158,7 +136,6 @@ var managers;
                     }
                 }
             }
-            //Check if object is right window
             if (object2.name == "windowLeft") {
                 //Check if the distance between object 1 and object 2 is less than the minimum distance  
                 if (object1.y <= object2.y + object2.height
@@ -167,7 +144,7 @@ var managers;
                     && object1.x <= object2.x - object2.halfWidth) {
                     //Check if objects are currently colliding, default = false
                     if (!object1.isColliding && !object2.isBroken) {
-                        object1.x = object2.x + object2.width - object1.halfWidth;
+                        object1.x = object2.x - object1.halfWidth;
                         object2.windowLeftHealth -= 1;
                         console.log(object2.windowLeftHealth);
                         //Check if window health is 0, then remove child

@@ -32,17 +32,30 @@ module objects {
         }
         public Update()                 
         {
-            if (this.windowReached)
+            if (this.y < this.targetWindowRight.y-this.height && this.windowReached)
             {
-                this.enterHouseLeft();
-                this.enterHouseRight();
+                this.ChasePlayer();
+            } 
+            else if (this.y >this.targetWindowRight.y-this.height && this.windowReached)
+            {
+                this.y -= this.generateNormalSpeed();
             }
-            else {
+            if (this.x > this.targetWindowLeft.x + this.halfWidth && this.windowReached) 
+            {
+                this.ChasePlayer();
+            }
+            else if (this.x < this.targetWindowLeft.x + this.halfWidth && this.windowReached)
+            {
+                this.x += this.generateNormalSpeed();
+            }
+            else 
+            {
                 this.setDestination();
             }    
         }
         public Reset():void 
         {
+            
            this.generateHealth();
            this.zombieSpawnPoint();   
            this.windowReached =false;  
@@ -64,7 +77,7 @@ module objects {
         }
         private generateNormalSpeed()
         {
-            return Math.random()* (0.2- 0.03)+ 0.03 ;
+            return Math.random()* (0.3- 0.01)+ 0.01 ;
         }
         private generateCloseSpeed()
         {
@@ -167,24 +180,5 @@ module objects {
             }
         }
 
-        private enterHouseRight()
-        {
-            if (this.y <= this.targetWindowRight.y + this.halfHeight)
-            {
-                this.ChasePlayer();
-            } 
-            else {this.y -= this.generateNormalSpeed();}  
-        }
-        private enterHouseLeft()
-        {
-            if (this.x >= this.targetWindowLeft.x + this.halfWidth) {
-                this.ChasePlayer();
-            }
-            else {
-                this.x += this.generateNormalSpeed();
-            }
-        }
-
-        
     }
 }

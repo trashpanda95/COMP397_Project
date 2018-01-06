@@ -77,19 +77,20 @@ module objects {
         private playerMovement()                            // Move player object
         {  
             var getKey = this.keyBoardKey.getkeyInput(); 
-            if (getKey !=null && getKey == 37)              // Left
+
+            if (getKey !=null && getKey == config.Key.LEFT_ARROW ||  getKey == config.Key.A)              // Left
             {
                 this.x -= this.playerSpeed;
             }   
-            else if (getKey !=null && getKey == 38)         // Up
+            else if (getKey !=null && getKey == config.Key.UP_ARROW ||  getKey == config.Key.W)         // Up
             {
                 this.y -= this.playerSpeed;
             } 
-            else if (getKey !=null && getKey == 39)         // Right
+            else if (getKey !=null && getKey == config.Key.RIGHT_ARROW||  getKey == config.Key.D)         // Right
             {
                 this.x += this.playerSpeed;
             } 
-            else if (getKey !=null && getKey == 40)         // Down
+            else if (getKey !=null && getKey == config.Key.DOWN_ARROW || getKey == config.Key.S)         // Down
             {
                 this.y += this.playerSpeed;
             }        

@@ -180,6 +180,7 @@ module scenes {
             // Reload Labels
             this.reloadBulletLabel = new objects.Label("Press CTRL to Reload", "20px","Verdana", "#000000", (config.Screen.WIDTH/5)*2.2, (config.Screen.HEIGHT/4)*3, false);
             this.reloadBulletLabelOutline = new objects.Label("Press CTRL to Reload", "20px","Verdana", "#FFFFFF", (config.Screen.WIDTH/5)*2.2, (config.Screen.HEIGHT/4)*3, false);
+<<<<<<< HEAD
             // Fixing Window Labels
             this.fixWindowLabel = new objects.Label("Press NUM PAD ZERO to Fix Windows", "20px","Verdana", "#000000", (config.Screen.WIDTH/5)*1.8, (config.Screen.HEIGHT/4)*3, false);
             this.fixWindowLabelOutline = new objects.Label("Press NUM PAD ZERO to Fix Windows", "20px","Verdana", "#FFFFFF", (config.Screen.WIDTH/5)*1.8, (config.Screen.HEIGHT/4)*3, false);
@@ -190,6 +191,13 @@ module scenes {
             this.bulletLabelOutline.outline = 1; 
             this.fixWindowLabelOutline.outline = 1;
             this.reloadBulletLabelOutline.outline = 1;
+=======
+            //this.reloadBulletLabelOutline.outline = 1;
+
+            // Set Label outlines to True
+            //this.playerHealthOutline.outline = 1;
+            //this.bulletLabelOutline.outline = 1; 
+>>>>>>> 46bc688cc6a65550ed882a67bced532f97293ea5
 
             // Add Labels onto Scene
             this.addChild(this.bulletLabel);
@@ -347,7 +355,6 @@ module scenes {
                 this.allowBulletFire = false;           // Stops Player from continued shooting after 0 bullets
                 this.bulletCounter = this.bulletNum;    // Reset bullet to the max amount to stop counter from going over array index
                 //console.log ("bulletCounter set to: "+this.bulletCounter);            // Debugger
-
             }
         }
         private reloadBullet ():void
