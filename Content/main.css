@@ -15,6 +15,14 @@
   border-radius: 6px;
   display: block;
 }
+@font-face {
+  font-family: 'Gesso';
+  src: url('../Assets/fonts/GESSO___-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
 html, body {
   background: rgb(53, 53, 53);
 }

@@ -5,7 +5,9 @@ module scenes {
           private assetManager: createjs.LoadQueue;
           private gameTitle: objects.Label;
           private startButton: objects.Button;
-  
+          private endImage:objects.Image;
+          private blackoutImage:objects.Image;
+          private ambianceSound: createjs.AbstractSoundInstance;
           //PUBLIC PROPETIES
   
           //CONSTRUCTORS
@@ -21,10 +23,15 @@ module scenes {
           //PUBLIC METHODS
           public Start():void
           {
-              this.gameTitle = new objects.Label("GAME OVER", "80px", "Dock51", "#ff0000", 400, 250, true);
-              this.addChild(this.gameTitle);
-  
-              this.startButton = new objects.Button("reStartBtn", 400, 350, true);
+              this.ambianceSound = createjs.Sound.play('endSound',0,0,0,1,0.2,0);
+              this.endImage = new objects.Image("endimage");
+              this.blackoutImage = new objects.Image("blackout");
+              //this.gameTitle = new objects.Label("GAME OVER", "80px", "Gesso", "#ff0000", 400, 250, true);
+              this.startButton = new objects.Button("reStartBtn", config.Screen.WIDTH/2, config.Screen.HEIGHT/4*2.2, true);
+
+              //this.addChild(this.gameTitle);
+              this.addChild(this.blackoutImage);
+              this.addChild(this.endImage);
               this.addChild(this.startButton);
               this.onClickStartBtn();
           }

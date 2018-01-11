@@ -6,6 +6,11 @@ module managers {
     }
 
     let assetManifest = [
+        // Audio
+        { id: "gun_fire", src: "./Assets/audio/gun_fire.wav" },
+        { id: "endSound", src: "./Assets/audio/engbgs.mp3" },
+
+        // Images
         { id: "startBtn", src: "./Assets/startButton.png" },
         { id: "reStartBtn", src: "./Assets/reStartButton.png" },
         { id: "player", src: "./Assets/images/player_test.png" },
@@ -24,7 +29,10 @@ module managers {
         { id: "insideVerticalWall", src: "./Assets/images/walls/insideVerticalWall.png"},
         { id: "rightWall", src: "./Assets/images/walls/rightWall.png"},
         { id: "windowLeft", src: "./Assets/images/window/windowLeft.png"},
-        { id: "windowRight", src: "./Assets/images/window/windowRight.png"}
+        { id: "windowRight", src: "./Assets/images/window/windowRight.png"},
+        { id: "startimage", src: "./Assets/images/startimage.jpg"},
+        { id: "blackout", src: "./Assets/images/blackout.jpg"},
+        { id: "endimage", src: "./Assets/images/endimage.jpg"}
     ];
 
     export class AssetManager extends createjs.LoadQueue {

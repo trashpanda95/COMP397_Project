@@ -145,7 +145,7 @@ var managers;
                     object2.buildWindow = true;
                     //Check if objects are currently colliding, default = false
                     if (!object1.isColliding && object2.isBroken) {
-                        if (getKey == config.Key.R || getKey == config.Key.NUM_PAD_0 && object2.windowRightHealth < 1000) {
+                        if ((getKey == config.Key.R || getKey == config.Key.NUM_PAD_0) && object2.windowRightHealth < 1000) {
                             object2.windowRightHealth += 50;
                             if (object2.windowRightHealth >= 1000) {
                                 object2.visible = true;
