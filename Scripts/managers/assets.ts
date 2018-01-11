@@ -7,9 +7,11 @@ module managers {
 
     let assetManifest = [
         // Audio
-        { id: "gun_fire", src: "./Assets/audio/gun_fire.wav" },
+        { id: "gunFire", src: "./Assets/audio/gun_fire.wav" },
         { id: "endSound", src: "./Assets/audio/endbgs.mp3" },
-
+        { id: "zombieHit", src: "./Assets/audio/zombie_hit.mp3" },
+        { id: "backgroundMusic", src: "./Assets/audio/Day of Chaos.mp3" },
+        { id: "backgroundStart", src: "./Assets/audio/Bump in the Night.mp3" },
         // Images
         { id: "startBtn", src: "./Assets/startButton.png" },
         { id: "reStartBtn", src: "./Assets/reStartButton.png" },

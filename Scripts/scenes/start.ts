@@ -6,6 +6,7 @@ module scenes {
         private gameTitleOutline: objects.Label;
         private startButton: objects.Button;
         private startImage:objects.Image;
+        private backgroundMusic: createjs.AbstractSoundInstance;
         //PUBLIC PROPETIES
 
         //CONSTRUCTORS
@@ -21,10 +22,11 @@ module scenes {
         //PUBLIC METHODS
         public Start():void
         {
+            this.backgroundMusic = createjs.Sound.play ("backgroundStart",0,0,0,-1,0.25,0);
             this.startImage = new objects.Image("startimage");
             this.startButton = new objects.Button("startBtn", config.Screen.WIDTH/2, config.Screen.HEIGHT/2, true);
-            this.gameTitle = new objects.Label("THE INVASION", "100px", "Gesso", "#000000", config.Screen.WIDTH/4*2.3, config.Screen.HEIGHT/4, true);
-            this.gameTitleOutline = new objects.Label("THE INVASION", "100px", "Gesso", "#FFFFFF", config.Screen.WIDTH/4*2.3, config.Screen.HEIGHT/4, true);
+            this.gameTitle = new objects.Label("THE INVASION", "100px", "Boycott", "#000000", config.Screen.WIDTH/4*2.3, config.Screen.HEIGHT/4, true);
+            this.gameTitleOutline = new objects.Label("THE INVASION", "100px", "Boycott", "#FFFFFF", config.Screen.WIDTH/4*2.3, config.Screen.HEIGHT/4, true);
             this.gameTitleOutline.outline = 1;
 
             this.addChild(this.startImage);
@@ -43,6 +45,7 @@ module scenes {
         {
             this.startButton.on("click", () =>
             {
+                this.backgroundMusic.stop();
                 this.currentScene = config.Scene.PLAY;
                 this.removeAllChildren();
             });

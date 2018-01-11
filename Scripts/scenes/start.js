@@ -23,10 +23,11 @@ var scenes;
         //PRIVATE METHOS
         //PUBLIC METHODS
         Start.prototype.Start = function () {
+            this.backgroundMusic = createjs.Sound.play("backgroundStart", 0, 0, 0, -1, 0.25, 0);
             this.startImage = new objects.Image("startimage");
             this.startButton = new objects.Button("startBtn", config.Screen.WIDTH / 2, config.Screen.HEIGHT / 2, true);
-            this.gameTitle = new objects.Label("THE INVASION", "100px", "Gesso", "#000000", config.Screen.WIDTH / 4 * 2.3, config.Screen.HEIGHT / 4, true);
-            this.gameTitleOutline = new objects.Label("THE INVASION", "100px", "Gesso", "#FFFFFF", config.Screen.WIDTH / 4 * 2.3, config.Screen.HEIGHT / 4, true);
+            this.gameTitle = new objects.Label("THE INVASION", "100px", "Boycott", "#000000", config.Screen.WIDTH / 4 * 2.3, config.Screen.HEIGHT / 4, true);
+            this.gameTitleOutline = new objects.Label("THE INVASION", "100px", "Boycott", "#FFFFFF", config.Screen.WIDTH / 4 * 2.3, config.Screen.HEIGHT / 4, true);
             this.gameTitleOutline.outline = 1;
             this.addChild(this.startImage);
             this.addChild(this.startButton);
@@ -40,6 +41,7 @@ var scenes;
         Start.prototype.onClickStartBtn = function () {
             var _this = this;
             this.startButton.on("click", function () {
+                _this.backgroundMusic.stop();
                 _this.currentScene = config.Scene.PLAY;
                 _this.removeAllChildren();
             });

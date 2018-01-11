@@ -96,6 +96,7 @@ var managers;
                     //Check if objects are currently colliding, default = false
                     if (!object1.isColliding) {
                         //Decrease player health
+                        //createjs.Sound.play("zombieHit",0,0,0,0,0.5,0);
                         object1.playerHealth -= 0.5;
                         //Check if player health is 0, then remove child and change scene
                         if (object1.playerHealth <= 0) {
