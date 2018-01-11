@@ -6,7 +6,7 @@ module.exports = function (grunt) {
 				jasmine: {
 					run: {
 						src: [
-							'../lib/tweenjs-NEXT.js'
+							'../lib/tweenjs-NEXT.combined.js'
 						],
 
 						options: {
@@ -15,8 +15,7 @@ module.exports = function (grunt) {
 								'spec/Helpers.js'
 							],
 							vendor: [],
-							host: 'http://127.0.0.1:<%=connect.serve.options.port%>/',
-							styles: "styles.css"
+							host: 'http://127.0.0.1:<%=connect.serve.options.port%>/'
 						}
 					}
 				},

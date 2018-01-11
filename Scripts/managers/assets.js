@@ -14,7 +14,7 @@ var managers;
     var assetManifest = [
         // Audio
         { id: "gun_fire", src: "./Assets/audio/gun_fire.wav" },
-        { id: "endSound", src: "./Assets/audio/engbgs.mp3" },
+        { id: "endSound", src: "./Assets/audio/endbgs.mp3" },
         // Images
         { id: "startBtn", src: "./Assets/startButton.png" },
         { id: "reStartBtn", src: "./Assets/reStartButton.png" },

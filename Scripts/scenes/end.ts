@@ -23,7 +23,7 @@ module scenes {
           //PUBLIC METHODS
           public Start():void
           {
-              this.ambianceSound = createjs.Sound.play('endSound',0,0,0,1,0.2,0);
+              this.ambianceSound = createjs.Sound.play("endSound",0,0,0,-1,0.2,0);
               this.endImage = new objects.Image("endimage");
               this.blackoutImage = new objects.Image("blackout");
               //this.gameTitle = new objects.Label("GAME OVER", "80px", "Gesso", "#ff0000", 400, 250, true);
@@ -33,6 +33,7 @@ module scenes {
               this.addChild(this.blackoutImage);
               this.addChild(this.endImage);
               this.addChild(this.startButton);
+              
               this.onClickStartBtn();
           }
   
@@ -45,8 +46,9 @@ module scenes {
           {
               this.startButton.on("click", () =>
               {
-                  this.currentScene = config.Scene.PLAY;
+                  this.ambianceSound.stop();
                   this.removeAllChildren();
+                  this.currentScene = config.Scene.PLAY;
               });
           }
       }

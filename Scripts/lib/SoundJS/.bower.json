@@ -1,6 +1,6 @@
 {
   "name": "SoundJS",
-  "version": "1.0.1",
+  "version": "0.6.2",
   "homepage": "https://github.com/CreateJS/SoundJS",
   "authors": [
     "lannymcnie",
@@ -9,7 +9,7 @@
     "wdamien"
   ],
   "description": "A Javascript library for working with Audio. Features a simple interface as the front end to multiple audio APIs via a plugin model. Currently supports WebAudio, HTML5 Audio, and a Flash fallback. Part of the CreateJS suite of libraries.",
-  "main": "lib/soundjs-1.0.0.combined.js",
+  "main": "lib/soundjs-0.6.2.combined.js",
   "keywords": [
     "sound",
     "audio",
@@ -35,13 +35,14 @@
     "tutorials",
     "VERSIONS.txt"
   ],
-  "_release": "1.0.1",
+  "_release": "0.6.2",
   "_resolution": {
     "type": "version",
-    "tag": "v1.0.1",
-    "commit": "2500a766ad172ef7be6a06bd9f6c34e0936c27fe"
+    "tag": "0.6.2",
+    "commit": "0750aad3fc07a3a50ec4a4be99537750a1787191"
   },
   "_source": "https://github.com/CreateJS/SoundJS.git",
-  "_target": "^1.0.1",
-  "_originalSource": "SoundJS"
+  "_target": "^0.6.2",
+  "_originalSource": "SoundJS",
+  "_direct": true
 }

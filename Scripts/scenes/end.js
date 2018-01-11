@@ -23,7 +23,7 @@ var scenes;
         //PRIVATE METHOS
         //PUBLIC METHODS
         End.prototype.Start = function () {
-            this.ambianceSound = createjs.Sound.play('endSound', 0, 0, 0, 1, 0.2, 0);
+            this.ambianceSound = createjs.Sound.play("endSound", 0, 0, 0, -1, 0.2, 0);
             this.endImage = new objects.Image("endimage");
             this.blackoutImage = new objects.Image("blackout");
             //this.gameTitle = new objects.Label("GAME OVER", "80px", "Gesso", "#ff0000", 400, 250, true);
@@ -40,8 +40,9 @@ var scenes;
         End.prototype.onClickStartBtn = function () {
             var _this = this;
             this.startButton.on("click", function () {
-                _this.currentScene = config.Scene.PLAY;
+                _this.ambianceSound.stop();
                 _this.removeAllChildren();
+                _this.currentScene = config.Scene.PLAY;
             });
         };
         return End;
