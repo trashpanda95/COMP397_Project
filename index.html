@@ -8,6 +8,16 @@
     <link rel="stylesheet" href="./Content/main.css">
 </head>
 <body>
+    <div id="workDone">
+        <p id="titleText">New features since presentation</p>
+            <ul>
+                    <li>Added sounds</li>
+                    <li>Added background images</li>
+                    <li>Added custom font</li>
+                    <li>Added second level</li>
+                    <li>Added instruction text</li>
+            </ul>
+    </div>
     <canvas id="game"></canvas>
 
     <!-- JavaScript-->
@@ -16,23 +26,29 @@
     <script src="./Scripts/lib/TweenJS/lib/tweenjs-0.6.2.min.js"></script>
     <script src="./Scripts/lib/SoundJS/lib/soundjs-0.6.2.min.js"></script>
     <script src="./Scripts/lib/PreloadJS/lib/preloadjs-0.6.2.min.js"></script>
+    
     <!--Game Scripts-->
     <script src="./Scripts/managers/assets.js"></script>
     <script src="./Scripts/config/config.js"></script>
-    
     <script src="./Scripts/objects/gameObject.js"></script>
-    <script src="./Scripts/objects/walls/leftWallTop.js"></script>
-    <script src="./Scripts/objects/walls/leftWallBottom.js"></script>
-    <script src="./Scripts/objects/walls/wallBottom.js"></script>
-    <script src="./Scripts/objects/walls/wallTop.js"></script>
-    <script src="./Scripts/objects/walls/rightWallBath.js"></script>
-    <script src="./Scripts/objects/walls/mainGateWallLeft.js"></script>
-    <script src="./Scripts/objects/walls/mainGateWallRight.js"></script>
-    <script src="./Scripts/objects/walls/rightWall.js"></script>
-    <script src="./Scripts/objects/walls/insideHorizontalWall.js"></script>
-    <script src="./Scripts/objects/walls/insideVerticalWall.js"></script>
+    <script src="./Scripts/objects/walls_level1/leftWallTop.js"></script>
+    <script src="./Scripts/objects/walls_level1/leftWallBottom.js"></script>
+    <script src="./Scripts/objects/walls_level1/wallBottom.js"></script>
+    <script src="./Scripts/objects/walls_level1/wallTop.js"></script>
+    <script src="./Scripts/objects/walls_level1/rightWallBath.js"></script>
+    <script src="./Scripts/objects/walls_level1/mainGateWallLeft.js"></script>
+    <script src="./Scripts/objects/walls_level1/mainGateWallRight.js"></script>
+    <script src="./Scripts/objects/walls_level1/rightWall.js"></script>
+    <script src="./Scripts/objects/walls_level1/insideHorizontalWall.js"></script>
+    <script src="./Scripts/objects/walls_level1/insideVerticalWall.js"></script>
     <script src="./Scripts/objects/window/windowLeft.js"></script>
     <script src="./Scripts/objects/window/windowRight.js"></script>
+    <script src="./Scripts/objects/walls_level2/wall_leftTop.js"></script>
+    <script src="./Scripts/objects/walls_level2/wall_leftBottom.js"></script>
+    <script src="./Scripts/objects/walls_level2/wall_bottomLeft.js"></script>
+    <script src="./Scripts/objects/walls_level2/wall_right.js"></script>
+    <script src="./Scripts/objects/window/level2_windowLeft.js"></script>
+    <script src="./Scripts/objects/window/level2_windowRight.js"></script>
     <script src="./Scripts/objects/label.js"></script>
     <script src="./Scripts/objects/bgmap.js"></script>
     <script src="./Scripts/objects/button.js"></script>
@@ -44,10 +60,10 @@
     <script src="./Scripts/objects/background images/image.js"></script>
 
     <script src="./Scripts/scenes/start.js"></script>
-    <script src="./Scripts/scenes/play.js"></script>
+    <script src="./Scripts/scenes/level1.js"></script>
+    <script src="./Scripts/scenes/level2.js"></script>
     <script src="./Scripts/scenes/end.js"></script>
-    
-   
+      
     <script src="./Scripts/managers/mouse.js"></script>
     <script src="./Scripts/managers/vector.js"></script>
     <script src="./Scripts/managers/keyBoardInput.js"></script>

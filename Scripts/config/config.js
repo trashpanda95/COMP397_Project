@@ -5,8 +5,9 @@ var config;
         function Scene() {
         }
         Scene.START = 0;
-        Scene.PLAY = 1;
-        Scene.END = 2;
+        Scene.LEVEL1 = 1;
+        Scene.LEVEL2 = 2;
+        Scene.END = 3;
         return Scene;
     }());
     config.Scene = Scene;
@@ -15,7 +16,7 @@ var config;
         function Screen() {
         }
         Screen.WIDTH = 1000;
-        Screen.HEIGHT = 670;
+        Screen.HEIGHT = 700;
         return Screen;
     }());
     config.Screen = Screen;

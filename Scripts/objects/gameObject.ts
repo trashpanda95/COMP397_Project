@@ -38,6 +38,7 @@ module objects {
         //Game
         public position: createjs.Point;
         public isColliding: boolean;
+        public currentScene: String;
 
     
         //CONSTRUCTORS

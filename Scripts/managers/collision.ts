@@ -261,6 +261,141 @@ module managers
                     }
                 }
             }
+
+            //Check if object is window and player
+            if (object1.name=="player" && object2.name == "level2_windowLeft") 
+            {
+                var getKey = this.keyBoardKey.getkeyInput();
+                //Check if the distance between object 1 and object 2 is less than the minimum distance  
+                if (this.objectToObject2Dist(startPoint, endPoint) < minimumDistance) 
+                {
+                    object2.buildWindow =true;
+                    //Check if objects are currently colliding, default = false
+                    if (!object1.isColliding && object2.isBroken) 
+                    {                       
+                        if  ( getKey == config.Key.R || getKey == config.Key.NUM_PAD_0 && object2.windowLeftHealth <1000 )
+                        {
+                            object2.windowLeftHealth +=50;
+                            if (object2.windowLeftHealth >= 1000)
+                            {
+                                object2.visible= true;
+                                object2.isBroken = false;
+                            }
+                        }
+                        object1.isColliding = true;
+                    }
+                    else {
+                        //console.log("Not Colliding");0
+                        object1.isColliding = false;
+                       
+                    }
+                }
+                else{ object2.buildWindow =false;}
+            }
+
+             //Check if object is window and player
+             if (object1.name=="player" && object2.name == "level2_windowRight") 
+             {
+                 var getKey = this.keyBoardKey.getkeyInput();
+                 //Check if the distance between object 1 and object 2 is less than the minimum distance  
+                 if (this.objectToObject2Dist(startPoint, endPoint) < minimumDistance) 
+                 {
+                     object2.buildWindow =true;
+                     //Check if objects are currently colliding, default = false
+                     if (!object1.isColliding && object2.isBroken) 
+                     {                       
+                         if  (( getKey == config.Key.R || getKey == config.Key.NUM_PAD_0) && object2.windowRightHealth <1000 )
+                         {
+                             object2.windowRightHealth +=50;
+                             if (object2.windowRightHealth >= 1000)
+                             {
+                                 object2.visible= true;
+                                 object2.isBroken = false;
+                             }
+                         }
+                         object1.isColliding = true;
+                     }
+                     else {
+                         //console.log("Not Colliding");
+                         object1.isColliding = false;
+                     }
+                 }
+                 else{ object2.buildWindow =false;}
+             }
+ 
+
+            //Check if object is right window
+            if (object1.name=="zombie" && object2.name == "level2_windowRight") 
+            {
+                //Check if the distance between object 1 and object 2 is less than the minimum distance  
+                 if (this.objectToObject2Dist(startPoint, endPoint) < object1.height) 
+                {                              
+                    //Check if objects are currently colliding, default = false
+                    if (!object1.isColliding && !object2.isBroken) 
+                    {                    
+                        object1.y= object2.y+object1.halfHeight
+                        object2.windowRightHealth -=1;
+                        console.log(object2.windowRightHealth);
+                        //Check if window health is 0, then remove child
+                        if (object2.windowRightHealth <= 0) 
+                        {
+                            //object2.parent.removeChild(object2);
+                            object2.visible = false;
+                            object2.isBroken =true;
+                            object1.windowReached = true; 
+                        }
+                        object1.isColliding = true;
+                    }
+                    else 
+                    {
+                        console.log("Right: Not Colliding");
+                        object1.isColliding = false;  
+                         // If the Window is already broken, then the Zombies can just go through
+                         if (this.object2.isBroken){
+                            console.log ("Right Window is Gone"); // Debugger
+                            this.object1.windowReached = true;
+                        }                   
+                    }
+                }        
+            }
+
+            //Check if object is left window
+            if (object1.name=="zombie" && object2.name == "level2_windowLeft") 
+            {
+                //Check if the distance between object 1 and object 2 is less than the minimum distance  
+                if (object1.y <=object2.y +object2.height
+                    &&object1.y >=object2.y
+                    &&object1.x >=object2.x -object1.halfWidth
+                    &&object1.x <=object2.x -object2.halfWidth) 
+                {
+                    //Check if objects are currently colliding, default = false
+                    if (!object1.isColliding && !object2.isBroken) 
+                    {
+                        object1.x =  object2.x- object1.halfWidth
+                        object2.windowLeftHealth -=1;
+                        console.log(object2.windowLeftHealth);
+                        //Check if window health is 0, then remove child
+                        if (object2.windowLeftHealth <= 0) 
+                        {
+                            //object2.parent.removeChild(object2);
+                            object2.visible = false;
+                            object2.isBroken =true;
+                            object1.windowReached = true;
+                        }
+                        object1.isColliding = true;
+                    }
+                    else {
+                        //console.log("Left: Not Colliding");
+                        object1.isColliding = false;
+                        
+                        // If the Window is already broken, then the Zombies can just go through
+                        if (this.object2.isBroken){
+                            console.log ("Right Window is Gone"); // Debugger
+                            this.object1.windowReached = true;
+                        }
+                    }
+                }
+            }
         }
 
         public checkCollisionWall(object1: objects.GameObject, object2: objects.GameObject) 

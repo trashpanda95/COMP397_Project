@@ -175,6 +175,7 @@ var scenes;
             //this.updateLabels();
             // Change Scene Condition
             if (this.player.isAlive == false) {
+                this.backgroundMusic.stop();
                 this.currentScene = config.Scene.END;
                 this.removeAllChildren();
             }
@@ -196,9 +197,6 @@ var scenes;
             this.updateLabels();
             this.updateHealthBarLeftWindow();
             this.updateHealthBarRightWindow();
-            if (this.player.isAlive == false) {
-                this.backgroundMusic.stop();
-            }
             return this.currentScene;
         };
         // PRIVATE METHODS

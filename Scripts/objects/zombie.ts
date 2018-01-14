@@ -3,8 +3,10 @@ module objects {
     {
         // PRIVATE INSTANCE VARIBALES
         private targetPlayer: objects.Player;
-        private targetWindowLeft: objects.WindowLeft;
-        private targetWindowRight: objects.WindowRight;
+        private targetWindowLeft_level1: objects.WindowLeft;
+        private targetWindowRight_level1: objects.WindowRight;
+        private targetWindowLeft_level2: objects.WindowLeft_Level2;
+        private targetWindowRight_level2: objects.WindowRight_Level2;
         private range: number = 200;
         private spawnMax = 400;
         private spawnMin = 50;
@@ -15,14 +17,18 @@ module objects {
         public health: number;
 
         // CONSTRUCTORS
-        constructor(targetPlayer:objects.Player, targetWindowLeft: objects.WindowLeft, targetWindowRight: objects.WindowRight) {
+        constructor(targetPlayer:objects.Player, targetWindowLeft_level1: objects.WindowLeft, targetWindowRight_level1: objects.WindowRight, targetWindowLeft_level2: objects.WindowLeft_Level2,
+        targetWindowRight_level2: objects.WindowRight_Level2) {
             super("zombie");
             this.targetPlayer = targetPlayer;
-            this.targetWindowLeft = targetWindowLeft;
-            this.targetWindowRight = targetWindowRight;
-            this.Start();
-        }
+            this.targetWindowLeft_level1 = targetWindowLeft_level1;
+            this.targetWindowRight_level1 = targetWindowRight_level1;
+            this.targetWindowLeft_level2 = targetWindowLeft_level2;
+            this.targetWindowRight_level2 = targetWindowRight_level2;
 
+            this.Start();
+        }  
+        
         //PUBLIC METHODS
         public Start()                  
         {
@@ -32,26 +38,56 @@ module objects {
         }
         public Update()                 
         {
-            if (this.y < this.targetWindowRight.y-this.height && this.windowReached)
+            if (this.targetPlayer.currentScene =="level1") 
             {
-                this.ChasePlayer();
-            } 
-            else if (this.y >this.targetWindowRight.y-this.height && this.windowReached)
-            {
-                this.y -= this.generateNormalSpeed();
+                if (this.y < this.targetWindowRight_level1.y-this.height && this.windowReached)
+                {
+                    this.ChasePlayer();
+                } 
+                else if (this.y >this.targetWindowRight_level1.y-this.height && this.windowReached)
+                {
+                    this.y -= this.generateNormalSpeed();
+                }
+                if (this.x > this.targetWindowLeft_level1.x + this.halfWidth && this.windowReached) 
+                {
+                    this.ChasePlayer();
+                }
+                else if (this.x < this.targetWindowLeft_level1.x + this.halfWidth && this.windowReached)
+                {
+                    this.x += this.generateNormalSpeed();
+                }
+                else 
+                {
+                    this.setDestination();
+                }    
             }
-            if (this.x > this.targetWindowLeft.x + this.halfWidth && this.windowReached) 
+            if (this.targetPlayer.currentScene =="level2") 
             {
-                this.ChasePlayer();
+                if (this.y < this.targetWindowRight_level2.y-this.height && this.windowReached)
+                {
+                    this.ChasePlayer();
+                } 
+                else if (this.y >this.targetWindowRight_level2.y-this.height && this.windowReached)
+                {
+                    this.y -= this.generateNormalSpeed();
+                }
+                if (this.x > this.targetWindowLeft_level2.x + this.halfWidth && this.windowReached) 
+                {
+                    this.ChasePlayer();
+                }
+                else if (this.x < this.targetWindowLeft_level2.x + this.halfWidth && this.windowReached)
+                {
+                    this.x += this.generateNormalSpeed();
+                }
+                else 
+                {
+                    this.setDestination();
+                }    
             }
-            else if (this.x < this.targetWindowLeft.x + this.halfWidth && this.windowReached)
-            {
-                this.x += this.generateNormalSpeed();
-            }
-            else 
-            {
-                this.setDestination();
-            }    
+           
+           
+           
+           
         }
         public Reset():void 
         {
@@ -104,18 +140,41 @@ module objects {
         private headTowardsLeftWindow()
         {
             //Zombie rotation
-            this.rotation = managers.Vector.RotateTowardPosition(new managers.Vector(this.x, this.y), new managers.Vector (this.targetWindowLeft.x, this.targetWindowLeft.y));
+            if (this.targetPlayer.currentScene =="level1")
+            {
+                this.rotation = managers.Vector.RotateTowardPosition(new managers.Vector(this.x, this.y), new managers.Vector (this.targetWindowLeft_level1.x, this.targetWindowLeft_level1.y));
 
                 this.x += managers.Vector.DegreeToVector(this.rotation).x * this.generateNormalSpeed();
                 this.y += managers.Vector.DegreeToVector(this.rotation).y * this.generateNormalSpeed();
+            }
+            if (this.targetPlayer.currentScene =="level2")
+            {
+                this.rotation = managers.Vector.RotateTowardPosition(new managers.Vector(this.x, this.y), new managers.Vector (
+                    this.targetWindowLeft_level2.x, this.targetWindowLeft_level2.y));
+
+                this.x += managers.Vector.DegreeToVector(this.rotation).x * this.generateNormalSpeed();
+                this.y += managers.Vector.DegreeToVector(this.rotation).y * this.generateNormalSpeed();
+            }
+            
         } 
         private headTowardsRightWindow()
         {
             //Zombie rotation
-            this.rotation = managers.Vector.RotateTowardPosition(new managers.Vector(this.x, this.y), new managers.Vector (this.targetWindowRight.x, this.targetWindowRight.y));
+            if (this.targetPlayer.currentScene =="level1")
+            {
+                this.rotation = managers.Vector.RotateTowardPosition(new managers.Vector(this.x, this.y), new managers.Vector (this.targetWindowRight_level1.x, this.targetWindowRight_level1.y));
 
                 this.x += managers.Vector.DegreeToVector(this.rotation).x * this.generateNormalSpeed();
                 this.y += managers.Vector.DegreeToVector(this.rotation).y * this.generateNormalSpeed();
+            }
+            if (this.targetPlayer.currentScene =="level2")
+            {
+                this.rotation = managers.Vector.RotateTowardPosition(new managers.Vector(this.x, this.y), new managers.Vector (this.targetWindowRight_level2.x, 
+                    this.targetWindowRight_level2.y));
+
+                this.x += managers.Vector.DegreeToVector(this.rotation).x * this.generateNormalSpeed();
+                this.y += managers.Vector.DegreeToVector(this.rotation).y * this.generateNormalSpeed();
+            }
         }
         private zombieSpawnPoint()
         {

@@ -13,14 +13,16 @@ var objects;
     var Zombie = /** @class */ (function (_super) {
         __extends(Zombie, _super);
         // CONSTRUCTORS
-        function Zombie(targetPlayer, targetWindowLeft, targetWindowRight) {
+        function Zombie(targetPlayer, targetWindowLeft_level1, targetWindowRight_level1, targetWindowLeft_level2, targetWindowRight_level2) {
             var _this = _super.call(this, "zombie") || this;
             _this.range = 200;
             _this.spawnMax = 400;
             _this.spawnMin = 50;
             _this.targetPlayer = targetPlayer;
-            _this.targetWindowLeft = targetWindowLeft;
-            _this.targetWindowRight = targetWindowRight;
+            _this.targetWindowLeft_level1 = targetWindowLeft_level1;
+            _this.targetWindowRight_level1 = targetWindowRight_level1;
+            _this.targetWindowLeft_level2 = targetWindowLeft_level2;
+            _this.targetWindowRight_level2 = targetWindowRight_level2;
             _this.Start();
             return _this;
         }
@@ -31,20 +33,39 @@ var objects;
             this.Reset();
         };
         Zombie.prototype.Update = function () {
-            if (this.y < this.targetWindowRight.y - this.height && this.windowReached) {
-                this.ChasePlayer();
+            if (this.targetPlayer.currentScene == "level1") {
+                if (this.y < this.targetWindowRight_level1.y - this.height && this.windowReached) {
+                    this.ChasePlayer();
+                }
+                else if (this.y > this.targetWindowRight_level1.y - this.height && this.windowReached) {
+                    this.y -= this.generateNormalSpeed();
+                }
+                if (this.x > this.targetWindowLeft_level1.x + this.halfWidth && this.windowReached) {
+                    this.ChasePlayer();
+                }
+                else if (this.x < this.targetWindowLeft_level1.x + this.halfWidth && this.windowReached) {
+                    this.x += this.generateNormalSpeed();
+                }
+                else {
+                    this.setDestination();
+                }
             }
-            else if (this.y > this.targetWindowRight.y - this.height && this.windowReached) {
-                this.y -= this.generateNormalSpeed();
-            }
-            if (this.x > this.targetWindowLeft.x + this.halfWidth && this.windowReached) {
-                this.ChasePlayer();
-            }
-            else if (this.x < this.targetWindowLeft.x + this.halfWidth && this.windowReached) {
-                this.x += this.generateNormalSpeed();
-            }
-            else {
-                this.setDestination();
+            if (this.targetPlayer.currentScene == "level2") {
+                if (this.y < this.targetWindowRight_level2.y - this.height && this.windowReached) {
+                    this.ChasePlayer();
+                }
+                else if (this.y > this.targetWindowRight_level2.y - this.height && this.windowReached) {
+                    this.y -= this.generateNormalSpeed();
+                }
+                if (this.x > this.targetWindowLeft_level2.x + this.halfWidth && this.windowReached) {
+                    this.ChasePlayer();
+                }
+                else if (this.x < this.targetWindowLeft_level2.x + this.halfWidth && this.windowReached) {
+                    this.x += this.generateNormalSpeed();
+                }
+                else {
+                    this.setDestination();
+                }
             }
         };
         Zombie.prototype.Reset = function () {
@@ -85,15 +106,29 @@ var objects;
         };
         Zombie.prototype.headTowardsLeftWindow = function () {
             //Zombie rotation
-            this.rotation = managers.Vector.RotateTowardPosition(new managers.Vector(this.x, this.y), new managers.Vector(this.targetWindowLeft.x, this.targetWindowLeft.y));
-            this.x += managers.Vector.DegreeToVector(this.rotation).x * this.generateNormalSpeed();
-            this.y += managers.Vector.DegreeToVector(this.rotation).y * this.generateNormalSpeed();
+            if (this.targetPlayer.currentScene == "level1") {
+                this.rotation = managers.Vector.RotateTowardPosition(new managers.Vector(this.x, this.y), new managers.Vector(this.targetWindowLeft_level1.x, this.targetWindowLeft_level1.y));
+                this.x += managers.Vector.DegreeToVector(this.rotation).x * this.generateNormalSpeed();
+                this.y += managers.Vector.DegreeToVector(this.rotation).y * this.generateNormalSpeed();
+            }
+            if (this.targetPlayer.currentScene == "level2") {
+                this.rotation = managers.Vector.RotateTowardPosition(new managers.Vector(this.x, this.y), new managers.Vector(this.targetWindowLeft_level2.x, this.targetWindowLeft_level2.y));
+                this.x += managers.Vector.DegreeToVector(this.rotation).x * this.generateNormalSpeed();
+                this.y += managers.Vector.DegreeToVector(this.rotation).y * this.generateNormalSpeed();
+            }
         };
         Zombie.prototype.headTowardsRightWindow = function () {
             //Zombie rotation
-            this.rotation = managers.Vector.RotateTowardPosition(new managers.Vector(this.x, this.y), new managers.Vector(this.targetWindowRight.x, this.targetWindowRight.y));
-            this.x += managers.Vector.DegreeToVector(this.rotation).x * this.generateNormalSpeed();
-            this.y += managers.Vector.DegreeToVector(this.rotation).y * this.generateNormalSpeed();
+            if (this.targetPlayer.currentScene == "level1") {
+                this.rotation = managers.Vector.RotateTowardPosition(new managers.Vector(this.x, this.y), new managers.Vector(this.targetWindowRight_level1.x, this.targetWindowRight_level1.y));
+                this.x += managers.Vector.DegreeToVector(this.rotation).x * this.generateNormalSpeed();
+                this.y += managers.Vector.DegreeToVector(this.rotation).y * this.generateNormalSpeed();
+            }
+            if (this.targetPlayer.currentScene == "level2") {
+                this.rotation = managers.Vector.RotateTowardPosition(new managers.Vector(this.x, this.y), new managers.Vector(this.targetWindowRight_level2.x, this.targetWindowRight_level2.y));
+                this.x += managers.Vector.DegreeToVector(this.rotation).x * this.generateNormalSpeed();
+                this.y += managers.Vector.DegreeToVector(this.rotation).y * this.generateNormalSpeed();
+            }
         };
         Zombie.prototype.zombieSpawnPoint = function () {
             var borderRandNum = Math.random();

@@ -58,8 +58,11 @@
             case config.Scene.START:
                 currentScene = new scenes.Start(currentState);
                 break;
-            case config.Scene.PLAY:
-                currentScene = new scenes.Play(currentState, gameCanvas);
+            case config.Scene.LEVEL1:
+                currentScene = new scenes.Level1(currentState, gameCanvas);
+                break;
+            case config.Scene.LEVEL2:
+                currentScene = new scenes.Level2(currentState, gameCanvas);
                 break;
             case config.Scene.END:
                 currentScene = new scenes.End(currentState);
